@@ -1,0 +1,97 @@
+{
+    "name": "Ninja Chili",
+    "description": "Ninja Foodi Chili recipe",
+    "thumbnailUrl": "images/recipes/hero-recipe-beef-chili-and-cornbread-casserole.webp",
+    "recipeYield": "8 servings",
+    "ingredients": [
+        {
+            "name": "Ground Beef",
+            "quantity": 2,
+            "units": "Pound",
+            "prepGroup": "Pressure Cook"
+        },
+        {
+            "name": "Kidney Beans",
+            "quantity": 42,
+            "units": "Ounce",
+            "prepGroup": "Pressure Cook"
+        },
+        {
+            "name": "Tomato Sauce",
+            "quantity": 15,
+            "units": "Fluid Ounce",
+            "prepGroup": "Pressure Cook"
+        },
+        {
+            "name": "Beef Broth",
+            "quantity": 1,
+            "units": "Cup",
+            "prepGroup": "Pressure Cook"
+        },
+        {
+            "name": "Large Onion",
+            "quantity": 1,
+            "prepGroup": "Mixins"
+        },
+        {
+            "name": "Green Bell Pepper",
+            "quantity": 1,
+            "prepGroup": "Mixins"
+        },
+        {
+            "name": "Jalapeno Pepper",
+            "quantity": 1,
+            "prepGroup": "Mixins"
+        },
+        {
+            "name": "Garlic",
+            "quantity": 1,
+            "units": "Tablespoon",
+            "prepGroup": "Mixins"
+        },
+        {
+            "name": "Salt",
+            "quantity": 2,
+            "units": "Tablespoon",
+            "prepGroup": "Spices"
+        },
+        {
+            "name": "Ground Black Pepper",
+            "quantity": 1,
+            "units": "Tablespoon",
+            "prepGroup": "Spices"
+        },
+        {
+            "name": "Ground Cumin",
+            "quantity": 2,
+            "units": "Tablespoon",
+            "prepGroup": "Spices"
+        },
+        {
+            "name": "Onion Powder",
+            "quantity": 1,
+            "units": "Tablespoon",
+            "prepGroup": "Spices"
+        },
+        {
+            "name": "Garlic Powder",
+            "quantity": 1,
+            "units": "Tablespoon",
+            "prepGroup": "Spices"
+        }
+    ],
+    "instructions": [
+        {
+            "description": "Place beef, beans, tomatoes, and stock into the pot, breaking apart meat. Assemble pressure lid, making sure the PRESSURE RELEASE valve is in the SEAL position. Select PRESSURE and set to HIGH. Set time to 15 minutes. Select START/STOP to begin."
+        },
+        {
+            "description": "When pressure cooking is complete, quick release the pressure by moving the PRESSURE RELEASE valve to the VENT position. Carefully remove lid when unit has finished releasing pressure."
+        },
+        {
+            "description": "Select SEAR/SAUTE and set to MD. Select START/STOP. Add onion, green bell pepper, jalapeno pepper, garlic, and spices; stir to incorporate. Bring to a simmer and cook for 5 minutes, stirring occasionally."
+        },
+        {
+            "description": "When cooking is complete, sprinkle it with cheese and close lid to resume cooking for 3 minutes, or until cheese is melted."
+        }
+    ]
+}
