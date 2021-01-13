@@ -1,0 +1,83 @@
+﻿.recipe {
+    font-family: "proxima-nova","Proxima Nova",Helvetica,sans-serif;
+
+    .recipe-header {
+        .recipe-header-img {
+            img {
+                width: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .recipe-header-title {
+            h1 {
+                font-weight: 700;
+                letter-spacing: -0.04em;
+            }
+
+            .recipe-header-details {
+                font-size: 16px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-content: baseline;
+
+                div {
+                    &:not(:first-child) {
+                        border-left: 1px solid #e4e4e3;
+                    }
+
+                    margin-left: -4px;
+                    padding: 1em;
+
+                    img {
+                        height: 42px;
+                        width: 42px;
+                    }
+
+                    h5 {
+                        margin: 1em 0;
+                    }
+
+                    span {
+                        font-size: 1.5em;
+                        line-height: 1.0833em;
+                        letter-spacing: -0.02em;
+                        font-weight: 700;
+                        color: #96ca43;
+                    }
+                }
+            }
+        }
+    }
+
+    .recipe-ingredients {
+        border: 1px solid #e4e4e3;
+        background-color: #f4f4f3;
+        padding: 2em;
+
+        li {
+            margin-bottom: 0.6875rem;
+            padding-left: 0.375rem;
+            font-size: 18px;
+            line-height: 1.1111em;
+            letter-spacing: 0em;
+            font-weight: 400;
+        }
+    }
+    .recipe-instructions {
+        ol {
+            list-style: decimal;
+            margin-left: 1em;
+
+            li {
+                padding-left: 1em;
+                margin-bottom: 1em;
+                font-weight: 400;
+                font-size: 1.125em;
+                line-height: 1.1111em;
+                letter-spacing: 0em;
+            }
+        }
+    }
+}

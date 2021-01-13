@@ -1,0 +1,101 @@
+﻿@page "/recipe/{id}"
+@inject HttpClient Http
+@using HomeRecipes.Shared
+
+@if (recipe == null) {
+    <Loader />
+} else {
+<div class="servings-adjustment">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Serving Size</span>
+        </div>
+        <select class="custom-select" id="servingsSelector" @onchange="ServingSizeChanged">
+            <option value="0.25">x¼ (Quarter)</option>
+            <option value="0.5">x½ (Half)</option>
+            <option value="0.75">x¾ (Three-Quarter)</option>
+            <option selected value="1">x1 (Full)</option>
+            <option value="2">x2 (Double)</option>
+            <option value="3">x3 (Triple)</option>
+            <option value="4">x4 (Quadruple)</option>
+        </select>
+    </div>
+</div>
+<div class="recipe container mt-5">
+    <div class="recipe-header row">
+        <div class="recipe-header-img col-4">
+            <img src="@(recipe.ThumbnailUrl)" alt="@(recipe.Name)" />
+        </div>
+        <div class="recipe-header-title col-8 text-center">
+            <div class="row">
+                <div class="text-center">
+                    <h1>@(recipe.Name)</h1>
+                    <p class="text-muted">@(recipe.Description)</p>
+                </div>
+            </div>
+            <div class="row recipe-header-details">
+                <div>
+                    <img src="images/prep-time.png" alt="Prep Time"/>
+                    <h5>Prep Time</h5>
+                    <span class="recipe-prep-time">@(recipe.PrepTime)</span>
+                </div>
+                <div>
+                    <img src="images/cook-time.png" alt="Cook Time" />
+                    <h5>Cook Time</h5>
+                    <span class="recipe-cook-time">@(recipe.CookTime)</span>
+                </div>
+                <div>
+                    <img src="images/servings.png" alt="Servings" />
+                    <h5>Servings</h5>
+                    <span class="recipe-servings">@(recipe.RecipeYield)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12 col-lg-6">
+            <h3>Ingredients</h3>
+            <ul class="recipe-ingredients">
+                @foreach (RecipeIngredient ingredient in recipe.Ingredients) {
+                    double servingQuantity = ingredient.Quantity * servingSize;
+                    string humanizedQuantity = HomeRecipes.Shared.Helper.HumanizeIngredientUnits((decimal)servingQuantity, ingredient.Units);
+                    <li @key="ingredient.Name" data-prep-group="@(ingredient.PrepGroup)">
+                        <div>
+                            <span class="ingredient-quantity">@(humanizedQuantity)</span>&nbsp;
+                            <span class="ingredient-name">@(ingredient.Name)</span>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-sm-12 col-lg-6">
+            <h3>Instructions</h3>
+            <div class="recipe-instructions">
+                <ol>
+                    @foreach (RecipeInstruction instruction in recipe.Instructions) {
+                        <li>
+                            <p>@(instruction.Description)</p>
+                        </li>
+                    }
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private double servingSize = 1;
+
+    private HomeRecipes.Shared.Recipe recipe;
+
+    protected override async Task OnInitializedAsync() {
+        recipe = await Http.GetFromJsonAsync<HomeRecipes.Shared.Recipe>($"recipes/recipe{Id}.json");
+    }
+
+    void ServingSizeChanged(ChangeEventArgs e) {
+        Double.TryParse(e.Value.ToString(), out servingSize);
+    }
+}
