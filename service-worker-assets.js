@@ -69,6 +69,10 @@
       "url": "images\/recipes\/hero-recipe-beef-chili-and-cornbread-casserole.webp"
     },
     {
+      "hash": "sha256-OTuLMKDmXNHrSsUxYjznAYe37Giq139ByKSC1rfatmM=",
+      "url": "images\/recipes\/Homemade-Spaghetti-Sauce-6.jpg"
+    },
+    {
       "hash": "sha256-TX+UOn2bl\/bsrAJUCgZA+2+UHDPRj4WXUdBf7XOoUIE=",
       "url": "images\/servings.png"
     },
@@ -81,8 +85,8 @@
       "url": "manifest.json"
     },
     {
-      "hash": "sha256-H0cJegH30PB4tIdvG0frqtzM\/GTEFxGsgUr7DOkBcvA=",
-      "url": "recipes\/recipe1.json"
+      "hash": "sha256-dRJ6ODNywETGBqqEDdvh30+lOJ2PAOtMPl3wVLyxoA8=",
+      "url": "recipes\/recipes.json"
     },
     {
       "hash": "sha256-4Yh4OTT5TEAPNyXEzOG+n5l2HPK294WFItz4SIelj88=",
@@ -117,7 +121,7 @@
       "url": "_framework\/dotnet.5.0.2.js"
     },
     {
-      "hash": "sha256-lrwyRc0lSTfzjb+SjkMMOH8P9xR4ZKqVthOoTRVy8Q4=",
+      "hash": "sha256-s9N+ktp4B00UACy6siusthuBf+sxnSXppFoNV1OvnzQ=",
       "url": "HomeRecipes.Client.styles.css"
     },
     {
@@ -193,11 +197,11 @@
       "url": "_framework\/System.IO.Pipelines.dll"
     },
     {
-      "hash": "sha256-NPemkh4ekR\/OFnkzTDa\/lL9D0SyxHf0QjwISb0vKHVY=",
+      "hash": "sha256-xhcxuMB1DMQeheWjT9hVMSdwsApCsEK4Eua6DGcTGHg=",
       "url": "_framework\/HomeRecipes.Shared.dll"
     },
     {
-      "hash": "sha256-pIqHQqp5iuprLrP1sVfAzjtGVt4+KsRbUb9\/RAsnqqY=",
+      "hash": "sha256-8x92RBJsds1IpYZk\/6b+wIHt6jE2x+I+oG7Gpfg3Kqs=",
       "url": "_framework\/HomeRecipes.Client.dll"
     },
     {
@@ -257,7 +261,7 @@
       "url": "_framework\/System.Linq.Expressions.dll"
     },
     {
-      "hash": "sha256-h6dCCEE5GVAf0aX569re+mpUycPKb+p4mgxtQiZT3Js=",
+      "hash": "sha256-1f+4gmMUfmKE6coBcQ1qgFO3\/MlglUV+VWsMlqAmtQ4=",
       "url": "_framework\/System.Linq.dll"
     },
     {
@@ -337,7 +341,7 @@
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
-      "hash": "sha256-q\/1I0wY0J8zb5P\/232OF9UM6dNWgr8Yfi1LELZis7X0=",
+      "hash": "sha256-+EUC6RFKr48rrxnSsFWHJNrC3k51vQaEKJ5mF5k42Y4=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -345,5 +349,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "L6OKnYIY"
+  "version": "pl0UOdWj"
 };
