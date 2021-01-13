@@ -1,15 +1,59 @@
 {
-  "name": "HomeRecipes.Client",
-  "short_name": "HomeRecipes.Client",
-  "start_url": "./",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#03173d",
-  "icons": [
-    {
-      "src": "icon-512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
-  ]
+    "name": "LightWorks.Recipes",
+    "short_name": "Recipes",
+    "start_url": "./",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#03173d",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "icon-512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "any"
+        },
+        {
+            "src": "maskable_icon_512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable_icon_384.png",
+            "type": "image/png",
+            "sizes": "384x384",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable_icon_152.png",
+            "type": "image/png",
+            "sizes": "152x152",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable_icon_144.png",
+            "type": "image/png",
+            "sizes": "144x144",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable_icon_128.png",
+            "type": "image/png",
+            "sizes": "128x128",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable_icon_96.png",
+            "type": "image/png",
+            "sizes": "96x96",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable_icon_72.png",
+            "type": "image/png",
+            "sizes": "72x72",
+            "purpose": "maskable"
+        }
+    ]
 }
