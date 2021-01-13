@@ -77,12 +77,44 @@
       "url": "images\/servings.png"
     },
     {
-      "hash": "sha256-nEfm2tZ2mhAQezXjU9gCKXh5bI5UVJnz8qUlDbCPfQA=",
+      "hash": "sha256-XZlKnBTLTyqZBA0uVRLLnvCbIgRkBKcYW\/6iME097So=",
       "url": "index.html"
     },
     {
-      "hash": "sha256-MLg2\/Rq2BPk3722XeoU\/f8ZZXOPwVXBj891gmLB6nDk=",
+      "hash": "sha256-xumCvreYpOP3A0W+RKt3SL5SxH2FTi2FDymbnW+sock=",
       "url": "manifest.json"
+    },
+    {
+      "hash": "sha256-xXIJfcBEY+0KWJuBCUJuPrZ7ZJk\/49DJ+rP2voRRIkA=",
+      "url": "maskable_icon_x1.png"
+    },
+    {
+      "hash": "sha256-yERSAy2aHJ1L91ngEqDMLJiEGHWcez94GqWdoqtmJTI=",
+      "url": "maskable_icon_x128.png"
+    },
+    {
+      "hash": "sha256-hbrqZkA7ZFPQk5bdbEW4QQULESgBkBd4+Izk0Kt+QO4=",
+      "url": "maskable_icon_x144.png"
+    },
+    {
+      "hash": "sha256-K8hFLpI8O7GhbhbQrsd4ko2xui0d9R9Fo6zsOadCy4U=",
+      "url": "maskable_icon_x152.png"
+    },
+    {
+      "hash": "sha256-qVyhPeFHedqSATT7oorGH4exbvizMBujRYzblKIdsKk=",
+      "url": "maskable_icon_x384.png"
+    },
+    {
+      "hash": "sha256-Jmxahy2aL+OhMlZpSS3S9\/pu7rig1st0z0+eGgNUtOQ=",
+      "url": "maskable_icon_x512.png"
+    },
+    {
+      "hash": "sha256-PSlZ6b6uoMOm57tjW4V9Njs2GXsH5wnyAnQugLuws2Q=",
+      "url": "maskable_icon_x72.png"
+    },
+    {
+      "hash": "sha256-wSga\/6B+du2ODCuIkjseUNm1BDSXu8RVmEJ\/\/ITq99M=",
+      "url": "maskable_icon_x96.png"
     },
     {
       "hash": "sha256-dRJ6ODNywETGBqqEDdvh30+lOJ2PAOtMPl3wVLyxoA8=",
@@ -349,5 +381,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "pl0UOdWj"
+  "version": "M0H0\/A2t"
 };
