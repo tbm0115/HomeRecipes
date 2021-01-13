@@ -81,7 +81,7 @@
       "url": "index.html"
     },
     {
-      "hash": "sha256-xumCvreYpOP3A0W+RKt3SL5SxH2FTi2FDymbnW+sock=",
+      "hash": "sha256-Lwhg2ypaQ\/FWCGYGBrr\/G8pExGRMXNppU7LlUT6QIAE=",
       "url": "manifest.json"
     },
     {
@@ -233,11 +233,11 @@
       "url": "_framework\/System.IO.Pipelines.dll"
     },
     {
-      "hash": "sha256-aH9e9QEVpoTxyBKa7s4IFtB1AH5JzmyZrahLUkYMOT8=",
+      "hash": "sha256-hepsRVvloatzHbYxB+Jd\/9reaqxK8SgqbkK2KrJ9vIM=",
       "url": "_framework\/HomeRecipes.Shared.dll"
     },
     {
-      "hash": "sha256-SJ\/uVPTetn5myy32VhJzvWymUDT88nMJj3OxUEa8B2Q=",
+      "hash": "sha256-XE25yeHP5WDzaU05QyJCTTvgQ1JzzSE0Rkr2R6bzdYE=",
       "url": "_framework\/HomeRecipes.Client.dll"
     },
     {
@@ -373,11 +373,11 @@
       "url": "_framework\/System.Text.RegularExpressions.dll"
     },
     {
-      "hash": "sha256-dCNGMIXiRz3v5cYqs3TzhWnmRGAQNVmEZi8y9I5gdRs=",
+      "hash": "sha256-K\/IuiWAbOTPuiT\/GM4nQuDQy\/jmhnH+8JuOo0GP6Y1Y=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
-      "hash": "sha256-gnR6wWKm214mTuPg9uNaA1DmCtmthKzqEr2XULnWUng=",
+      "hash": "sha256-lV\/lHiWurh5nVq4ysBQyDmDfttFA\/4z5dIRvUV1P7WQ=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -385,5 +385,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "Ild97SWB"
+  "version": "1C4ZzG+O"
 };
