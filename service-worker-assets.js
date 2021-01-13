@@ -117,7 +117,7 @@
       "url": "_framework\/dotnet.5.0.2.js"
     },
     {
-      "hash": "sha256-3QBXxXvdMgVoN9cFhvK4QBgrcWXjWrQK268Gsnv11FU=",
+      "hash": "sha256-lrwyRc0lSTfzjb+SjkMMOH8P9xR4ZKqVthOoTRVy8Q4=",
       "url": "HomeRecipes.Client.styles.css"
     },
     {
@@ -197,7 +197,7 @@
       "url": "_framework\/HomeRecipes.Shared.dll"
     },
     {
-      "hash": "sha256-BZBxwn0VNlVbJB1a4AAvLlcKV4O1UEaXH1fVScsg6IY=",
+      "hash": "sha256-pIqHQqp5iuprLrP1sVfAzjtGVt4+KsRbUb9\/RAsnqqY=",
       "url": "_framework\/HomeRecipes.Client.dll"
     },
     {
@@ -337,7 +337,7 @@
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
-      "hash": "sha256-\/lCYt5UBPgbj7D12LUmfiWOMJl4HYq+SbzujKHOPsY0=",
+      "hash": "sha256-q\/1I0wY0J8zb5P\/232OF9UM6dNWgr8Yfi1LELZis7X0=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -345,5 +345,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "20j9hWdL"
+  "version": "L6OKnYIY"
 };
