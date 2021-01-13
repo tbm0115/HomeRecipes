@@ -8,16 +8,18 @@ namespace HomeRecipes.Shared
     {
         
         public static string HumanizeIngredientUnits(decimal quantity, string unitName) {
+            Fractional.Fractional fraction = new Fractional.Fractional(quantity, false);
             var unit = SIUnits.UnitManager.GetUnit(unitName);
             if (unit == null) {
-                return quantity.ToString();
+                if (!string.IsNullOrEmpty(unitName)) {
+                    return $"{fraction.HumanRepresentation} ({unitName.ToLower()})";
+                } else {
+                    return $"{fraction.HumanRepresentation}";
+                }
             }
 
             SIUnits.Abstracts.BaseUnit convertToUnit = unit;
             switch (unit.Name) {
-                case "To Taste":
-                    return $"{quantity} (to taste)";
-                    break;
                 case "Teaspoon":
                     if (quantity >= 3) {
                         convertToUnit = SIUnits.UnitManager.GetUnit("Tablespoon");
@@ -70,11 +72,12 @@ namespace HomeRecipes.Shared
                     if (convertedQuantity.Value > 0) {
                         return HumanizeIngredientUnits(convertedQuantity.Value, convertToUnit.Name);
                     } else {
-                        return convertToUnit.Format(convertedQuantity.GetValueOrDefault());
+                        fraction = new Fractional.Fractional(convertedQuantity.Value, false);
+                        return $"{fraction.HumanRepresentation} {convertToUnit.Symbol}";// convertToUnit.Format(convertedQuantity.GetValueOrDefault());
                     }
                 }
             }
-            return unit.Format(quantity);
+            return $"{fraction.HumanRepresentation} {unit.Symbol}";
         }
     }
 }

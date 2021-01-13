@@ -2,14 +2,10 @@
 @inject HttpClient Http
 @using HomeRecipes.Client.Components
 
-<h1>LightWorks: Home Recipes!</h1>
-
-<div class="container">
-    <div class="card-columns">
-        @for (int i = 0; i < recipes?.Count(); i++) {
-            <RecipeTile Index="@i" recipe="@recipes.ElementAt(i)" />
-        }
-    </div>
+<div class="card-columns">
+    @for (int i = 0; i < recipes?.Count(); i++) {
+        <RecipeTile Index="@i" recipe="@recipes.ElementAt(i)" />
+    }
 </div>
 
 @code {
