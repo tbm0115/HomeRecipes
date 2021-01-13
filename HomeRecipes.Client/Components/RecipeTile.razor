@@ -8,18 +8,21 @@
         <div class="card-body">
             <h5 class="card-title">@(recipe.Name)</h5>
             <p class="card-text">@(recipe.Description)</p>
-            <a href="recipe/@(Id)" class="btn btn-primary">View Recipe</a>
+            <a href="recipe/@(recipe.Name)" class="btn btn-primary">View Recipe</a>
         </div>
     }
 </div>
 
 @code {
     [Parameter]
-    public string Id { get; set; }
+    public int Index { get; set; }
 
-    private HomeRecipes.Shared.Recipe recipe;
+    [Parameter]
+    public HomeRecipes.Shared.Recipe recipe { get; set; }
 
     protected override async Task OnInitializedAsync() {
-        recipe = await Http.GetFromJsonAsync<HomeRecipes.Shared.Recipe>($"recipes/recipe{Id}.json");
+        if (recipe == null && Index > 0) {
+            recipe = (await Http.GetFromJsonAsync<IEnumerable<HomeRecipes.Shared.Recipe>>($"recipes/recipes.json")).ElementAt(Index);
+        }
     }
 }

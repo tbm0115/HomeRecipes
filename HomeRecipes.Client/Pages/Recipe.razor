@@ -1,4 +1,4 @@
-﻿@page "/recipe/{id}"
+﻿@page "/recipe/{name}"
 @inject HttpClient Http
 @using HomeRecipes.Shared
 
@@ -90,13 +90,14 @@
 
 @code {
     [Parameter]
-    public string Id { get; set; }
+    public string Name { get; set; }
+
+    public HomeRecipes.Shared.Recipe recipe { get; set; }
+
     private double servingSize = 1;
 
-    private HomeRecipes.Shared.Recipe recipe;
-
     protected override async Task OnInitializedAsync() {
-        recipe = await Http.GetFromJsonAsync<HomeRecipes.Shared.Recipe>($"recipes/recipe{Id}.json");
+        recipe = (await Http.GetFromJsonAsync<IEnumerable<HomeRecipes.Shared.Recipe>>($"recipes/recipes.json")).FirstOrDefault(o => o.Name == Name);
     }
 
     void ServingSizeChanged(ChangeEventArgs e) {

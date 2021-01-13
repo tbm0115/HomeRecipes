@@ -15,6 +15,9 @@ namespace HomeRecipes.Shared
 
             SIUnits.Abstracts.BaseUnit convertToUnit = unit;
             switch (unit.Name) {
+                case "To Taste":
+                    return $"{quantity} (to taste)";
+                    break;
                 case "Teaspoon":
                     if (quantity >= 3) {
                         convertToUnit = SIUnits.UnitManager.GetUnit("Tablespoon");

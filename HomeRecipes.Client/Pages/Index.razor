@@ -1,10 +1,21 @@
 ﻿@page "/"
+@inject HttpClient Http
 @using HomeRecipes.Client.Components
 
 <h1>LightWorks: Home Recipes!</h1>
 
 <div class="container">
     <div class="card-columns">
-        <RecipeTile Id="1" />
+        @for (int i = 0; i < recipes?.Count(); i++) {
+            <RecipeTile Index="@i" recipe="@recipes.ElementAt(i)" />
+        }
     </div>
 </div>
+
+@code {
+    private IEnumerable<HomeRecipes.Shared.Recipe> recipes { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+        recipes = await Http.GetFromJsonAsync<IEnumerable<HomeRecipes.Shared.Recipe>>($"recipes/recipes.json");
+    }
+} 
