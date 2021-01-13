@@ -49,7 +49,7 @@
       "url": "css\/open-iconic\/README.md"
     },
     {
-      "hash": "sha256-qU+KhVPK6oQw3UyjzAHU4xjRmCj3TLZUU\/+39dni9E0=",
+      "hash": "sha256-ikDY2gFbzbA5khnC2vAG2B5O9px6T0qvsY8pgqisiw8=",
       "url": "favicon.ico"
     },
     {
@@ -157,6 +157,10 @@
       "url": "HomeRecipes.Client.styles.css"
     },
     {
+      "hash": "sha256-jSle0m2sY3s5AGvVsN5R5eq1MNpgWgT0poO+yLuN\/Fc=",
+      "url": "_framework\/Fractional.dll"
+    },
+    {
       "hash": "sha256-tbv803VEJ59nPsQtC+9AnHgADma+8Bc89ZcTgSt9cFg=",
       "url": "_framework\/Microsoft.AspNetCore.Components.dll"
     },
@@ -229,11 +233,11 @@
       "url": "_framework\/System.IO.Pipelines.dll"
     },
     {
-      "hash": "sha256-xhcxuMB1DMQeheWjT9hVMSdwsApCsEK4Eua6DGcTGHg=",
+      "hash": "sha256-aH9e9QEVpoTxyBKa7s4IFtB1AH5JzmyZrahLUkYMOT8=",
       "url": "_framework\/HomeRecipes.Shared.dll"
     },
     {
-      "hash": "sha256-8x92RBJsds1IpYZk\/6b+wIHt6jE2x+I+oG7Gpfg3Kqs=",
+      "hash": "sha256-SJ\/uVPTetn5myy32VhJzvWymUDT88nMJj3OxUEa8B2Q=",
       "url": "_framework\/HomeRecipes.Client.dll"
     },
     {
@@ -345,7 +349,7 @@
       "url": "_framework\/System.Runtime.Numerics.dll"
     },
     {
-      "hash": "sha256-lgAJ1pEblw+xd1NZURlqonDPbUMV7m4cLbxcfjLbLls=",
+      "hash": "sha256-tNZ1yuyLVzo+0qk6i0Vh+LkP1e9YOoVMiPjQ9xqNQvU=",
       "url": "_framework\/System.Runtime.Serialization.Formatters.dll"
     },
     {
@@ -369,11 +373,11 @@
       "url": "_framework\/System.Text.RegularExpressions.dll"
     },
     {
-      "hash": "sha256-xIPL70YJI0sLf4TEvUX8H9td1VX8N9CwtW+RVfUozr4=",
+      "hash": "sha256-dCNGMIXiRz3v5cYqs3TzhWnmRGAQNVmEZi8y9I5gdRs=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
-      "hash": "sha256-+EUC6RFKr48rrxnSsFWHJNrC3k51vQaEKJ5mF5k42Y4=",
+      "hash": "sha256-gnR6wWKm214mTuPg9uNaA1DmCtmthKzqEr2XULnWUng=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -381,5 +385,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "M0H0\/A2t"
+  "version": "Ild97SWB"
 };
