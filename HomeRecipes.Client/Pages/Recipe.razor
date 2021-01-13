@@ -22,32 +22,36 @@
     </div>
 </div>
 <div class="recipe container mt-5">
-    <div class="recipe-header row">
-        <div class="recipe-header-img col-4">
-            <img src="@(recipe.ThumbnailUrl)" alt="@(recipe.Name)" />
-        </div>
-        <div class="recipe-header-title col-8 text-center">
-            <div class="row">
-                <div class="text-center">
-                    <h1>@(recipe.Name)</h1>
-                    <p class="text-muted">@(recipe.Description)</p>
-                </div>
+    <div class="recipe-header">
+        <div class="row">
+            <div class="col text-center recipe-header-title">
+                <h1>@(recipe.Name)</h1>
+                <p class="text-muted">@(recipe.Description)</p>
             </div>
-            <div class="row recipe-header-details">
+        </div>
+        <div class="row">
+            <div class="col recipe-header-img mb-5">
+                <img src="@(recipe.ThumbnailUrl)" alt="@(recipe.Name)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col recipe-header-details">
                 <div>
-                    <img src="images/prep-time.png" alt="Prep Time"/>
+                    <img src="images/prep-time.png" alt="Prep Time" />
                     <h5>Prep Time</h5>
-                    <span class="recipe-prep-time">@(recipe.PrepTime)</span>
+                    <p class="recipe-prep-time">@(recipe.PrepTime)</p>
                 </div>
+                <div class="divider" />
                 <div>
                     <img src="images/cook-time.png" alt="Cook Time" />
                     <h5>Cook Time</h5>
-                    <span class="recipe-cook-time">@(recipe.CookTime)</span>
+                    <p class="recipe-cook-time">@(recipe.CookTime)</p>
                 </div>
+                <div class="divider" />
                 <div>
                     <img src="images/servings.png" alt="Servings" />
                     <h5>Servings</h5>
-                    <span class="recipe-servings">@(recipe.RecipeYield)</span>
+                    <p class="recipe-servings">@(recipe.RecipeYield)</p>
                 </div>
             </div>
         </div>

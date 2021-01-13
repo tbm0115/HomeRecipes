@@ -4,6 +4,7 @@
     .recipe-header {
         .recipe-header-img {
             img {
+                max-height: 300px;
                 width: 100%;
                 object-fit: contain;
             }
@@ -14,39 +15,48 @@
                 font-weight: 700;
                 letter-spacing: -0.04em;
             }
+        }
 
-            .recipe-header-details {
-                font-size: 16px;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-content: baseline;
+        .recipe-header-details {
+            font-size: 16px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-content: baseline;
 
-                div {
-                    &:not(:first-child) {
-                        border-left: 1px solid #e4e4e3;
-                    }
+            div {
+                margin-left: -4px;
+                padding: 1em;
 
-                    margin-left: -4px;
-                    padding: 1em;
+                img {
+                    height: 42px;
+                    width: 42px;
+                    margin: 0px auto;
+                    display: block;
+                }
 
-                    img {
-                        height: 42px;
-                        width: 42px;
-                    }
+                h5 {
+                    margin: 1em 0;
+                }
 
-                    h5 {
-                        margin: 1em 0;
-                    }
+                p {
+                    font-size: 1.5em;
+                    line-height: 1.0833em;
+                    letter-spacing: -0.02em;
+                    font-weight: 700;
+                    color: #96ca43;
+                    text-align: center;
 
-                    span {
-                        font-size: 1.5em;
-                        line-height: 1.0833em;
-                        letter-spacing: -0.02em;
-                        font-weight: 700;
-                        color: #96ca43;
+                    &:empty {
+                        &::before {
+                            content: '\2014';
+                        }
                     }
                 }
+            }
+
+            .divider:not(:first-child) {
+                border-left: 1px solid #e4e4e3;
             }
         }
     }
@@ -65,6 +75,7 @@
             font-weight: 400;
         }
     }
+
     .recipe-instructions {
         ol {
             list-style: decimal;
