@@ -1,7 +1,7 @@
 ﻿self.assetsManifest = {
   "assets": [
     {
-      "hash": "sha256-CLMwCdXSHqGZJPkmVzrW5AzX0GqL2ZMFG0ZMmKJhCxs=",
+      "hash": "sha256-e3DnccfXjBFeF6uuldm4Qs5WHxzbgeV1qbnv9+6zDOQ=",
       "url": "css\/app.css"
     },
     {
@@ -11,6 +11,14 @@
     {
       "hash": "sha256-xMZ0SaSBYZSHVjFdZTAT\/IjRExRIxSriWcJLcA9nkj0=",
       "url": "css\/bootstrap\/bootstrap.min.css.map"
+    },
+    {
+      "hash": "sha256-esy+o57TC8Oy\/m384hKtPO5JDrUQ8\/gtNMjpEW\/98LY=",
+      "url": "css\/loader.css"
+    },
+    {
+      "hash": "sha256-mkeYmleNeoPY2d4n3h796zkyl1V6KjVwwe05YILLlIc=",
+      "url": "css\/loader.scss"
     },
     {
       "hash": "sha256-+Q44zfEaCMmXduni5Td+IgCbk8sSUQwES2nWs+KKQz0=",
@@ -57,12 +65,20 @@
       "url": "icon-512.png"
     },
     {
+      "hash": "sha256-cazm\/imwjXMeXV9kFRRqDMCjhYokBxai\/p86ikc1IZs=",
+      "url": "idb.js"
+    },
+    {
       "hash": "sha256-29qlnGRYlLN8TOaf1kA7M0r8zWgit5\/Bk6kHAElBZY8=",
       "url": "images\/cook-time.png"
     },
     {
       "hash": "sha256-6kHlKCFAazLdb1MB3l4EMR+5UGTblkGUty7zfSTNpQI=",
       "url": "images\/prep-time.png"
+    },
+    {
+      "hash": "sha256-CNlPBSJXUfkZq2xDHItyF6c5vCwkc8a8Q8uQDhrexIs=",
+      "url": "images\/recipes\/7AFBF630-5C61-4F07-B5B8-84D43F6EC7CA1.jpg"
     },
     {
       "hash": "sha256-mo99\/+Fjq2CttDOYAQ3LeufNANEfIcXnUmrfxUJMH80=",
@@ -73,12 +89,20 @@
       "url": "images\/recipes\/Homemade-Spaghetti-Sauce-6.jpg"
     },
     {
+      "hash": "sha256-bsgTvJTx\/IweTwYUTS4EzZYxySrx99bgT96MwuoYjWE=",
+      "url": "images\/recipes\/IMG_9329.jpg"
+    },
+    {
       "hash": "sha256-TX+UOn2bl\/bsrAJUCgZA+2+UHDPRj4WXUdBf7XOoUIE=",
       "url": "images\/servings.png"
     },
     {
-      "hash": "sha256-XZlKnBTLTyqZBA0uVRLLnvCbIgRkBKcYW\/6iME097So=",
+      "hash": "sha256-cGh7LsHTxppEXQk5yFqc0VTXTFbwCMUwgGMQCKidbfE=",
       "url": "index.html"
+    },
+    {
+      "hash": "sha256-3U63zvvZHdOCuCtF3l5vZEciOsRzmonzTCUybelBQE4=",
+      "url": "localRecipeStore.js"
     },
     {
       "hash": "sha256-Lwhg2ypaQ\/FWCGYGBrr\/G8pExGRMXNppU7LlUT6QIAE=",
@@ -117,7 +141,7 @@
       "url": "maskable_icon_x96.png"
     },
     {
-      "hash": "sha256-dRJ6ODNywETGBqqEDdvh30+lOJ2PAOtMPl3wVLyxoA8=",
+      "hash": "sha256-\/oOOVzlRnNRhcdaB8hqWDLdCHF8UTx3o\/RYTXOXGnXA=",
       "url": "recipes\/recipes.json"
     },
     {
@@ -153,7 +177,7 @@
       "url": "_framework\/dotnet.5.0.2.js"
     },
     {
-      "hash": "sha256-s9N+ktp4B00UACy6siusthuBf+sxnSXppFoNV1OvnzQ=",
+      "hash": "sha256-SX7GcJrrTi+0XR8Zv3OX8eOoRZidGjpeNbkT5IkkH9E=",
       "url": "HomeRecipes.Client.styles.css"
     },
     {
@@ -189,7 +213,7 @@
       "url": "_framework\/Microsoft.Extensions.DependencyInjection.dll"
     },
     {
-      "hash": "sha256-AjnkOnqoQDS4FBQ7U5SmjPIthDVSq5uP1l6ACz+CUVw=",
+      "hash": "sha256-hK6Ap\/IWUjGDX6XOzN6hJq8JILYXFwbjmQoVsoeatqk=",
       "url": "_framework\/Microsoft.Extensions.DependencyInjection.Abstractions.dll"
     },
     {
@@ -225,7 +249,7 @@
       "url": "_framework\/Schema.NET.dll"
     },
     {
-      "hash": "sha256-rGl7LPJC1CURbIr3bxYtaHM\/XUMpg6948\/U1iZOkmIk=",
+      "hash": "sha256-Glglgce1f+13xszLqkU0tk041\/xdITMnxWnMJIFvxyI=",
       "url": "_framework\/SIUnitsCore.dll"
     },
     {
@@ -233,11 +257,11 @@
       "url": "_framework\/System.IO.Pipelines.dll"
     },
     {
-      "hash": "sha256-hepsRVvloatzHbYxB+Jd\/9reaqxK8SgqbkK2KrJ9vIM=",
+      "hash": "sha256-Uo3Z29BOxP1jHi\/NU4KRGbWOfFmJvxPV821OrRHfGnI=",
       "url": "_framework\/HomeRecipes.Shared.dll"
     },
     {
-      "hash": "sha256-XE25yeHP5WDzaU05QyJCTTvgQ1JzzSE0Rkr2R6bzdYE=",
+      "hash": "sha256-deEBXIObfWwIfnrQxSquuJ+iI9Vskg17mhVV8VNPUrw=",
       "url": "_framework\/HomeRecipes.Client.dll"
     },
     {
@@ -273,7 +297,7 @@
       "url": "_framework\/System.ComponentModel.dll"
     },
     {
-      "hash": "sha256-mvTDkdZW56QfysTrLFYN6gfV4+yd0f49VaXY7sF4NpA=",
+      "hash": "sha256-1xXGK+t\/BKHvECsEJa0ulZv0RVpOlftEUTB\/RZE9PPM=",
       "url": "_framework\/System.Console.dll"
     },
     {
@@ -297,7 +321,7 @@
       "url": "_framework\/System.Linq.Expressions.dll"
     },
     {
-      "hash": "sha256-1f+4gmMUfmKE6coBcQ1qgFO3\/MlglUV+VWsMlqAmtQ4=",
+      "hash": "sha256-\/HaAdXDZuLBbvQtnb0B6CGI8Hq9I\/hJKxI0Nq+3m47g=",
       "url": "_framework\/System.Linq.dll"
     },
     {
@@ -309,7 +333,7 @@
       "url": "_framework\/System.Net.Http.Json.dll"
     },
     {
-      "hash": "sha256-ZSY1Z+O4o\/OyWbACPLkvStzbRQkxOIYIuNZ9kFqUAkA=",
+      "hash": "sha256-MnxxNwllQyBNnEetock2OTP+V88UxQ3uXxRyj2i3Zmk=",
       "url": "_framework\/System.Net.Http.dll"
     },
     {
@@ -357,6 +381,10 @@
       "url": "_framework\/System.Runtime.Serialization.Primitives.dll"
     },
     {
+      "hash": "sha256-fdSQnwzWii6hSLNuxoqyaKc0lo9QclqnhT+C5w\/Fs+Q=",
+      "url": "_framework\/System.Security.Claims.dll"
+    },
+    {
       "hash": "sha256-MvTTzdjK8TfjGbeciVR3aNgLZmeiJyC2PgkxfzQHFSY=",
       "url": "_framework\/System.Security.Cryptography.Algorithms.dll"
     },
@@ -373,11 +401,11 @@
       "url": "_framework\/System.Text.RegularExpressions.dll"
     },
     {
-      "hash": "sha256-K\/IuiWAbOTPuiT\/GM4nQuDQy\/jmhnH+8JuOo0GP6Y1Y=",
+      "hash": "sha256-tC8zMTAt9UqcIBjtP8n2MwtcGoRqRKPF8xIhem+Qqgo=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
-      "hash": "sha256-lV\/lHiWurh5nVq4ysBQyDmDfttFA\/4z5dIRvUV1P7WQ=",
+      "hash": "sha256-bLOMNjLKxlu8Lay2Zk33x5PGJY\/wg\/0p8B04iD5ZIMI=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -385,5 +413,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "1C4ZzG+O"
+  "version": "CApuE4oP"
 };

@@ -3,7 +3,7 @@
         "name": "Ninja Chili",
         "description": "Ninja Foodi Chili recipe",
         "thumbnailUrl": "images/recipes/hero-recipe-beef-chili-and-cornbread-casserole.webp",
-        "recipeYield": "8",
+        "recipeYield": 8,
         "ingredients": [
             {
                 "name": "Ground Beef",
@@ -100,8 +100,14 @@
         "name": "Spaghetti",
         "description": "Spaghetti Sauce Recipe",
         "thumbnailUrl": "images/recipes/Homemade-Spaghetti-Sauce-6.jpg",
-        "recipeYield": "2",
+        "recipeYield": 2,
         "ingredients": [
+            {
+                "name": "Ground Beef",
+                "quantity": 1,
+                "units": "Pound",
+                "prepGroup": "Sauce"
+            },
             {
                 "name": "Medium Onion",
                 "quantity": 1,
@@ -170,6 +176,138 @@
             },
             {
                 "description": "Reduce heat and simmer for 30 minutes. Add chopped basil before serving, if desired."
+            }
+        ]
+    },
+    {
+        "name": "Chicken + Seed Potatoes",
+        "description": "Baked chicken with seed potatoes covered in light cheese sauce",
+        "thumbnailUrl": "images/recipes/7AFBF630-5C61-4F07-B5B8-84D43F6EC7CA1.jpg",
+        "recipeYield": 2,
+        "ingredients": [
+            {
+                "name": "Low-Fat Milk",
+                "quantity": 1,
+                "units": "Cup",
+                "prepGroup": "Sauce"
+            },
+            {
+                "name": "Bob's Redmill All-Purpose Flour",
+                "quantity": 4,
+                "units": "Teaspoon",
+                "prepGroup": "Sauce"
+            },
+            {
+                "name": "Salt",
+                "quantity": 0.25,
+                "units": "Teaspoon",
+                "prepGroup": "Sauce"
+            },
+            {
+                "name": "Mozzarella",
+                "quantity": 1.5,
+                "units": "Ounce",
+                "prepGroup": "Sauce"
+            },
+            {
+                "name": "Group Black Pepper",
+                "quantity": 0.25,
+                "units": "Teaspoon",
+                "prepGroup": "Sauce"
+            },
+            {
+                "name": "Chicken Breast",
+                "quantity": 2,
+                "prepGroup": "Protein"
+            },
+            {
+                "name": "Lemon Chicken Seasoning",
+                "quantity": 1,
+                "units": "To Taste",
+                "prepGroup": "Protein"
+            }
+        ],
+        "instructions": [
+            {
+                "description": "Preheat the oven to 400F. Prep chicken in casserole dish. Place chicken in oven when finished preheating."
+            },
+            {
+                "description": "Combine 1/4 of the measured milk and all measured flour in a saucepan. Stir with a whisk. Stir in remaining 3/4 of the measured milk and salt."
+            },
+            {
+                "description": "Bring sauce to a boil over medium heat, stirring frequently."
+            },
+            {
+                "description": "Simmer 2 minutes or until slightly thickened, stirring constantly."
+            },
+            {
+                "description": "Remove from heat. Stir in cheese and pepper, stirring until cheese melts."
+            }
+        ]
+    },
+    {
+        "name": "Macaroni and Cheese Casserole",
+        "description": "Grandmama Alternease Winn's recipe when mom was 9.",
+        "thumbnailUrl": "images/recipes/IMG_9329.jpg",
+        "recipeYield": 4,
+        "ingredients": [
+            {
+                "name": "Elbow Noodles",
+                "quantity": 8,
+                "units": "Ounce"
+            },
+            {
+                "name": "Butter",
+                "quantity": 0.25,
+                "units": "Cup"
+            },
+            {
+                "name": "Evaporated Milk",
+                "quantity": 16,
+                "units": "Fluid Ounce"
+            },
+            {
+                "name": "Large Eggs",
+                "quantity": 5
+            },
+            {
+                "name": "Medium Cheddar Cheese",
+                "quantity": 1,
+                "units": "Pound"
+            },
+            {
+                "name": "Salt",
+                "units": "To Taste"
+            },
+            {
+                "name": "Ground Black Pepper",
+                "units": "To Taste"
+            }
+        ],
+        "instructions": [
+            {
+                "description": "Preheat oven to 350 degrees. Spray casserole dish to prevent sticking (Full serving fits in an 8x8x2 bread pan)."
+            },
+            {
+                "description": "In medium pot, bring to boil, 6 quarts water. Add a pinch of salt to water. Boil elbow noodles per package direction or until al dente or slightly tender. Drain."
+            },
+            {
+                "description": "Place noodles in casserole dish. Add butter, mix until melted."
+            },
+            {
+                "description": "Add salt and pepper."
+            },
+            {
+                "description": "Add evaporated milk to barely cover noodles (~2-3 cans for Full serving)."
+            },
+            {
+                "description": "Add slightly beaten eggs, mix well."
+            },
+            {
+                "description": "Add half of grated cheese. Push cheese down into noodle mixture with fork, distributing well. Add remaining cheese to top of mixture."
+            },
+            {
+                "description": "Place casserole on baking sheet, bake in oven 35-45 minutes, until casserole is baked in center, letting outside edges brown. Let casserole rest 15 minutes before scooping."
             }
         ]
     }
