@@ -14,13 +14,20 @@
 </head>
 
 <body>
-    <app>Loading...</app>
+    <app>
+        <header></header>
+        <main class="container">
+            <div class="loader"></div>
+        </main>
+    </app>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+    <script src="idb.js"></script>
+    <script src="localRecipeStore.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
 </body>

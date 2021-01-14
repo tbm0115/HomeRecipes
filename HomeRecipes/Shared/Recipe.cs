@@ -23,7 +23,7 @@ namespace HomeRecipes.Shared
 
         public TimeSpan? PrepTime { get; set; }
 
-        public string RecipeYield { get; set; }
+        public decimal RecipeYield { get; set; }
 
         public DateTime? DateCreated { get; set; }
 
@@ -33,7 +33,7 @@ namespace HomeRecipes.Shared
 
 
         [JsonExtensionData]
-        private IDictionary<string, JToken> _additionalData;
+        private IDictionary<string, JToken> _additionalData = new Dictionary<string, JToken>();
 
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context) {

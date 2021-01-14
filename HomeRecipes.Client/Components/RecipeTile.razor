@@ -15,14 +15,5 @@
 
 @code {
     [Parameter]
-    public int Index { get; set; }
-
-    [Parameter]
     public HomeRecipes.Shared.Recipe recipe { get; set; }
-
-    protected override async Task OnInitializedAsync() {
-        if (recipe == null && Index > 0) {
-            recipe = (await Http.GetFromJsonAsync<IEnumerable<HomeRecipes.Shared.Recipe>>($"recipes/recipes.json")).ElementAt(Index);
-        }
-    }
 }

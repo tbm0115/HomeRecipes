@@ -1,5 +1,6 @@
 ﻿@page "/recipe/{name}"
 @inject HttpClient Http
+@inject Data.LocalRecipeStore LocalRecipeStore
 @using HomeRecipes.Shared
 
 @if (recipe == null) {
@@ -51,7 +52,7 @@
                 <div>
                     <img src="images/servings.png" alt="Servings" />
                     <h5>Servings</h5>
-                    <p class="recipe-servings">@(recipe.RecipeYield)</p>
+                    <p class="recipe-servings">@(new Fractional.Fractional((recipe.RecipeYield * (decimal)servingSize), false).HumanRepresentation)</p>
                 </div>
             </div>
         </div>
@@ -60,14 +61,19 @@
         <div class="col-sm-12 col-lg-6">
             <h3>Ingredients</h3>
             <ul class="recipe-ingredients">
-                @foreach (RecipeIngredient ingredient in recipe.Ingredients) {
-                    double servingQuantity = ingredient.Quantity * servingSize;
-                    string humanizedQuantity = HomeRecipes.Shared.Helper.HumanizeIngredientUnits((decimal)servingQuantity, ingredient.Units);
-                    <li @key="ingredient.Name" data-prep-group="@(ingredient.PrepGroup)">
-                        <div>
-                            <span class="ingredient-quantity">@(humanizedQuantity)</span>&nbsp;
-                            <span class="ingredient-name">@(ingredient.Name)</span>
-                        </div>
+                @foreach (var ingredientGroup in recipe.Ingredients.GroupBy(o => o.PrepGroup)) {
+                    <li>
+                        @(ingredientGroup.Key ?? "Other")
+                        <ul>
+                            @foreach (RecipeIngredient ingredient in ingredientGroup) {
+                                <li @key="ingredient.Name" data-prep-group="@(ingredient.PrepGroup)">
+                                    <div>
+                                        <HomeRecipes.Client.Components.IngredientMeasurement QuantityCallout="@((decimal)ingredient.Quantity)" ServingModifier="@servingSize" UnitCallout="@ingredient.Units" />
+                                        <span class="ingredient-name">@(ingredient.Name)</span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
                     </li>
                 }
             </ul>
@@ -97,7 +103,7 @@
     private double servingSize = 1;
 
     protected override async Task OnInitializedAsync() {
-        recipe = (await Http.GetFromJsonAsync<IEnumerable<HomeRecipes.Shared.Recipe>>($"recipes/recipes.json")).FirstOrDefault(o => o.Name == Name);
+        recipe = await LocalRecipeStore.GetRecipe(Name);// (await Http.GetFromJsonAsync<IEnumerable<HomeRecipes.Shared.Recipe>>($"recipes/recipes.json")).FirstOrDefault(o => o.Name == Name);
     }
 
     void ServingSizeChanged(ChangeEventArgs e) {
