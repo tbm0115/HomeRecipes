@@ -3,7 +3,7 @@
         "name": "Ninja Chili",
         "description": "Ninja Foodi Chili recipe",
         "thumbnailUrl": "images/recipes/hero-recipe-beef-chili-and-cornbread-casserole.webp",
-        "recipeYield": 8,
+        "recipeYield": 4,
         "ingredients": [
             {
                 "name": "Ground Beef",
@@ -308,6 +308,84 @@
             },
             {
                 "description": "Place casserole on baking sheet, bake in oven 35-45 minutes, until casserole is baked in center, letting outside edges brown. Let casserole rest 15 minutes before scooping."
+            }
+        ]
+    },
+    {
+        "name": "GF Philly Cheesesteak",
+        "description": "Philly cheesesteak casserole for the Ninja Foodi with a Gluten Free twist.",
+        "thumbnailUrl": "hero-recipe-ninja-placeholder.webp",
+        "recipeYield": 6,
+        "ingredients": [
+            {
+                "name": "Canola Oil",
+                "quantity": 2,
+                "units": "Tablespoon"
+            },
+            {
+                "name": "Large Onion",
+                "quantity": 1
+            },
+            {
+                "name": "Green Bell Pepper",
+                "quantity": 1
+            },
+            {
+                "name": "Button Mushrooms",
+                "quantity": 8,
+                "units": "Ounce"
+            },
+            {
+                "name": "Shaved Steak",
+                "quantity": 1.5,
+                "units": "Pound"
+            },
+            {
+                "name": "Garlic Powder",
+                "quantity": 2,
+                "units": "Teaspoon"
+            },
+            {
+                "name": "Onion Powder",
+                "quantity": 2,
+                "units": "Teaspoon"
+            },
+            {
+                "name": "GF Bread",
+                "quantity": 2,
+                "units": "Slice"
+            },
+            {
+                "name": "Sub Roll",
+                "quantity": 1
+            },
+            {
+                "name": "Provolone Cheese",
+                "quantity": 10,
+                "units": "Slice"
+            }
+        ],
+        "instructions": [
+            {
+                "description": "Select SEAR/SAUTÉ and set to MD:HI. Select START/STOP to begin. Allow to preheat for 5 minutes."
+            },
+            {
+                "description": "After 5 minutes, place oil, onion, and pepper into the pot. Cook until vegetables are soft, about 5 minutes. Season with salt. Add mushrooms and cook for another 5 minutes, until mushrooms are soft and have released most of their liquid."
+            },
+            {
+                "description": "Add shaved steak, garlic powder, onion powder, and black pepper. Cook for 5 minutes, or until steak is cooked through."
+            },
+            {
+                "description": "Evenly lay the cheese slices on top of mixture."
+            },
+            {
+                "description": "Close crisping lid. Select BAKE/ROAST, set temperature to 375°F, and set time to 10 minutes. Select START/STOP to begin. Check frequently to avoid burning the cheese."
+            },
+            {
+                "description": "Toast Gluten Free bread (or sub roll(s)) while cheese is cooking."
+            },
+            {
+                "description": "When cooking is complete, serve immediately."
             }
         ]
     }

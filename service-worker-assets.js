@@ -85,6 +85,10 @@
       "url": "images\/recipes\/hero-recipe-beef-chili-and-cornbread-casserole.webp"
     },
     {
+      "hash": "sha256-U\/RXU8achYywDrUaCzlliSHX9Z10RW9fCxfrtVVptGU=",
+      "url": "images\/recipes\/hero-recipe-ninja-placeholder.webp"
+    },
+    {
       "hash": "sha256-OTuLMKDmXNHrSsUxYjznAYe37Giq139ByKSC1rfatmM=",
       "url": "images\/recipes\/Homemade-Spaghetti-Sauce-6.jpg"
     },
@@ -141,7 +145,7 @@
       "url": "maskable_icon_x96.png"
     },
     {
-      "hash": "sha256-\/oOOVzlRnNRhcdaB8hqWDLdCHF8UTx3o\/RYTXOXGnXA=",
+      "hash": "sha256-ouu9hIp+K1mnkfhUQyveWlULu2iVBP05Sel04sHNJzo=",
       "url": "recipes\/recipes.json"
     },
     {
@@ -413,5 +417,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "CApuE4oP"
+  "version": "2dIX7uKN"
 };
