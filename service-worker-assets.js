@@ -265,7 +265,7 @@
       "url": "_framework\/HomeRecipes.Shared.dll"
     },
     {
-      "hash": "sha256-deEBXIObfWwIfnrQxSquuJ+iI9Vskg17mhVV8VNPUrw=",
+      "hash": "sha256-pOhmqqmTyumktIw9+kBmn7AigQCqnzPYRa5dLGYo+qE=",
       "url": "_framework\/HomeRecipes.Client.dll"
     },
     {
@@ -329,15 +329,11 @@
       "url": "_framework\/System.Linq.dll"
     },
     {
-      "hash": "sha256-nzlY3Omfnfw230jQSt\/UwRsI8CKfVkUYNsS9630zmmM=",
+      "hash": "sha256-uVE578hHS08BHcXcdjD0JypJFZD5xG0D+mUjtwxFTcg=",
       "url": "_framework\/System.Memory.dll"
     },
     {
-      "hash": "sha256-w9m4kvv5unfV0B0eQ9EZ6LcHnqKa6YTMoQajnqEFhrA=",
-      "url": "_framework\/System.Net.Http.Json.dll"
-    },
-    {
-      "hash": "sha256-MnxxNwllQyBNnEetock2OTP+V88UxQ3uXxRyj2i3Zmk=",
+      "hash": "sha256-kBgO5txlO6FPXTJlVKePQez2v6utVR\/580BrPZhC8\/s=",
       "url": "_framework\/System.Net.Http.dll"
     },
     {
@@ -397,7 +393,7 @@
       "url": "_framework\/System.Text.Encodings.Web.dll"
     },
     {
-      "hash": "sha256-bJIYViD0p8GIApnxu\/PY0Osvaz6jjIsM50UiOd4bRyQ=",
+      "hash": "sha256-5paJ5ugaGk8AmrRccEOSI5HrJMVyJDkHmKLxR32zwyQ=",
       "url": "_framework\/System.Text.Json.dll"
     },
     {
@@ -405,11 +401,11 @@
       "url": "_framework\/System.Text.RegularExpressions.dll"
     },
     {
-      "hash": "sha256-tC8zMTAt9UqcIBjtP8n2MwtcGoRqRKPF8xIhem+Qqgo=",
+      "hash": "sha256-+sukJeiAAwYdAlf9bnDk2w93wq4fimlQfSX5bC+h\/rk=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
-      "hash": "sha256-bLOMNjLKxlu8Lay2Zk33x5PGJY\/wg\/0p8B04iD5ZIMI=",
+      "hash": "sha256-b9v855mYt6tIw2ffMETwYVbqLCkgHrF8Yn7oaKGzXt4=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -417,5 +413,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "2dIX7uKN"
+  "version": "rADGJYcP"
 };
