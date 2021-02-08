@@ -265,7 +265,7 @@
       "url": "_framework\/HomeRecipes.Shared.dll"
     },
     {
-      "hash": "sha256-pOhmqqmTyumktIw9+kBmn7AigQCqnzPYRa5dLGYo+qE=",
+      "hash": "sha256-AYbqZGdtqPV7tqbyZVTW6iTrCBSjRXpi9C80f73ZaNo=",
       "url": "_framework\/HomeRecipes.Client.dll"
     },
     {
@@ -405,7 +405,7 @@
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
-      "hash": "sha256-b9v855mYt6tIw2ffMETwYVbqLCkgHrF8Yn7oaKGzXt4=",
+      "hash": "sha256-PYcv2R\/wFUw6lZiWjGVp46odc1d\/Oh34Dfho1EB7shY=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -413,5 +413,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "zuLswZWY"
+  "version": "Z3XeMHMs"
 };
