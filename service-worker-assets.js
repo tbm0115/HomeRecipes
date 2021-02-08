@@ -101,7 +101,7 @@
       "url": "images\/servings.png"
     },
     {
-      "hash": "sha256-cGh7LsHTxppEXQk5yFqc0VTXTFbwCMUwgGMQCKidbfE=",
+      "hash": "sha256-OH8Xn1Ihk4GPpl3sjZmLW1FflAQjCtC2RTP4NTWzp7A=",
       "url": "index.html"
     },
     {
@@ -413,5 +413,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "rADGJYcP"
+  "version": "zuLswZWY"
 };
