@@ -367,7 +367,7 @@
         ],
         "instructions": [
             {
-                "description": "Select SEAR/SAUTÉ and set to MD:HI. Select START/STOP to begin. Allow to preheat for 5 minutes."
+                "description": "Select SEAR/SAUTï¿½ and set to MD:HI. Select START/STOP to begin. Allow to preheat for 5 minutes."
             },
             {
                 "description": "After 5 minutes, place oil, onion, and pepper into the pot. Cook until vegetables are soft, about 5 minutes. Season with salt. Add mushrooms and cook for another 5 minutes, until mushrooms are soft and have released most of their liquid."
@@ -379,10 +379,222 @@
                 "description": "Evenly lay the cheese slices on top of mixture."
             },
             {
-                "description": "Close crisping lid. Select BAKE/ROAST, set temperature to 375°F, and set time to 10 minutes. Select START/STOP to begin. Check frequently to avoid burning the cheese."
+                "description": "Close crisping lid. Select BAKE/ROAST, set temperature to 375ï¿½F, and set time to 10 minutes. Select START/STOP to begin. Check frequently to avoid burning the cheese."
             },
             {
                 "description": "Toast Gluten Free bread (or sub roll(s)) while cheese is cooking."
+            },
+            {
+                "description": "When cooking is complete, serve immediately."
+            }
+        ]
+    },
+    {
+        "name": "Alfredo Lasagna",
+        "description": "Sam's Alfredo Lasagna",
+        "thumbnailUrl": "images/recipes/Ground-Beef-Spinach-Alfredo-Lasagna_EXPS_SCBZ18_49865_C06_28_6b.jpg",
+        "recipeYield": 4,
+        "ingredients": [
+            {
+                "name": "Gluten Free Lasagna Noodles",
+                "quantity": 1,
+                "units": "Box"
+            },
+            {
+                "name": "Alfredo Sauce",
+                "quantity": 15,
+                "units": "Ounces",
+                "prepGroup": "Sauce"
+            },
+            {
+                "name": "Ground Beef",
+                "quantity": 0.5,
+                "units": "Pounds",
+                "prepGroup": "Sauce"
+            },
+            {
+                "name": "Ground Sausage",
+                "quantity": 0.5,
+                "units": "Pounds",
+                "prepGroup": "Sauce"
+            },
+            {
+                "name": "Italian Seasoning",
+                "quantity": 0.5,
+                "units": "Teaspoon",
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Dried Parsley Flakes",
+                "quantity": 1,
+                "units": "Tablespoon",
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Red Pepper Flakes",
+                "quantity": 1,
+                "units": "To Taste",
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Garlic Powder",
+                "quantity": 1,
+                "units": "Teaspoon",
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Granulated Sugar",
+                "quantity": 1,
+                "units": "Tablespoon",
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Basil",
+                "quantity": 1,
+                "units": "To Taste",
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Mozzarella",
+                "quantity": 1,
+                "units": "To Taste"
+            }
+        ],
+        "instructions": [
+            {
+                "description": "Preheat the oven (375&#0176;F) while you prepare the sauce, noodles, and baking pan."
+            },
+            {
+                "description": "Fill a large pot with water, adding roughly 1 tablespoon of olive oil in preparation for noodles. Place on burner to bring to a boil."
+            },
+            {
+                "description": "While water is coming to a boil, brown meat in a large sauce pan. Break apart the meat into small chunks while browning."
+            },
+            {
+                "description": "If meat is high in fat, drain the fat out of the sauce pan."
+            },
+            {
+                "description": "Add Alfredo Sauce to the meat in the sauce pan while stirring."
+            },
+            {
+                "description": "Add Spices to the sauce pan by spreading an even layer across the pan and stirring slowly. Repeat until all spices are mixed in with the sauce. You can let the sauce stay on a low heat until the noodles are done."
+            },
+            {
+                "description": "With the water boiling, add the lasagna noodles one at a time while ensuring they are completely submerged. Let cook in simmering water for 11-12 minutes. Too much sooner will result in crunchy noodles. Too much later and the noodles may disintegrate (especially Brown Rice noodles)."
+            },
+            {
+                "description": "Once the noodles are done cooking. Pour a baking pan about 1/4 full with meat + sauce. Add a full layer of noodles on top of sauce in the baking pan. Then add cheese on top of the noodles. Repeat until the baking pan is nearly full minus about 1/4&quote;, making sure that cheese is the top layer. Add an even coating of parmesan cheese."
+            },
+            {
+                "description": "Cover the baking pan with cooking foil, folding in the middle to ensure air can pass through. Place the baking pan in the oven and cook for 30 minutes."
+            },
+            {
+                "description": "After 30 minutes, remove the cooking foil from the baking pan and continue cooking for an additional 20 minutes. Alternatively you can cook until the desired crispness of the cheese on top, which usually turns an even golden color on top."
+            },
+            {
+                "description": "Remove and let sit for a minute or two before serving."
+            }
+        ]
+    },
+    {
+        "name": "Stuffed Peppers",
+        "description": "Ninja Foodi Stuffed Peppers recipe.",
+        "thumbnailUrl": "images/recipes/air-fryer-stuffed-peppers-2-600x855.jpg",
+        "recipeYield": 4,
+        "ingredients": [
+            {
+                "name": "Bell Pepper",
+                "quantity": 4
+            },
+            {
+                "name": "Brown Rice",
+                "quantity": 1,
+                "units": "Cup",
+                "prepGroup": "Stuffing"
+            },
+            {
+                "name": "Ground Beef",
+                "quantity": 1,
+                "units": "Pound",
+                "prepGroup": "Stuffing"
+            },
+            {
+                "name": "Small Onion",
+                "quantity": 1,
+                "prepGroup": "Stuffing"
+            },
+            {
+                "name": "Garlic Powder",
+                "quantity": 1,
+                "units": "Tablespoon",
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Black Pepper",
+                "quantity": 1,
+                "units": "Teaspoon",
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Ground Cinnamon",
+                "quantity": 1,
+                "units": "Tablespoon",
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Kosher Salt",
+                "quantity": 1.5,
+                "units": "Tablespoon",
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Paprika",
+                "quantity": 3,
+                "units": "Tablespoon",
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Ground Cumin",
+                "quantity": 1.5,
+                "units": "Teaspoon",
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Chicken Stock",
+                "quantity": 1,
+                "units": "Cup",
+                "prepGroup": "Stuffing"
+            },
+            {
+                "name": "Dry White Wine",
+                "quantity": 0.25,
+                "units": "Cup",
+                "prepGroup": "Stuffing"
+            },
+            {
+                "name": "Fresh Parsley (Chopped)",
+                "quantity": 0.5,
+                "units": "Cup"
+            }
+        ],
+        "instructions": [
+            {
+                "description": "In a small mixing bowl, stir together the Spices; set aside."
+            },
+            {
+                "description": "Add Stuffing and 2 tablespoons Spices to the pot, breaking apart meat. Assemble pressure lid, making sure the PRESSURE RELEASE valve is in the SEAL position."
+            },
+            {
+                "description": "Select PRESSURE and set to HIGH. Set time to 15 minutes. Select START/STOP to begin."
+            },
+            {
+                "description": "When pressure cooking is complete, naturally release the pressure for 10 minutes, then quick release any remaining pressure by moving the PRESSURE RELEASE valve to the VENT position. Carefully remove lid when unit has finished releasing pressure."
+            },
+            {
+                "description": "Stir meat mixture, then add fresh parsley, and remaining salt. Using a rubber or wooden spoon, stuff mixture into the Bell Pepper(s)."
+            },
+            {
+                "description": "Place stuffed pepper(s) in the pot. Close crisping lid. Select BAKE/ROAST, set temperature to 360Â°F, and set time to 15 minutes. Select START/STOP to begin."
             },
             {
                 "description": "When cooking is complete, serve immediately."

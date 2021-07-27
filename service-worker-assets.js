@@ -81,6 +81,14 @@
       "url": "images\/recipes\/7AFBF630-5C61-4F07-B5B8-84D43F6EC7CA1.jpg"
     },
     {
+      "hash": "sha256-n9BbZSoeqfpiGUlQcicr473YuqUVo2yk6oTym7kk\/Rw=",
+      "url": "images\/recipes\/air-fryer-stuffed-peppers-2-600x855.jpg"
+    },
+    {
+      "hash": "sha256-eoe7sF7tiFUT9LSNEC4WPhTFtPFFWs7umE+4wwTZBB8=",
+      "url": "images\/recipes\/Ground-Beef-Spinach-Alfredo-Lasagna_EXPS_SCBZ18_49865_C06_28_6b.jpg"
+    },
+    {
       "hash": "sha256-mo99\/+Fjq2CttDOYAQ3LeufNANEfIcXnUmrfxUJMH80=",
       "url": "images\/recipes\/hero-recipe-beef-chili-and-cornbread-casserole.webp"
     },
@@ -145,7 +153,7 @@
       "url": "maskable_icon_x96.png"
     },
     {
-      "hash": "sha256-ouu9hIp+K1mnkfhUQyveWlULu2iVBP05Sel04sHNJzo=",
+      "hash": "sha256-ncwHIfsKGKbLX3ukHvYjD\/v5hUb\/LqtVmzpWKOJtCX4=",
       "url": "recipes\/recipes.json"
     },
     {
@@ -413,5 +421,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "Z3XeMHMs"
+  "version": "G8SrkfWM"
 };
