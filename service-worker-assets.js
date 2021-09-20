@@ -85,6 +85,10 @@
       "url": "images\/recipes\/air-fryer-stuffed-peppers-2-600x855.jpg"
     },
     {
+      "hash": "sha256-3otXDT586z5WA7W6z2n0zembWvJc9ty\/5GjbKdM61AM=",
+      "url": "images\/recipes\/Epic-Dry-Rubbed-Baked-Chicken-Wings-3-677x1024.jpg"
+    },
+    {
       "hash": "sha256-eoe7sF7tiFUT9LSNEC4WPhTFtPFFWs7umE+4wwTZBB8=",
       "url": "images\/recipes\/Ground-Beef-Spinach-Alfredo-Lasagna_EXPS_SCBZ18_49865_C06_28_6b.jpg"
     },
@@ -103,6 +107,10 @@
     {
       "hash": "sha256-bsgTvJTx\/IweTwYUTS4EzZYxySrx99bgT96MwuoYjWE=",
       "url": "images\/recipes\/IMG_9329.jpg"
+    },
+    {
+      "hash": "sha256-jT5uu8Rohzj+JaECRa7FVehydNk5gV63c6l\/b1FYn6I=",
+      "url": "images\/recipes\/square-1442259703-country-crock-stuffed-potatoes.jpg"
     },
     {
       "hash": "sha256-TX+UOn2bl\/bsrAJUCgZA+2+UHDPRj4WXUdBf7XOoUIE=",
@@ -153,7 +161,7 @@
       "url": "maskable_icon_x96.png"
     },
     {
-      "hash": "sha256-ncwHIfsKGKbLX3ukHvYjD\/v5hUb\/LqtVmzpWKOJtCX4=",
+      "hash": "sha256-hOyyAjTT4P3N2\/AY4DMkMnWExWXbujZH0qi7zZZHjxM=",
       "url": "recipes\/recipes.json"
     },
     {
@@ -421,5 +429,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "G8SrkfWM"
+  "version": "bYQNseum"
 };

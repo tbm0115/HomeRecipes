@@ -600,5 +600,146 @@
                 "description": "When cooking is complete, serve immediately."
             }
         ]
+    },
+    {
+        "name": "Air Fry Wings",
+        "description": "Ninja Foodi air-fried wings with a dry rub.",
+        "thumbnailUrl": "images/recipes/Epic-Dry-Rubbed-Baked-Chicken-Wings-3-677x1024.jpg",
+        "recipeYield": 2,
+        "ingredients": [
+            {
+                "name": "Chicken Wings+Legs",
+                "quantity": 8
+            },
+            {
+                "name": "Onion Powder",
+                "units": "Tablespoon",
+                "quantity": 0.5,
+                "group": "Dry Rub"
+            },
+            {
+                "name": "Salt",
+                "units": "Tablespoon",
+                "quantity": 0.5,
+                "group": "Dry Rub"
+            },
+            {
+                "name": "Chili Powder",
+                "units": "Teaspoon",
+                "quantity": 0.75,
+                "group": "Dry Rub"
+            },
+            {
+                "name": "Paprika",
+                "units": "Teaspoon",
+                "quantity": 0.75,
+                "group": "Dry Rub"
+            },
+            {
+                "name": "Cumin",
+                "units": "Teaspoon",
+                "quantity": 0.75,
+                "group": "Dry Rub"
+            },
+            {
+                "name": "Garlic Powder",
+                "units": "Teaspoon",
+                "quantity": 0.5,
+                "group": "Dry Rub"
+            },
+            {
+                "name": "Cayenne Pepper",
+                "units": "Teaspoon",
+                "quantity": 0.5,
+                "group": "Dry Rub"
+            },
+            {
+                "name": "Black Pepper",
+                "units": "Teaspoon",
+                "quantity": 0.25,
+                "group": "Dry Rub"
+            },
+            {
+                "name": "Dried Oregano",
+                "units": "Teaspoon",
+                "quantity": 0.25,
+                "group": "Dry Rub"
+            }
+        ],
+        "instructions": [
+            {
+                "description": "Add 1 cup of water to the Ninja pot. Add chicken to the basket and place in Ninja. Install pressure cooking lid and set the Ninja to pressure cook on HIGH and SEAL for 10 minutes."
+            },
+            {
+                "description": "While chicken is pressure cooking, mix Dry Rub spices."
+            },
+            {
+                "description": "Once pressure cooking is complete, QUICK RELEASE the pressure. Once pressure is released, remove basket from pot and set aside. Drain bottom of Ninja pot of liquid."
+            },
+            {
+                "description": "Spray the chicken with a vegetable spray. Then take a spoonfull of the mixed dry rub and sprinkle on the chicken."
+            },
+            {
+                "description": "Place chicken in Ninja and close the air fry lid. Set the Ninja to AIR FRY at 400°F for 15 minutes."
+            },
+            {
+                "description": "Every 5 minutes or so flip the chicken over, apply vegetable spray, and sprinkle mixed dry rub on the chicken then continue."
+            },
+            {
+                "description": "Extend the air fry time, as necessary, until the skin is slightly crispy and fully covered with dry rub."
+            }
+        ]
+    },
+    {
+        "name": "Loaded Baked Potato",
+        "description": "Ninja Foodi loaded baked potato.",
+        "thumbnailUrl": "images/recipes/square-1442259703-country-crock-stuffed-potatoes.jpg",
+        "recipeYield": 2,
+        "ingredients": [
+            {
+                "name": "Russet Potato",
+                "quantity": 2
+            },
+            {
+                "name": "Butter"
+            },
+            {
+                "name": "Mozzerella Cheese",
+                "quantity": "To Taste"
+            },
+            {
+                "name": "Sour Cream",
+                "quantity": "To Taste"
+            },
+            {
+                "name": "Chives",
+                "quantity": "To Taste"
+            },
+            {
+                "name": "Bacon Pieces",
+                "quantity": "To Taste"
+            },
+            {
+                "name": "Sour Cream",
+                "quantity": "To Taste"
+            }
+        ],
+        "instructions": [
+            {
+                "description": "Clean and puncture potatos. Add 1 cup of water to Ninja pot. Install pressure cooking lid and set Ninja to PRESSURE on HIGH and SEAL for 50 minutes."
+            },
+            {
+                "description": "Once pressure cooking is complete, QUICK RELEASE the pressure. Once pressure is released, remove basket from pot and set aside. Drain bottom of Ninja pot of liquid."
+            },
+            {
+                "description": "Slit the top of each potato about 3 inches and add about 1 tablespoon of butter into the potato. Add mozzerella cheese and bacon pieces as desired."
+            },
+            {
+                "description": "Close air fyer lid on Ninja and set to AIR FRY at 400°F for 10 minutes or until any cheese is crispy."
+            },
+            {
+                "description": "Add any additional 'fixings' as desired and serve."
+            }
+        ]
     }
 ]
