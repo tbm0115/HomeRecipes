@@ -314,7 +314,7 @@
     {
         "name": "GF Philly Cheesesteak",
         "description": "Philly cheesesteak casserole for the Ninja Foodi with a Gluten Free twist.",
-        "thumbnailUrl": "hero-recipe-ninja-placeholder.webp",
+        "thumbnailUrl": "images/recipes/hero-recipe-ninja-placeholder.webp",
         "recipeYield": 6,
         "ingredients": [
             {
@@ -615,55 +615,55 @@
                 "name": "Onion Powder",
                 "units": "Tablespoon",
                 "quantity": 0.5,
-                "group": "Dry Rub"
+                "prepGroup": "Dry Rub"
             },
             {
                 "name": "Salt",
                 "units": "Tablespoon",
                 "quantity": 0.5,
-                "group": "Dry Rub"
+                "prepGroup": "Dry Rub"
             },
             {
                 "name": "Chili Powder",
                 "units": "Teaspoon",
                 "quantity": 0.75,
-                "group": "Dry Rub"
+                "prepGroup": "Dry Rub"
             },
             {
                 "name": "Paprika",
                 "units": "Teaspoon",
                 "quantity": 0.75,
-                "group": "Dry Rub"
+                "prepGroup": "Dry Rub"
             },
             {
                 "name": "Cumin",
                 "units": "Teaspoon",
                 "quantity": 0.75,
-                "group": "Dry Rub"
+                "prepGroup": "Dry Rub"
             },
             {
                 "name": "Garlic Powder",
                 "units": "Teaspoon",
                 "quantity": 0.5,
-                "group": "Dry Rub"
+                "prepGroup": "Dry Rub"
             },
             {
                 "name": "Cayenne Pepper",
                 "units": "Teaspoon",
                 "quantity": 0.5,
-                "group": "Dry Rub"
+                "prepGroup": "Dry Rub"
             },
             {
                 "name": "Black Pepper",
                 "units": "Teaspoon",
                 "quantity": 0.25,
-                "group": "Dry Rub"
+                "prepGroup": "Dry Rub"
             },
             {
                 "name": "Dried Oregano",
                 "units": "Teaspoon",
                 "quantity": 0.25,
-                "group": "Dry Rub"
+                "prepGroup": "Dry Rub"
             }
         ],
         "instructions": [
@@ -701,27 +701,28 @@
                 "quantity": 2
             },
             {
-                "name": "Butter"
+                "name": "Butter",
+                "units": "To Taste"
             },
             {
                 "name": "Mozzerella Cheese",
-                "quantity": "To Taste"
+                "units": "To Taste"
             },
             {
                 "name": "Sour Cream",
-                "quantity": "To Taste"
+                "units": "To Taste"
             },
             {
                 "name": "Chives",
-                "quantity": "To Taste"
+                "units": "To Taste"
             },
             {
                 "name": "Bacon Pieces",
-                "quantity": "To Taste"
+                "units": "To Taste"
             },
             {
                 "name": "Sour Cream",
-                "quantity": "To Taste"
+                "units": "To Taste"
             }
         ],
         "instructions": [
@@ -738,7 +739,7 @@
                 "description": "Close air fyer lid on Ninja and set to AIR FRY at 400°F for 10 minutes or until any cheese is crispy."
             },
             {
-                "description": "Add any additional 'fixings' as desired and serve."
+                "description": "Add any additional fixings as desired and serve."
             }
         ]
     }

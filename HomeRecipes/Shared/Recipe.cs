@@ -19,8 +19,10 @@ namespace HomeRecipes.Shared
 
         public string ThumbnailUrl { get; set; }
         
+        [JsonConverter(typeof(TimeSpanConverter))]
         public TimeSpan? CookTime { get; set; }
 
+        [JsonConverter(typeof(TimeSpanConverter))]
         public TimeSpan? PrepTime { get; set; }
 
         public decimal RecipeYield { get; set; }
