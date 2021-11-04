@@ -97,6 +97,10 @@
       "url": "images\/recipes\/hero-recipe-beef-chili-and-cornbread-casserole.webp"
     },
     {
+      "hash": "sha256-6mFnMD4l\/hRu5aXBSQxkKzfvzMTs1iITpS4q+GUT32w=",
+      "url": "images\/recipes\/hero-recipe-chicken-and-dumplings.webp"
+    },
+    {
       "hash": "sha256-U\/RXU8achYywDrUaCzlliSHX9Z10RW9fCxfrtVVptGU=",
       "url": "images\/recipes\/hero-recipe-ninja-placeholder.webp"
     },
@@ -161,7 +165,7 @@
       "url": "maskable_icon_x96.png"
     },
     {
-      "hash": "sha256-fxxV5CMEVMfu91yzKLs38zJWDYrL3kGfRH3HJjyqaH8=",
+      "hash": "sha256-ZYqzXPe0x9uoGi+pWyYTU5gbETlsPIprxCEmMDjXmzk=",
       "url": "recipes\/recipes.json"
     },
     {
@@ -429,5 +433,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "gk59+nZK"
+  "version": "a6h9HLJ4"
 };

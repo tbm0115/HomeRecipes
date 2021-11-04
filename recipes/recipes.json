@@ -742,5 +742,152 @@
                 "description": "Add any additional fixings as desired and serve."
             }
         ]
+    },
+    {
+        "name": "Chicken & Dumplings",
+        "description": "Ninja Foodi Chicken and Dumplings.",
+        "thumbnailUrl": "images/recipes/hero-recipe-chicken-and-dumplings.webp",
+        "recipeYield": 6,
+        "ingredients": [
+            {
+                "name": "Olive Oil",
+                "units": "Tablespoon",
+                "quantity": 2,
+                "prepGroup": "Saute"
+            },
+            {
+                "name": "Onion",
+                "quantity": 1,
+                "prepGroup": "Saute"
+            },
+            {
+                "name": "Celery",
+                "quantity": 3,
+                "prepGroup": "Saute"
+            },
+            {
+                "name": "Carrots",
+                "quantity": 2,
+                "prepGroup": "Saute"
+            },
+            {
+                "name": "Garlic Cloves",
+                "quantity": 2,
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Dried Thyme",
+                "units": "Teaspoon",
+                "quantity": 1,
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Dried Rosemary",
+                "units": "Teaspoon",
+                "quantity": 1,
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Salt",
+                "units": "Teaspoon",
+                "quantity": 1.5,
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Black Pepper",
+                "units": "Teaspoon",
+                "quantity": 0.5,
+                "prepGroup": "Spices"
+            },
+            {
+                "name": "Chicken Breasts",
+                "units": "Pounds",
+                "quantity": 2,
+                "prepGroup": "Pressure Cook"
+            },
+            {
+                "name": "Seed Potatos",
+                "prepGroup": "Pressure Cook"
+            },
+            {
+                "name": "Gluten Free Chicken Stock",
+                "units": "Cup",
+                "quantity": 6,
+                "prepGroup":"Pressure Cook"
+            },
+            {
+                "name": "Gluten Free Cream of Chicken Soup",
+                "units": "Can",
+                "quantity": 1,
+                "prepGroup": "Pressure Cook"
+            },
+            {
+                "name": "Gluten Free All-Purpose Baking Mix",
+                "units": "Cup",
+                "quantity": 1.5,
+                "prepGroup": "Dough"
+            },
+            {
+                "name": "Milk",
+                "units": "Cup",
+                "quantity": 0.5,
+                "prepGroup": "Dough"
+            },
+            {
+                "name": "Fresh Parsley",
+                "quantity": 1,
+                "prepGroup": "Garnish"
+            },
+            {
+                "name": "Gluten Free Chicken Stock",
+                "units": "Cup",
+                "quantity": 0.75,
+                "prepGroup": "Homemade Cream of Chicken Soup"
+            },
+            {
+                "name": "Milk",
+                "units": "Cup",
+                "quantity": 0.75,
+                "prepGroup": "Homemade Cream of Chicken Soup"
+            },
+            {
+                "name": "Cornstarch",
+                "units": "Tablespoon",
+                "quantity": 3,
+                "prepGroup": "Homemade Cream of Chicken Soup"
+            }
+        ],
+        "instructions": [
+            {
+                "description": "(Optional) To make homemade cream of chicken soup: Stir ingredients together in a small saucepan until cornstarch is dissolved. Cook over medium heat, stirring constantly, until bubbling, about 5 minutes. Reduce heat to medium-low; continue to cook and stir until mixture is very thick, about 5 minutes. Remove from heat."
+            },
+            {
+                "description": "Select SEAR/SAUTE and set to MD:HI. Select START/STOP to begin. Allow to preheat for 5 minutes. After 5 minutes, add Saute ingredients to the pot. Cook for 5 minutes, stirring occasionally."
+            },
+            {
+                "description": "Add Spices ingredients. Cook for 2 minutes, stirring occasionally."
+            },
+            {
+                "description": "Add Pressure Cook ingredients. Stir to combine."
+            },
+            {
+                "description": "Assemble pressure lid, making sure the pressure release valve is in the SEAL position. Select PRESSURE and set to HIGH. Set time to 15 minutes. Select START/STOP to begin."
+            },
+            {
+                "description": "Meanwhile, combine Dough ingredients in a bowl until dough forms. Set aside."
+            },
+            {
+                "description": "When pressure cooking is complete, quick release the pressure by moving the pressure release valve to the VENT position. Carefully remove lid when unit has finished releasing pressure."
+            },
+            {
+                "description": "Transfer chicken to a bowl and shred into small pieces. Return shredded chicken to pot."
+            },
+            {
+                "description": "Select SEAR/SAUTE and set to MD:HI. Select START/STOP to begin. When liquid comes to a simmer, drop 1-inch balls of dough into pot. Cook for 10 minutes."
+            },
+            {
+                "description": "Select START/STOP to turn off SEAR/SAUTE. Close crisping lid and let chicken and dumplings sit for 5 minutes. Then garnish with Garnish ingredients and serve."
+            }
+        ]
     }
 ]
