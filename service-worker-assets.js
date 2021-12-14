@@ -129,7 +129,7 @@
       "url": "localRecipeStore.js"
     },
     {
-      "hash": "sha256-Lwhg2ypaQ\/FWCGYGBrr\/G8pExGRMXNppU7LlUT6QIAE=",
+      "hash": "sha256-KHHzuk\/kqWWuU9qFq5++eSYcRK9ilzAT9um3DTWVCn0=",
       "url": "manifest.json"
     },
     {
@@ -433,5 +433,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "qiCWl92C"
+  "version": "BSRuu0cb"
 };
