@@ -165,7 +165,7 @@
       "url": "maskable_icon_x96.png"
     },
     {
-      "hash": "sha256-ZYqzXPe0x9uoGi+pWyYTU5gbETlsPIprxCEmMDjXmzk=",
+      "hash": "sha256-wGQXj3h\/GUz9GqnfG3fExew6vDhN6slughsGiYSwFgk=",
       "url": "recipes\/recipes.json"
     },
     {
@@ -433,5 +433,5 @@
       "url": "_framework\/blazor.webassembly.js"
     }
   ],
-  "version": "a6h9HLJ4"
+  "version": "FGmi8YqD"
 };

@@ -813,7 +813,7 @@
                 "name": "Gluten Free Chicken Stock",
                 "units": "Cup",
                 "quantity": 6,
-                "prepGroup":"Pressure Cook"
+                "prepGroup": "Pressure Cook"
             },
             {
                 "name": "Gluten Free Cream of Chicken Soup",
@@ -887,6 +887,79 @@
             },
             {
                 "description": "Select START/STOP to turn off SEAR/SAUTE. Close crisping lid and let chicken and dumplings sit for 5 minutes. Then garnish with Garnish ingredients and serve."
+            }
+        ]
+    },
+    {
+        "name": "Homemade Noodles",
+        "description": "Samantha's Gluten-Free version of Grandma Waldrop's Homemade Chicken & Dumplings recipe. Aka Homemade Noodles.",
+        "thumbnailUrl": "",
+        "recipeYield": 4,
+        "ingredients": [
+            {
+                "name": "Gluten-Free All-Purpose Flour",
+                "units": "Cups",
+                "quantity": 2,
+                "prepGroup": "Noodles"
+            },
+            {
+                "name": "Egg Yolk",
+                "quantity": 3,
+                "prepGroup": "Noodles"
+            },
+            {
+                "name": "Egg",
+                "quantity": 1,
+                "prepGroup": "Noodles"
+            },
+            {
+                "name": "Salt",
+                "units": "Teaspoons",
+                "quantity": 2,
+                "prepGroup": "Noodles"
+            },
+            {
+                "name": "Pepper",
+                "units": "Teaspoons",
+                "quantity": 2,
+                "prepGroup": "Noodles"
+            },
+            {
+                "name": "Water",
+                "units": "Cups",
+                "quantity": 0.33,
+                "prepGroup": "Noodles"
+            },
+            {
+                "name": "Chicken Thighs",
+                "quantity": 2,
+                "prepGroup": "Cooking Broth"
+            },
+            {
+                "name": "Chicken Broth",
+                "quantity": 30,
+                "units": "Fluid Ounces",
+                "prepGroup": "Cooking Broth"
+            }
+        ],
+        "instructions": [
+            {
+                "description": "Place chicken thighs (or equivelant) into a pot and add chicken broth. Place on medium to high heat and bring to a simmer while you prepare the flour."
+            }
+            {
+                "description": "Place measured flour into a bowl; make a well in the center and Egg Yolks, whole Egg, and Salt + Pepper. Coat your hands with additional flour and begin thoroughly mixing eggs into flour by hand. Add water, once tablespoon at a time, mixxing thoroughly after each addition. Add water until the dough can be formed into a ball."
+            },
+            {
+                "description": "Prepare your counter or cutting board by spreading flour onto the surface. Once well-floured, turn dough onto the surface. Kneead the dough until smooth and elastic for about 10 minutes. Once kneaded, let rest for an additional 10 minutes."
+            },
+            {
+                "description": "Divide the dough into 4 equal parts. Roll dough, 1 part at a time, into a rectangle that is approximately 1/8th to 1/4 of an inch thick."
+            },
+            {
+                "description": "Using a pizza cutter, or equivelant, cut dough cross-wise into strips approximately one inch square."
+            },
+            {
+                "description": "Place dumpling strips one at a time into boiling chicken broth. Stir frequently to avoid sticking together or to the pot. Cook for 12-15 minutes."
             }
         ]
     }
