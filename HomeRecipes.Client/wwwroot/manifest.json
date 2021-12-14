@@ -2,9 +2,13 @@
     "name": "LightWorks.Recipes",
     "short_name": "Recipes",
     "start_url": "./",
+    "lang": "en-US",
+    "dir": "ltr",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#03173d",
+    "categories": [ "food" ],
+    "description": "A collection of favorite family recipes with capabilities of adjusting recipe by serving size automatically.",
     "orientation": "portrait",
     "icons": [
         {
