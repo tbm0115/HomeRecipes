@@ -898,7 +898,7 @@
     "ingredients": [
       {
         "name": "Gluten-Free All-Purpose Flour",
-        "units": "Cups",
+        "units": "Cup",
         "quantity": 2,
         "prepGroup": "Noodles"
       },
@@ -914,20 +914,20 @@
       },
       {
         "name": "Salt",
-        "units": "Teaspoons",
+        "units": "Teaspoon",
         "quantity": 2,
         "prepGroup": "Noodles"
       },
       {
         "name": "Pepper",
-        "units": "Teaspoons",
+        "units": "Teaspoon",
         "quantity": 2,
         "prepGroup": "Noodles"
       },
       {
         "name": "Water",
-        "units": "Cups",
-        "quantity": 0.33,
+        "units": "Cup",
+        "quantity": 0.33336,
         "prepGroup": "Noodles"
       },
       {
@@ -938,7 +938,7 @@
       {
         "name": "Chicken Broth",
         "quantity": 30,
-        "units": "Fluid Ounces",
+        "units": "Fluid Ounce",
         "prepGroup": "Cooking Broth"
       }
     ],
@@ -977,8 +977,8 @@
       },
       {
         "name": "Chicken stock",
-        "quantity": 3.33,
-        "units": "Cups",
+        "quantity": 3.3333336,
+        "units": "Cup",
         "prepGroup": "Chicken"
       },
       {
@@ -1002,7 +1002,7 @@
       {
         "name": "Long Grain White Rice",
         "quantity": 1.5,
-        "units": "Cups",
+        "units": "Cup",
         "prepGroup": "Rice"
       }
     ],
@@ -1027,6 +1027,117 @@
       },
       {
         "description": "Serve with garlic bread and green beans for an authentic Papa-style experience."
+      }
+    ]
+  },
+  {
+    "name": "Creamy Chicken Casserole",
+    "description": "Sam's favorite recipe for creamy chicken casserole.",
+    "thumbnailUrl": "images/recipes/Creamy-Chicken-Casserole-6-500x500.jpg",
+    "recipeYield": 6,
+    "ingredients": [
+      {
+        "name": "Egg Noodles",
+        "quantity": 12,
+        "units": "Ounce",
+        "prepGroup": "Pasta"
+      },
+      {
+        "name": "Butter",
+        "quantity": 0.25,
+        "units": "Cup",
+        "prepGroup": "Sauce"
+      },
+      {
+        "name": "White Onion",
+        "quantity": 0.5,
+        "units": "Count",
+        "prepGroup": "Sauce"
+      },
+      {
+        "name": "Garlic Cloves",
+        "quantity": 3,
+        "units": "Count",
+        "prepGroup": "Sauce"
+      },
+      {
+        "name": "Flour",
+        "quantity": 0.25,
+        "units": "Cup",
+        "prepGroup": "Sauce"
+      },
+      {
+        "name": "Chicken Broth",
+        "quantity": 2,
+        "units": "Cup",
+        "prepGroup": "Sauce"
+      },
+      {
+        "name": "Milk",
+        "quantity": 2,
+        "units": "Cup",
+        "prepGroup": "Sauce"
+      },
+      {
+        "name": "Salt",
+        "quantity": 0.25,
+        "units": "Teaspoon",
+        "prepGroup": "Sauce"
+      },
+      {
+        "name": "Pepper",
+        "quantity": 0.25,
+        "units": "Teaspoon",
+        "prepGroup": "Sauce"
+      },
+      {
+        "name": "Peas",
+        "quantity": 2,
+        "units": "Cup",
+        "prepGroup": "Sauce"
+      },
+      {
+        "name": "Chicken",
+        "quantity": 1,
+        "units": "Pound"
+      },
+      {
+        "name": "Cheddar Cheese",
+        "quantity": 2,
+        "units": "Cup",
+        "prepGroup": "Sauce"
+      },
+      {
+        "name": "Breading",
+        "quantity": 1,
+        "units": "Cup"
+      },
+      {
+        "name": "Parmesan Cheese",
+        "quantity": 0.25,
+        "units": "Cup"
+      },
+      {
+        "name": "Olive Oil",
+        "quantity": 3,
+        "units": "Teaspoon"
+      }
+    ],
+    "instructions": [
+      {
+        "description": "Preheat oven to 400 degrees and lightly grease a 9x13 pan. Cook the egg noodles according to the package directions. Drain and pour pasta to prepared pan."
+      },
+      {
+        "description": "Meanwhile, melt butter in a medium-sized saucepan over medium heat. Add in onion and saute 5 to 7 minutes, until softened. Stir in garlic and flour and cook 1 minute. Slowly pour in chicken broth and milk, season with salt and pepper, and bring to a simmer, stirring constantly."
+      },
+      {
+        "description": "Once mixture has thickened, stir in peas, cheddar cheese, and chicken. Turn off the heat and stir until cheese has melted. Pour over pasta in the 9x13 pan."
+      },
+      {
+        "description": "In a small bowl, use a fork to mix together crushed crackers, parmesan, and olive oil. Sprinkle over the pasta."
+      },
+      {
+        "description": "Bake in the preheated oven, uncovered, for 15 to 20 minutes, until crackers are lightly browned. Serve hot."
       }
     ]
   }
