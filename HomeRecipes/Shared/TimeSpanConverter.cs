@@ -1,15 +1,21 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace HomeRecipes.Shared
 {
     public class TimeSpanConverter : JsonConverter<TimeSpan>
     {
-        public override TimeSpan ReadJson(JsonReader reader, Type objectType, [AllowNull] TimeSpan existingValue, bool hasExistingValue, JsonSerializer serializer)
-            => TimeSpan.Parse(reader.ReadAsString());
+        public override TimeSpan Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            string value = reader.GetString();
+            return TimeSpan.Parse(value);
+        }
 
-        public override void WriteJson(JsonWriter writer, [AllowNull] TimeSpan value, JsonSerializer serializer)
-            => writer.WriteValue(value.ToString("hh:mm:ss"));
+
+        public override void Write(Utf8JsonWriter writer, TimeSpan value, JsonSerializerOptions options)
+            => writer.WriteStringValue(value.ToString("hh:mm:ss"));
+
     }
 }

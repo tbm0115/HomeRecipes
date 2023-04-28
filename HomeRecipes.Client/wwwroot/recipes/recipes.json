@@ -1035,6 +1035,8 @@
     "description": "Sam's favorite recipe for creamy chicken casserole.",
     "thumbnailUrl": "images/recipes/Creamy-Chicken-Casserole-6-500x500.jpg",
     "recipeYield": 6,
+    "prepTime": "00:15:00",
+    "cookTime": "00:20:00",
     "ingredients": [
       {
         "name": "Egg Noodles",

@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Schema.NET;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace HomeRecipes.Shared
 {
@@ -34,16 +32,16 @@ namespace HomeRecipes.Shared
         public DateTime? DateModified { get; set; }
 
 
-        [JsonExtensionData]
-        private IDictionary<string, JToken> _additionalData = new Dictionary<string, JToken>();
+        //[JsonExtensionData]
+        //private IDictionary<string, JToken> _additionalData = new Dictionary<string, JToken>();
 
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context) {
-            Name = (string)_additionalData["title"];
-            string ingredientsRaw = (string)_additionalData["ingredients"];
-            ingredientsRaw = ingredientsRaw.Substring(ingredientsRaw.IndexOf("<ul>\r\n"));
-            ingredientsRaw = ingredientsRaw.Substring(0, ingredientsRaw.LastIndexOf("</ul>"));
-            string[] ingredientListItems = ingredientsRaw.Split("</li>\r\n<li>", StringSplitOptions.RemoveEmptyEntries);
+            //Name = (string)_additionalData["title"];
+            //string ingredientsRaw = (string)_additionalData["ingredients"];
+            //ingredientsRaw = ingredientsRaw.Substring(ingredientsRaw.IndexOf("<ul>\r\n"));
+            //ingredientsRaw = ingredientsRaw.Substring(0, ingredientsRaw.LastIndexOf("</ul>"));
+            //string[] ingredientListItems = ingredientsRaw.Split("</li>\r\n<li>", StringSplitOptions.RemoveEmptyEntries);
         }
 
         //public OneOrMany<string> CookingMethod { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

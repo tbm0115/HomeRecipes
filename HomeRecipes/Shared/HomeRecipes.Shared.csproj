@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Fractional.NET" Version="1.0.0" />
-    <PackageReference Include="Schema.NET" Version="8.0.0" />
-    <PackageReference Include="SIUnitsCore" Version="1.0.2" />
+    <PackageReference Include="Schema.NET" Version="11.0.1" />
+    <PackageReference Include="SIUnitsCore" Version="1.0.6" />
   </ItemGroup>
 
 </Project>
