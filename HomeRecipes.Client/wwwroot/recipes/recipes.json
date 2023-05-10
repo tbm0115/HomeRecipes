@@ -606,6 +606,8 @@
     "description": "Ninja Foodi air-fried wings with a dry rub.",
     "thumbnailUrl": "images/recipes/Epic-Dry-Rubbed-Baked-Chicken-Wings-3-677x1024.jpg",
     "recipeYield": 2,
+    "prepTime": "00:25:00",
+    "cookTime": "00:30:00",
     "ingredients": [
       {
         "name": "Chicken Wings+Legs",
@@ -680,7 +682,7 @@
         "description": "Spray the chicken with a vegetable spray. Then take a spoonfull of the mixed dry rub and sprinkle on the chicken."
       },
       {
-        "description": "Place chicken in Ninja and close the air fry lid. Set the Ninja to AIR FRY at 400°F for 15 minutes."
+        "description": "Place chicken in Ninja and close the air fry lid. Set the Ninja to AIR FRY at 400°F for 20 minutes."
       },
       {
         "description": "Every 5 minutes or so flip the chicken over, apply vegetable spray, and sprinkle mixed dry rub on the chicken then continue."
@@ -695,6 +697,8 @@
     "description": "Ninja Foodi loaded baked potato.",
     "thumbnailUrl": "images/recipes/square-1442259703-country-crock-stuffed-potatoes.jpg",
     "recipeYield": 2,
+    "prepTime": "00:05:00",
+    "cookTime": "01:05:00",
     "ingredients": [
       {
         "name": "Russet Potato",
@@ -736,7 +740,7 @@
         "description": "Slit the top of each potato about 3 inches and add about 1 tablespoon of butter into the potato. Add mozzerella cheese and bacon pieces as desired."
       },
       {
-        "description": "Close air fyer lid on Ninja and set to AIR FRY at 400°F for 10 minutes or until any cheese is crispy."
+        "description": "Close air fyer lid on Ninja and set to AIR FRY at 400°F for 10-15 minutes or until any cheese is crispy."
       },
       {
         "description": "Add any additional fixings as desired and serve."
@@ -1142,5 +1146,97 @@
         "description": "Bake in the preheated oven, uncovered, for 15 to 20 minutes, until crackers are lightly browned. Serve hot."
       }
     ]
+  },
+  {
+    "name": "Creamy Garlic Chicken",
+    "description": "This easy and delicious Creamy Garlic Chicken recipe is a great option for a quick weeknight dinner. Serve it with your favorite sides and enjoy!",
+    "thumbnailUrl": "images/recipes/Creamy-Garlic-Chicken.png",
+    "recipeYield": 3,
+    "ingredients": [
+      {
+        "name": "Chicken Breasts",
+        "quantity": 3,
+        "units": "Each"
+      },
+      {
+        "name": "Garlic Cloves",
+        "quantity": 3,
+        "units": "Each"
+      },
+      {
+        "name": "Shallot",
+        "quantity": 1,
+        "units": "Each"
+      },
+      {
+        "name": "Chicken Broth",
+        "quantity": 170,
+        "units": "Milliliter"
+      },
+      {
+        "name": "Heavy Cream",
+        "quantity": 170,
+        "units": "Milliliter"
+      },
+      {
+        "name": "Parsley",
+        "quantity": 1,
+        "units": "Handful"
+      },
+      {
+        "name": "Lemon",
+        "quantity": 0.5,
+        "units": "Each"
+      },
+      {
+        "name": "Butter",
+        "quantity": 2,
+        "units": "Tablespoons"
+      },
+      {
+        "name": "Olive Oil",
+        "quantity": 2,
+        "units": "Tablespoons"
+      },
+      {
+        "name": "Nutmeg",
+        "quantity": 0.5,
+        "units": "Teaspoon"
+      },
+      {
+        "name": "Salt",
+        "quantity": 1,
+        "units": "To Taste"
+      },
+      {
+        "name": "Black Pepper",
+        "quantity": 1,
+        "units": "To Taste"
+      }
+    ],
+    "instructions": [
+      {
+        "description": "Season chicken breasts with salt, black pepper and nutmeg."
+      },
+      {
+        "description": "Heat olive oil in a large skillet over medium-high heat. Add chicken breasts and cook for 6-7 minutes per side, until golden brown and cooked through. Remove chicken from skillet and set aside."
+      },
+      {
+        "description": "Reduce heat to medium and add butter to the same skillet. Once melted, add minced garlic and shallot, and sauté for 1-2 minutes until fragrant."
+      },
+      {
+        "description": "Add chicken broth to the skillet and use a wooden spoon to scrape any brown bits from the bottom of the pan. Allow to simmer for 5 minutes."
+      },
+      {
+        "description": "Add heavy cream, lemon juice, and chopped parsley to the skillet. Stir well to combine."
+      },
+      {
+        "description": "Return chicken to the skillet and cook for an additional 5 minutes, until heated through and the sauce has thickened."
+      },
+      {
+        "description": "Serve immediately with your favorite sides."
+      }
+    ]
   }
+
 ]
