@@ -305,6 +305,10 @@
       "url": "images\/recipes\/Creamy-Chicken-Casserole-6-500x500.jpg"
     },
     {
+      "hash": "sha256-zVth+t7xYr+3HxWfVENqlQKnVwj5g5A95WvCyNmeX8E=",
+      "url": "images\/recipes\/Creamy-Garlic-Chicken.png"
+    },
+    {
       "hash": "sha256-3otXDT586z5WA7W6z2n0zembWvJc9ty\/5GjbKdM61AM=",
       "url": "images\/recipes\/Epic-Dry-Rubbed-Baked-Chicken-Wings-3-677x1024.jpg"
     },
@@ -385,7 +389,7 @@
       "url": "maskable_icon_x96.png"
     },
     {
-      "hash": "sha256-H7Vc4HdXxyARRvcEizyz2iPRNDvjjdrmaxoc1XKuZUQ=",
+      "hash": "sha256-ALRM6r5YfiyaZYwwDsAlmoMjEGtdPSv8B\/uRCqmmq14=",
       "url": "recipes\/recipes.json"
     },
     {
@@ -393,5 +397,5 @@
       "url": "sample-data\/weather.json"
     }
   ],
-  "version": "BJOgoU41"
+  "version": "1xsPWFcL"
 };
