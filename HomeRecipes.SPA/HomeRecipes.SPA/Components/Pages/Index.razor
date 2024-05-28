@@ -1,0 +1,25 @@
+﻿@page "/"
+@inject HttpClient Http
+@* @inject Data.LocalRecipeStore LocalRecipeStore *@
+
+@if (recipeCount > 0) {
+    <div class="card-columns">
+        @for (int i = 0; i < recipeCount; i++) {
+        <RecipeTile recipe="@recipes.ElementAt(i)" />
+        }
+    </div>
+} else {
+    <p class="alert alert-info">No Recipes Available</p>
+}
+
+<SyncStatus OnSyncComplete="@OnSyncComplete" />
+
+@code {
+    private int recipeCount => recipes?.Count() ?? 0;
+    private IEnumerable<HomeRecipes.Shared.Recipe> recipes { get; set; } = new List<HomeRecipes.Shared.Recipe>();
+
+    async void OnSyncComplete() {
+        // recipes = await LocalRecipeStore.GetAllRecipes();
+        StateHasChanged();
+    }
+} 

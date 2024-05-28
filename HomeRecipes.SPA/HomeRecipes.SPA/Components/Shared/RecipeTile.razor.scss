@@ -1,0 +1,11 @@
+﻿.card {
+    width: 18rem;
+    margin-left: auto;
+    margin-right: auto;
+
+    .card-img-top {
+        width: 100%;
+        height: 15vh;
+        object-fit: cover;
+    }
+}
