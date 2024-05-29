@@ -1,5 +1,6 @@
 ﻿@page "/authentication/{action}"
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject IAccessTokenProvider tokenProvider
 
 <RemoteAuthenticatorView Action="@Action">
 
@@ -8,4 +9,5 @@
 @code {
     [Parameter]
     public string Action { get; set; }
+
 }

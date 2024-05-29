@@ -1,0 +1,51 @@
+﻿@using BlazorBootstrap
+@using HomeRecipes.SPA.Data
+@using HomeRecipes.Shared
+@inject LocalRecipeStore RecipeStore
+@inject IJSRuntime JSRuntime
+
+<button class="btn btn-primary" @onclick="ShowModal">Create New Recipe</button>
+
+<Modal @ref="modal" Title="Create New Recipe">
+    <BodyTemplate>
+        <div class="form-group">
+            <label for="recipeName">Recipe Name</label>
+            <input type="text" class="form-control" id="recipeName" @bind="newRecipe.Name" placeholder="Enter recipe name">
+        </div>
+        <!-- Add more fields for the recipe as needed -->
+    </BodyTemplate>
+    <FooterTemplate>
+        <button class="btn btn-secondary" @onclick="HideModal">Close</button>
+        <button class="btn btn-primary" @onclick="CreateRecipe">Create Recipe</button>
+    </FooterTemplate>
+</Modal>
+
+@code {
+    private Modal modal = default!;
+    private Recipe newRecipe = new Recipe();
+
+    private async Task ShowModal()
+    {
+        await modal.ShowAsync();
+    }
+
+    private async Task HideModal()
+    {
+        await modal.HideAsync();
+    }
+
+    private async Task CreateRecipe()
+    {
+        // Save the new recipe using LocalRecipeStore
+        await RecipeStore.SaveRecipeAsync(newRecipe);
+
+        // Optionally, synchronize with Google Drive
+        await RecipeStore.SynchronizeAsync();
+
+        // Close the modal
+        await HideModal();
+
+        // Reset the form
+        newRecipe = new Recipe();
+    }
+}

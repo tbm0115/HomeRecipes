@@ -1,0 +1,123 @@
+﻿@page "/recipe/{name}"
+@inject HttpClient Http
+@inject Data.LocalRecipeStore LocalRecipeStore
+@using HomeRecipes.Shared
+
+@if (recipe == null) {
+    <BlazorBootstrap.Spinner />
+} else {
+<div class="servings-adjustment">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Serving Size</span>
+        </div>
+        <select class="custom-select" id="servingsSelector" @onchange="ServingSizeChanged">
+            <option value="0.25">x¼ (Quarter)</option>
+            <option value="0.5">x½ (Half)</option>
+            <option value="0.75">x¾ (Three-Quarter)</option>
+            <option selected value="1">x1 (Full)</option>
+            <option value="2">x2 (Double)</option>
+            <option value="3">x3 (Triple)</option>
+            <option value="4">x4 (Quadruple)</option>
+        </select>
+    </div>
+</div>
+<div class="recipe container mt-5">
+    <div class="recipe-header">
+        <div class="row">
+            <div class="col text-center recipe-header-title">
+                <h1>@(recipe.Name)</h1>
+                <p class="text-muted">@(recipe.Description)</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col recipe-header-img mb-5">
+                <img src="@(recipe.ThumbnailUrl)" alt="@(recipe.Name)" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col recipe-header-details">
+                <div>
+                    <img src="images/prep-time.png" alt="Prep Time" />
+                    <h5>Prep Time</h5>
+                    <p class="recipe-prep-time">@(recipe.PrepTime)</p>
+                </div>
+                <div class="divider" />
+                <div>
+                    <img src="images/cook-time.png" alt="Cook Time" />
+                    <h5>Cook Time</h5>
+                    <p class="recipe-cook-time">@(recipe.CookTime)</p>
+                </div>
+                <div class="divider" />
+                <div>
+                    <img src="images/servings.png" alt="Servings" />
+                    <h5>Servings</h5>
+                    <p class="recipe-servings">@(new Fractional.Fractional((recipe.RecipeYield * (decimal)servingSize), false).HumanRepresentation)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mb-5">
+        <div class="col-sm-12 col-lg-6">
+            <h3>Ingredients</h3>
+            <ul class="recipe-ingredients">
+                @if (recipe.Ingredients?.Count() >= 0)
+                {
+                    foreach (var ingredientGroup in recipe.Ingredients.GroupBy(o => o.PrepGroup))
+                    {
+                        <li>
+                            @(ingredientGroup.Key ?? "Other")
+                            <ul>
+                                @foreach (RecipeIngredient ingredient in ingredientGroup)
+                                {
+                                    <li @key="ingredient.Name" data-prep-group="@(ingredient.PrepGroup)">
+                                        <div>
+                                            <IngredientMeasurement QuantityCallout="@((decimal)ingredient.Quantity)" ServingModifier="@servingSize" UnitCallout="@ingredient.Units" />
+                                            <span class="ingredient-name">@(ingredient.Name)</span>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                } else {
+                    <li>No ingredients</li>
+                }
+            </ul>
+        </div>
+        <div class="col-sm-12 col-lg-6">
+            <h3>Instructions</h3>
+            <div class="recipe-instructions">
+                <ol>
+                    @if (recipe.Instructions?.Count() >= 0){
+                        foreach (RecipeInstruction instruction in recipe.Instructions) {
+                        <li>
+                            <p>@(instruction.Description)</p>
+                        </li>
+                        }
+                    } else {
+                        <li>No ingredients</li>
+                    }
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@code {
+    [Parameter]
+    public string Name { get; set; }
+
+    public HomeRecipes.Shared.Recipe recipe { get; set; }
+
+    private double servingSize = 1;
+
+    protected override async Task OnInitializedAsync() {
+        recipe = await LocalRecipeStore.GetRecipe(Name);// (await Http.GetFromJsonAsync<IEnumerable<HomeRecipes.Shared.Recipe>>($"recipes/recipes.json")).FirstOrDefault(o => o.Name == Name);
+    }
+
+    void ServingSizeChanged(ChangeEventArgs e) {
+        Double.TryParse(e.Value.ToString(), out servingSize);
+    }
+}
