@@ -24,7 +24,13 @@ builder.Services.AddSingleton<SyncState>();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddOidcAuthentication(options =>
 {
-    builder.Configuration.Bind("Local", options.ProviderOptions);
+    builder.Configuration.Bind("Oidc", options.ProviderOptions);
+    options.ProviderOptions.DefaultScopes.Clear();
+    foreach (var scope in builder.Configuration.GetSection("Oidc:Scopes").Get<string[]>())
+    {
+        options.ProviderOptions.DefaultScopes.Add(scope);
+    }
+    options.ProviderOptions.ResponseType = "code"; // Ensure this is set to "code" for PKCE
 });
 
 await builder.Build().RunAsync();

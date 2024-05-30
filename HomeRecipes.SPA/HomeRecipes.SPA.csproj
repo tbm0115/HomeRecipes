@@ -5,8 +5,14 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+    <Title>LightWorksHomeRecipes</Title>
   </PropertyGroup>
 
+	<ItemGroup>
+		<AssemblyAttribute Include="HomeRecipes.PackageTitleAttribute">
+			<_Parameter1>"$(Title)"</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
   </ItemGroup>

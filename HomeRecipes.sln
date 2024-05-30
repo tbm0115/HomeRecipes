@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeRecipes.Shared", "HomeR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeRecipes.Client", "HomeRecipes.Client\HomeRecipes.Client.csproj", "{B448BA48-CA3C-4F1A-A9CD-9C59A19E8562}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeRecipes.SPA", "HomeRecipes.SPA\HomeRecipes.SPA.csproj", "{FDAC4D91-CED8-45E5-AF8E-5F8E204D8907}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeRecipes.SPA", "HomeRecipes.SPA\HomeRecipes.SPA.csproj", "{FDAC4D91-CED8-45E5-AF8E-5F8E204D8907}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

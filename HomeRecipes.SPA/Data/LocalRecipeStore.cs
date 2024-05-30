@@ -11,7 +11,11 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
+using Google.Apis.Auth.OAuth2.Responses;
+using Google.Apis.Util.Store;
 using System.Security.Claims;
+using Google.Apis.Auth.OAuth2.Flows;
 
 namespace HomeRecipes.SPA.Data
 {
@@ -43,28 +47,45 @@ namespace HomeRecipes.SPA.Data
 
         private async Task InitializeDriveServiceAsync()
         {
-            try
+            var result = await tokenProvider.RequestAccessToken();
+            if (result.TryGetToken(out var token))
             {
-                var result = await tokenProvider.RequestAccessToken();
-                if (result.TryGetToken(out var token))
+                var applicationName = typeof(App).Assembly.GetCustomAttribute<PackageTitleAttribute>()?.Title;
+                if (string.IsNullOrEmpty(applicationName))
                 {
-                    var credential = GoogleCredential.FromAccessToken(token.Value);
-                    driveService = new DriveService(new BaseClientService.Initializer()
+                    throw new ArgumentException("Application name is not set. Ensure the PackageTitleAttribute is correctly applied to the assembly.");
+                }
+
+                var tokenResponse = new TokenResponse
+                {
+                    AccessToken = token.Value,
+                    //RefreshToken = token.RefreshToken
+                };
+
+                var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
+                {
+                    ClientSecrets = new ClientSecrets
                     {
-                        HttpClientInitializer = credential,
-                        ApplicationName = "HomeRecipes",
-                    });
-                    recipeFile = await GetOrCreateFileAsync("recipes.json");
-                    logger.LogInformation("Drive service initialized successfully.");
-                }
-                else
+                    },
+                    Scopes = new[] { "https://www.googleapis.com/auth/drive.appdata" },
+                    DataStore = new FileDataStore("LightWorks", true)
+                });
+
+                var credential = new UserCredential(flow, Environment.UserName, tokenResponse);
+
+                driveService = new DriveService(new BaseClientService.Initializer
                 {
-                    logger.LogError("Failed to get access token. Error: {Error}", result.ToString());
-                }
+                    HttpClientInitializer = credential,
+                    ApplicationName = applicationName
+                });
+
+                recipeFile = await GetOrCreateFileAsync("recipes.json");
+                logger.LogInformation("Drive service initialized successfully.");
             }
-            catch (Exception ex)
+            else
             {
-                logger.LogError(ex, "Error initializing Drive service.");
+                logger.LogError("Failed to get access token. Error: {Error}", result.ToString());
+                throw new InvalidOperationException("User is not authenticated.");
             }
         }
 
@@ -73,6 +94,7 @@ namespace HomeRecipes.SPA.Data
             try
             {
                 var request = driveService.Files.List();
+                request.Spaces = "appDataFolder";
                 request.Q = $"name='{fileName}'";
                 request.Fields = "files(id, name)";
                 var result = await request.ExecuteAsync();
@@ -82,22 +104,22 @@ namespace HomeRecipes.SPA.Data
                     var fileMetadata = new Google.Apis.Drive.v3.Data.File()
                     {
                         Name = fileName,
-                        MimeType = "application/json"
+                        Parents = new List<string> { "appDataFolder" }
                     };
                     var createRequest = driveService.Files.Create(fileMetadata);
                     file = await createRequest.ExecuteAsync();
-                    logger.LogInformation("Created new file in Google Drive.");
+                    logger.LogInformation("Created new file in Google Drive appDataFolder.");
                 }
                 else
                 {
-                    logger.LogInformation("File already exists in Google Drive.");
+                    logger.LogInformation("File already exists in Google Drive appDataFolder.");
                 }
                 return file;
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error getting or creating file in Google Drive.");
-                return null;
+                logger.LogError(ex, "Error getting or creating file in Google Drive appDataFolder.");
+                throw;
             }
         }
 
@@ -109,7 +131,7 @@ namespace HomeRecipes.SPA.Data
             try
             {
                 var request = driveService.Files.Get(recipeFile.Id);
-                var stream = new MemoryStream();
+                using var stream = new MemoryStream();
                 await request.DownloadAsync(stream);
                 stream.Seek(0, SeekOrigin.Begin);
                 using var reader = new StreamReader(stream);
@@ -117,7 +139,7 @@ namespace HomeRecipes.SPA.Data
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error reading file content from Google Drive.");
+                logger.LogError(ex, "Error reading file content from Google Drive appDataFolder.");
                 throw;
             }
         }
@@ -133,11 +155,11 @@ namespace HomeRecipes.SPA.Data
                 using var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
                 var updateRequest = driveService.Files.Update(fileMetadata, recipeFile.Id, stream, "application/json");
                 await updateRequest.UploadAsync();
-                logger.LogInformation("File content updated in Google Drive.");
+                logger.LogInformation("File content updated in Google Drive appDataFolder.");
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error updating file content in Google Drive.");
+                logger.LogError(ex, "Error updating file content in Google Drive appDataFolder.");
                 throw;
             }
         }
@@ -192,27 +214,12 @@ namespace HomeRecipes.SPA.Data
             return value == null ? (DateTime?)null : DateTime.Parse(value);
         }
 
-        public async ValueTask SaveRecipeAsync(Recipe recipe)
+        public ValueTask SaveRecipeAsync(Recipe recipe)
+            => PutAsync(IndexedDb.LOCAL_STORE, null, recipe);
+
+        async Task FetchChangesAsync()
         {
-            // Validate the recipe name
-            if (string.IsNullOrEmpty(recipe.Name))
-            {
-                throw new InvalidOperationException("Recipe name is required and cannot be null or empty.");
-            }
-
-            await PutAsync(IndexedDb.LOCAL_STORE, null, recipe);
-
-            var json = await ReadFileContentAsync();
-            var recipes = JsonSerializer.Deserialize<List<Recipe>>(json) ?? new List<Recipe>();
-            recipes.Add(recipe);
-
-            var updatedJson = JsonSerializer.Serialize(recipes);
-            await UpdateFileContentAsync(updatedJson);
-        }
-
-        public async Task FetchChangesAsync()
-        {
-            var json = await ReadFileContentAsync();
+            var json = await httpClient.GetStringAsync($"recipes/recipes.json?d={DateTime.UtcNow}"); // The d parameter helps ensure that the JSON is ALWAYS read and bypasses cache
             await js.InvokeVoidAsync($"{IndexedDb.PREFIX}.putAllFromJson", IndexedDb.SERVER_STORE, json);
             await PutAsync(IndexedDb.META_STORE, "lastUpdateDate", DateTime.Now.ToString("o"));
         }
@@ -228,19 +235,19 @@ namespace HomeRecipes.SPA.Data
 
         ValueTask DeleteAsync(string storeName, object key)
             => js.InvokeVoidAsync($"{IndexedDb.PREFIX}.delete", storeName, key);
+    }
 
-        class ClaimData
-        {
-            public string Type { get; set; }
-            public string Value { get; set; }
-        }
+    public static class IndexedDb
+    {
+        public const string PREFIX = "localRecipeStore";
+        public const string LOCAL_STORE = "localedits";
+        public const string SERVER_STORE = "serverdata";
+        public const string META_STORE = "metadata";
+    }
 
-        public static class IndexedDb
-        {
-            public const string PREFIX = "localRecipeStore";
-            public const string LOCAL_STORE = "localedits";
-            public const string SERVER_STORE = "serverdata";
-            public const string META_STORE = "metadata";
-        }
+    public class ClaimData
+    {
+        public string Type { get; set; }
+        public string Value { get; set; }
     }
 }
