@@ -30,7 +30,7 @@ builder.Services.AddOidcAuthentication(options =>
     {
         options.ProviderOptions.DefaultScopes.Add(scope);
     }
-    options.ProviderOptions.ResponseType = "code"; // Ensure this is set to "code" for PKCE
+    options.ProviderOptions.ResponseType = "id_token token"; // Ensure this is set to "code" for PKCE
 });
 
 await builder.Build().RunAsync();
