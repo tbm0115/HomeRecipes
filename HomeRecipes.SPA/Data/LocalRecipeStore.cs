@@ -23,15 +23,19 @@ namespace HomeRecipes.SPA.Data
         private readonly HttpClient httpClient;
         private readonly IJSRuntime js;
         private readonly IAccessTokenProvider tokenProvider;
+        private readonly TokenStorage tokenStorage;
         private readonly ILogger<LocalRecipeStore> logger;
         private DriveService driveService;
         private Google.Apis.Drive.v3.Data.File recipeFile;
 
-        public LocalRecipeStore(HttpClient httpClient, IJSRuntime js, IAccessTokenProvider tokenProvider, ILogger<LocalRecipeStore> logger)
+        private GoogleCredential credential;
+
+        public LocalRecipeStore(HttpClient httpClient, IJSRuntime js, IAccessTokenProvider tokenProvider, TokenStorage tokenStorage, ILogger<LocalRecipeStore> logger)
         {
             this.httpClient = httpClient;
             this.js = js;
             this.tokenProvider = tokenProvider;
+            this.tokenStorage = tokenStorage;
             this.logger = logger;
         }
 
@@ -49,32 +53,27 @@ namespace HomeRecipes.SPA.Data
             try
             {
                 var result = await tokenProvider.RequestAccessToken(new AccessTokenRequestOptions { Scopes = new[] { "https://www.googleapis.com/auth/drive.appdata" } });
+
                 if (result.TryGetToken(out var token))
                 {
-                    var applicationName = "LightWorks Home Recipes";
-                    var tokenResponse = new TokenResponse
-                    {
-                        AccessToken = token.Value,
-                        RefreshToken = token.RefreshToken // Use your refresh token here if needed
-                    };
+                    await tokenStorage.SetItemAsync("AccessToken", token.Value);
 
-                    var credential = new UserCredential(new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
-                    {
-                        ClientSecrets = new ClientSecrets
-                        {
-                            // TODO: Add client info
-                        },
-                        Scopes = new[] { DriveService.Scope.DriveAppdata },
-                        DataStore = new FileDataStore(applicationName)
-                    }), "user", tokenResponse);
+                    var applicationName = "LightWorks Home Recipes";
+                    this.credential = GoogleCredential.FromAccessToken(token.Value)
+                        .CreateScoped(DriveService.Scope.DriveAppdata);
 
                     driveService = new DriveService(new BaseClientService.Initializer
                     {
                         HttpClientInitializer = credential,
                         ApplicationName = applicationName,
+                        GZipEnabled = false,
                     });
+
                     recipeFile = await GetOrCreateFileAsync("recipes.json");
-                    logger.LogInformation("Drive service initialized successfully.");
+                    if (recipeFile != null)
+                    {
+                        logger.LogInformation("Drive service initialized successfully.");
+                    }
                 }
                 else
                 {
@@ -92,6 +91,7 @@ namespace HomeRecipes.SPA.Data
             try
             {
                 var request = driveService.Files.List();
+                request.Spaces = "appDataFolder";
                 request.Q = $"name='{fileName}' and trashed=false";
                 request.Fields = "files(id, name)";
                 var result = await request.ExecuteAsync();
@@ -100,11 +100,31 @@ namespace HomeRecipes.SPA.Data
                 {
                     var fileMetadata = new Google.Apis.Drive.v3.Data.File()
                     {
-                        Name = fileName,
-                        MimeType = "application/json"
+                        Name = "recipes.json",
+                        Parents = new List<string>()
+                    {
+                        "appDataFolder"
+                    }
                     };
-                    var createRequest = driveService.Files.Create(fileMetadata);
-                    file = await createRequest.ExecuteAsync();
+                    FilesResource.CreateMediaUpload uploadRequest;
+                    using (var stream = new MemoryStream())
+                    {
+                        uploadRequest = driveService.Files.Create(
+                            fileMetadata, stream, "application/json");
+                        uploadRequest.Fields = "id";
+                        await uploadRequest.UploadAsync();
+                    }
+
+                    file = uploadRequest.ResponseBody;
+                    // Prints the file id.
+                    Console.WriteLine("File ID: " + file.Id);
+                    //var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+                    //{
+                    //    Name = fileName,
+                    //    MimeType = "application/json"
+                    //};
+                    //var createRequest = driveService.Files.Create(fileMetadata);
+                    //file = await createRequest.ExecuteAsync();
                     logger.LogInformation("Created new file in Google Drive.");
                 }
                 else
@@ -222,18 +242,25 @@ namespace HomeRecipes.SPA.Data
             await PutAsync(IndexedDb.LOCAL_STORE, null, recipe);
 
             var json = await ReadFileContentAsync();
-            var recipes = JsonSerializer.Deserialize<List<Recipe>>(json) ?? new List<Recipe>();
+            var recipes = new List<Recipe>();
+            if (!string.IsNullOrEmpty(json))
+                recipes = JsonSerializer.Deserialize<List<Recipe>>(json)!;
             recipes.Add(recipe);
 
-            var updatedJson = JsonSerializer.Serialize(recipes);
+            var updatedJson = JsonSerializer.Serialize(recipes, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             await UpdateFileContentAsync(updatedJson);
         }
 
         public async Task FetchChangesAsync()
         {
             var json = await ReadFileContentAsync();
-            await js.InvokeVoidAsync($"{IndexedDb.PREFIX}.putAllFromJson", IndexedDb.SERVER_STORE, json);
-            await PutAsync(IndexedDb.META_STORE, "lastUpdateDate", DateTime.Now.ToString("o"));
+            if (!string.IsNullOrEmpty(json))
+            {
+                var recipes = JsonSerializer.Deserialize<List<Recipe>>(json);
+                json = JsonSerializer.Serialize(recipes, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                await js.InvokeVoidAsync($"{IndexedDb.PREFIX}.putAllFromJson", IndexedDb.SERVER_STORE, json);
+                await PutAsync(IndexedDb.META_STORE, "lastUpdateDate", DateTime.Now.ToString("o"));
+            }
         }
 
         ValueTask<T> GetAsync<T>(string storeName, object key)

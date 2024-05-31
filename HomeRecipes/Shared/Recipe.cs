@@ -7,28 +7,39 @@ namespace HomeRecipes.Shared
 {
     public class Recipe
     {
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
+        [JsonPropertyName("description")]
         public string Description { get; set; }
 
+        [JsonPropertyName("ingredients")]
         public IEnumerable<RecipeIngredient> Ingredients { get; set; }
 
+        [JsonPropertyName("instructions")]
         public IEnumerable<RecipeInstruction> Instructions { get; set; }
 
+        [JsonPropertyName("thumbnailUrl")]
         public string ThumbnailUrl { get; set; }
-        
+
+        [JsonPropertyName("cookTime")]
         [JsonConverter(typeof(TimeSpanConverter))]
         public TimeSpan? CookTime { get; set; }
 
+        [JsonPropertyName("prepTime")]
         [JsonConverter(typeof(TimeSpanConverter))]
         public TimeSpan? PrepTime { get; set; }
 
+        [JsonPropertyName("recipeYield")]
         public decimal RecipeYield { get; set; }
 
+        [JsonPropertyName("dateCreated")]
         public DateTime? DateCreated { get; set; }
 
+        [JsonPropertyName("datePublished")]
         public DateTime? DatePublished { get; set; }
 
+        [JsonPropertyName("dateModified")]
         public DateTime? DateModified { get; set; }
 
 

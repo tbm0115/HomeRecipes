@@ -20,6 +20,7 @@ builder.Services.AddScoped(sp =>
     return client;
 });
 builder.Services.AddScoped<LocalRecipeStore>();
+builder.Services.AddScoped<TokenStorage>();
 builder.Services.AddSingleton<SyncState>();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddOidcAuthentication(options =>
