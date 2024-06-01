@@ -8,6 +8,10 @@
     <Title>LightWorksHomeRecipes</Title>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\Readme.md" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<AssemblyAttribute Include="HomeRecipes.PackageTitleAttribute">
 			<_Parameter1>"$(Title)"</_Parameter1>
@@ -15,6 +19,7 @@
 	</ItemGroup>
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
+    <_ContentIncludedByDefault Remove="wwwroot\Readme.md" />
   </ItemGroup>
 
   <ItemGroup>
@@ -94,6 +99,10 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Readme.md" />
   </ItemGroup>
 
 </Project>

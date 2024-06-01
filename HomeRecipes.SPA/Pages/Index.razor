@@ -1,6 +1,19 @@
 ﻿@page "/"
+@using HomeRecipes.Shared
 @inject HttpClient Http
 @inject Data.LocalRecipeStore LocalRecipeStore
+
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Select Collection
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        @foreach (var collection in collections)
+        {
+            <a class="dropdown-item" @onclick="() => SwitchCollection(collection.Name)">@collection.Name</a>
+        }
+    </div>
+</div>
 
 @if (recipeCount > 0) {
     <div class="card-columns">
@@ -17,16 +30,46 @@
 <SyncStatus OnSyncComplete="@OnSyncComplete" />
 
 @code {
+    private List<RecipeCollection> collections;
+    private RecipeCollection currentCollection = new RecipeCollection();
+
     private int recipeCount => recipes?.Count() ?? 0;
     private IEnumerable<HomeRecipes.Shared.Recipe> recipes { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+        collections = await LoadCollectionsAsync();
     }
 
     async void OnSyncComplete() {
         recipes = await LocalRecipeStore.GetAllRecipes();
         StateHasChanged();
+    }
+
+    private async Task<List<RecipeCollection>> LoadCollectionsAsync()
+    {
+        // Load collections from Google Drive
+        return await Task.FromResult(new List<RecipeCollection>());
+    }
+
+    private async Task SwitchCollection(string collectionName)
+    {
+        currentCollection = await LocalRecipeStore.LoadCollectionAsync(collectionName);
+    }
+
+    private void AddCollaborator()
+    {
+        currentCollection.Collaborators.Add(new Collaborator());
+    }
+
+    private void RemoveCollaborator(Collaborator collaborator)
+    {
+        currentCollection.Collaborators.Remove(collaborator);
+    }
+
+    private async Task SaveCollection()
+    {
+        await LocalRecipeStore.SaveCollectionAsync(currentCollection);
     }
 } 

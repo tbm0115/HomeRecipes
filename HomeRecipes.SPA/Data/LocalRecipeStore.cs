@@ -4,8 +4,6 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using Google.Apis.Auth.OAuth2.Responses;
-using Google.Apis.Util.Store;
 using System.IO;
 using System.Text.Json;
 using System.Text;
@@ -13,8 +11,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
-using Google.Apis.Auth.OAuth2.Flows;
 using System.Security.Claims;
+using Google.Apis.Drive.v3.Data;
 
 namespace HomeRecipes.SPA.Data
 {
@@ -101,10 +99,7 @@ namespace HomeRecipes.SPA.Data
                     var fileMetadata = new Google.Apis.Drive.v3.Data.File()
                     {
                         Name = "recipes.json",
-                        Parents = new List<string>()
-                    {
-                        "appDataFolder"
-                    }
+                        Parents = new List<string>() { "appDataFolder" }
                     };
                     FilesResource.CreateMediaUpload uploadRequest;
                     using (var stream = new MemoryStream())
@@ -116,15 +111,6 @@ namespace HomeRecipes.SPA.Data
                     }
 
                     file = uploadRequest.ResponseBody;
-                    // Prints the file id.
-                    Console.WriteLine("File ID: " + file.Id);
-                    //var fileMetadata = new Google.Apis.Drive.v3.Data.File()
-                    //{
-                    //    Name = fileName,
-                    //    MimeType = "application/json"
-                    //};
-                    //var createRequest = driveService.Files.Create(fileMetadata);
-                    //file = await createRequest.ExecuteAsync();
                     logger.LogInformation("Created new file in Google Drive.");
                 }
                 else
@@ -140,14 +126,14 @@ namespace HomeRecipes.SPA.Data
             }
         }
 
-        private async Task<string> ReadFileContentAsync()
+        private async Task<string> ReadFileContentAsync(string fileId)
         {
             if (!await EnsureDriveServiceInitializedAsync())
                 throw new Exception("Drive service not initialized");
 
             try
             {
-                var request = driveService.Files.Get(recipeFile.Id);
+                var request = driveService.Files.Get(fileId);
                 var stream = new MemoryStream();
                 await request.DownloadAsync(stream);
                 stream.Seek(0, SeekOrigin.Begin);
@@ -161,7 +147,7 @@ namespace HomeRecipes.SPA.Data
             }
         }
 
-        private async Task UpdateFileContentAsync(string content)
+        private async Task UpdateFileContentAsync(string fileId, string content)
         {
             if (!await EnsureDriveServiceInitializedAsync())
                 throw new Exception("Drive service not initialized");
@@ -170,7 +156,7 @@ namespace HomeRecipes.SPA.Data
             {
                 var fileMetadata = new Google.Apis.Drive.v3.Data.File();
                 using var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
-                var updateRequest = driveService.Files.Update(fileMetadata, recipeFile.Id, stream, "application/json");
+                var updateRequest = driveService.Files.Update(fileMetadata, fileId, stream, "application/json");
                 await updateRequest.UploadAsync();
                 logger.LogInformation("File content updated in Google Drive.");
             }
@@ -178,6 +164,51 @@ namespace HomeRecipes.SPA.Data
             {
                 logger.LogError(ex, "Error updating file content in Google Drive.");
                 throw;
+            }
+        }
+        public async Task<RecipeCollection> LoadCollectionAsync(string collectionName)
+        {
+            var file = await GetOrCreateFileAsync($"{collectionName}.json");
+            if (file == null)
+            {
+                throw new Exception("Unable to load collection file.");
+            }
+
+            var json = await ReadFileContentAsync(file.Id);
+            return JsonSerializer.Deserialize<RecipeCollection>(json);
+        }
+
+        public async Task SaveCollectionAsync(RecipeCollection collection)
+        {
+            var file = await GetOrCreateFileAsync($"{collection.Name}.json");
+            if (file == null)
+            {
+                throw new Exception("Unable to save collection file.");
+            }
+
+            var json = JsonSerializer.Serialize(collection);
+            await UpdateFileContentAsync(file.Id, json);
+        }
+
+        private async Task AddCollaboratorAsync(string fileId, string email, string role)
+        {
+            var permission = new Permission
+            {
+                Type = "user",
+                Role = role,
+                EmailAddress = email
+            };
+
+            var request = driveService.Permissions.Create(permission, fileId);
+            await request.ExecuteAsync();
+        }
+
+        public async Task AddCollaboratorToCollectionAsync(string collectionName, string email, string role)
+        {
+            var file = await GetOrCreateFileAsync($"{collectionName}.json");
+            if (file != null)
+            {
+                await AddCollaboratorAsync(file.Id, email, role);
             }
         }
 
@@ -209,19 +240,14 @@ namespace HomeRecipes.SPA.Data
         }
 
         public ValueTask<string[]> Autocomplete(string prefix)
-            => js.InvokeAsync<string[]>($"{IndexedDb.PREFIX}.autocompleteKeys", IndexedDb.SERVER_STORE, prefix, 5);
+            => js.InvokeAsync<string[]>($"{IndexedDb.PREFIX}.autocompleteKeys", IndexedDb.LOCAL_STORE, prefix, 5);
 
         public async Task<Recipe> GetRecipe(string recipeName)
-            => await GetAsync<Recipe>(IndexedDb.LOCAL_STORE, recipeName)
-            ?? await GetAsync<Recipe>(IndexedDb.SERVER_STORE, recipeName);
+            => await GetAsync<Recipe>(IndexedDb.LOCAL_STORE, recipeName);
 
         public async Task<IEnumerable<Recipe>> GetAllRecipes()
         {
             IEnumerable<Recipe> recipes = await GetAllAsync<Recipe>(IndexedDb.LOCAL_STORE);
-            if (recipes?.Any() == false)
-            {
-                return await GetAllAsync<Recipe>(IndexedDb.SERVER_STORE);
-            }
             return recipes;
         }
 
@@ -239,26 +265,29 @@ namespace HomeRecipes.SPA.Data
                 throw new InvalidOperationException("Recipe name is required and cannot be null or empty.");
             }
 
+            recipe.DateModified = DateTime.UtcNow;
+            recipe.DatePublished = DateTime.UtcNow;
+
             await PutAsync(IndexedDb.LOCAL_STORE, null, recipe);
 
-            var json = await ReadFileContentAsync();
+            var json = await ReadFileContentAsync(recipeFile.Id);
             var recipes = new List<Recipe>();
             if (!string.IsNullOrEmpty(json))
                 recipes = JsonSerializer.Deserialize<List<Recipe>>(json)!;
             recipes.Add(recipe);
 
             var updatedJson = JsonSerializer.Serialize(recipes, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-            await UpdateFileContentAsync(updatedJson);
+            await UpdateFileContentAsync(recipeFile.Id, updatedJson);
         }
 
         public async Task FetchChangesAsync()
         {
-            var json = await ReadFileContentAsync();
+            var json = await ReadFileContentAsync(recipeFile.Id);
             if (!string.IsNullOrEmpty(json))
             {
                 var recipes = JsonSerializer.Deserialize<List<Recipe>>(json);
                 json = JsonSerializer.Serialize(recipes, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-                await js.InvokeVoidAsync($"{IndexedDb.PREFIX}.putAllFromJson", IndexedDb.SERVER_STORE, json);
+                await js.InvokeVoidAsync($"{IndexedDb.PREFIX}.putAllFromJson", IndexedDb.LOCAL_STORE, json);
                 await PutAsync(IndexedDb.META_STORE, "lastUpdateDate", DateTime.Now.ToString("o"));
             }
         }
@@ -285,7 +314,6 @@ namespace HomeRecipes.SPA.Data
         {
             public const string PREFIX = "localRecipeStore";
             public const string LOCAL_STORE = "localedits";
-            public const string SERVER_STORE = "serverdata";
             public const string META_STORE = "metadata";
         }
     }

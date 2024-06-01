@@ -1,10 +1,14 @@
 ﻿using Schema.NET;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace HomeRecipes.Shared
 {
     public class RecipeInstruction //: Schema.NET.IHowToStep
     {
+        [Required]
+        [JsonPropertyName("description")]
         public string Description { get; set; }
         //public OneOrMany<IThing> Item { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         //public OneOrMany<IListItem> NextItem { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

@@ -1,4 +1,4 @@
-﻿@page "/recipe/{name}"
+﻿@page "/recipes/{name}"
 @inject HttpClient Http
 @inject Data.LocalRecipeStore LocalRecipeStore
 @using HomeRecipes.Shared
@@ -21,6 +21,7 @@
             <option value="4">x4 (Quadruple)</option>
         </select>
     </div>
+    <a href="recipes/@(Name)/edit" class="float-end">Edit</a>
 </div>
 <div class="recipe container mt-5">
     <div class="recipe-header">
@@ -96,7 +97,7 @@
                         </li>
                         }
                     } else {
-                        <li>No ingredients</li>
+                        <li>No instructions</li>
                     }
                 </ol>
             </div>

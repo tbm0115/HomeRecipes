@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -7,6 +8,7 @@ namespace HomeRecipes.Shared
 {
     public class Recipe
     {
+        [Required]
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
@@ -34,7 +36,7 @@ namespace HomeRecipes.Shared
         public decimal RecipeYield { get; set; }
 
         [JsonPropertyName("dateCreated")]
-        public DateTime? DateCreated { get; set; }
+        public DateTime? DateCreated { get; set; } = DateTime.UtcNow;
 
         [JsonPropertyName("datePublished")]
         public DateTime? DatePublished { get; set; }

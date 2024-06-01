@@ -1,4 +1,12 @@
-﻿(function () {
+# Basic migration pattern for IndexedDB:
+
+1. **Define Migration Functions**: Create functions for each version upgrade.
+2. **Apply Migrations During Upgrade**: Apply the necessary migrations based on the old and new version numbers.
+
+Below is an example of how you might implement this:
+
+```javascript
+(function () {
     // Migration functions
     const migrations = [
         // Version 1 to Version 2
@@ -75,3 +83,22 @@
         }
     };
 })();
+```
+
+### Explanation
+
+1. **Migration Functions**:
+   - An array `migrations` is defined, where each element is a function that handles the upgrade logic for a specific version.
+
+2. **Run Migrations During Upgrade**:
+   - The `runMigrations` function runs the appropriate migration functions based on the old and new version numbers.
+
+3. **Open the Database and Apply Migrations**:
+   - The `dbPromise` object opens the database and applies the necessary migrations during the upgrade.
+
+4. **API for `localRecipeStore`**:
+   - The `window.localRecipeStore` object exposes the methods for interacting with the IndexedDB, using the upgraded database schema.
+
+### Usage
+- Each time you need to upgrade the database schema, add a new migration function to the `migrations` array.
+- Increment the version number when opening the database (`idb.openDB('Recipes', 2, {...}`), and ensure the new migration function is added to handle the schema changes.

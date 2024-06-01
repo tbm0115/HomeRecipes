@@ -2,13 +2,13 @@
 
 <div class="card">
     @if (recipe == null) {
-        <Loader />
+        <BlazorBootstrap.Spinner />
     } else {
         <img class="card-img-top" src="@(recipe.ThumbnailUrl)" alt="@(recipe.Name)" />
         <div class="card-body">
             <h5 class="card-title">@(recipe.Name)</h5>
             <p class="card-text">@(recipe.Description)</p>
-            <a href="recipe/@(recipe.Name)" class="btn btn-primary">View Recipe</a>
+            <a href="recipes/@(recipe.Name)" class="btn btn-primary">View Recipe</a>
         </div>
     }
 </div>
