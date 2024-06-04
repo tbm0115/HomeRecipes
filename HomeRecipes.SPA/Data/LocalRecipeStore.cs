@@ -4,48 +4,62 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using System.IO;
 using System.Text.Json;
 using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using Google.Apis.Drive.v3.Data;
+using System.Text.Json.Serialization;
 
 namespace HomeRecipes.SPA.Data
 {
-    public class LocalRecipeStore
+    public class GoogleAppDataStorage
     {
-        private readonly HttpClient httpClient;
-        private readonly IJSRuntime js;
         private readonly IAccessTokenProvider tokenProvider;
         private readonly TokenStorage tokenStorage;
-        private readonly ILogger<LocalRecipeStore> logger;
         private DriveService driveService;
-        private Google.Apis.Drive.v3.Data.File recipeFile;
+        private readonly ILogger<GoogleAppDataStorage> logger;
+        private readonly Dictionary<string, string> supportedMimeTypes = new Dictionary<string, string>()
+        {
+            { "json", "application/json" },
+            { "png", "image/png" },
+            { "jpg", "image/jpg" },
+            { "jpeg", "image/jpeg" },
+            { "webp", "image/webp" }
+        };
 
+        private Google.Apis.Drive.v3.Data.File ProfileConfigFile;
+        public ProfileConfiguration ProfileConfiguration { get; set; }
         private GoogleCredential credential;
 
-        public LocalRecipeStore(HttpClient httpClient, IJSRuntime js, IAccessTokenProvider tokenProvider, TokenStorage tokenStorage, ILogger<LocalRecipeStore> logger)
+        /// <summary>
+        /// Indicates whether or not the user profile has initialized the application.
+        /// </summary>
+        public bool IsInitialized => ProfileConfigFile != null;
+
+        public GoogleAppDataStorage(IAccessTokenProvider tokenProvider, TokenStorage tokenStorage, ILogger<GoogleAppDataStorage> logger)
         {
-            this.httpClient = httpClient;
-            this.js = js;
             this.tokenProvider = tokenProvider;
             this.tokenStorage = tokenStorage;
             this.logger = logger;
         }
 
-        private async Task<bool> EnsureDriveServiceInitializedAsync()
+        /// <summary>
+        /// Ensures the Google Drive API is connected and initialized with the default profile config file.
+        /// </summary>
+        /// <returns>Flag for whether or not the Google Drive appData folder has been initialized.</returns>
+        public async Task<bool> EnsureDriveServiceInitializedAsync()
         {
-            if (driveService == null || recipeFile == null)
+            if (driveService == null || ProfileConfigFile == null)
             {
                 await InitializeDriveServiceAsync();
             }
-            return driveService != null && recipeFile != null;
+            return driveService != null && ProfileConfigFile != null;
         }
 
+        /// <summary>
+        /// Establishes a connection to the user's Google Drive appData folder and ensures the default profile config file is created.
+        /// </summary>
+        /// <returns>awaitable task</returns>
         private async Task InitializeDriveServiceAsync()
         {
             try
@@ -67,11 +81,8 @@ namespace HomeRecipes.SPA.Data
                         GZipEnabled = false,
                     });
 
-                    recipeFile = await GetOrCreateFileAsync("recipes.json");
-                    if (recipeFile != null)
-                    {
-                        logger.LogInformation("Drive service initialized successfully.");
-                    }
+                    // Establish connection with the Profile configuration file by utilizing the refresh method
+                    await Refresh();
                 }
                 else
                 {
@@ -84,8 +95,20 @@ namespace HomeRecipes.SPA.Data
             }
         }
 
+        /// <summary>
+        /// Filename to get or create (including the extension).
+        /// </summary>
+        /// <param name="fileName">Filename, including the extension.</param>
+        /// <returns>Google Drive file contained in the users appData folder.</returns>
         private async Task<Google.Apis.Drive.v3.Data.File> GetOrCreateFileAsync(string fileName)
         {
+            string supportedMimeType;
+            string extension = Path.GetExtension(fileName).Remove(0, 1);
+            if (!supportedMimeTypes.TryGetValue(extension, out supportedMimeType) || string.IsNullOrEmpty(supportedMimeType))
+            {
+                throw new Exception("Mime type not supported");
+            }
+
             try
             {
                 var request = driveService.Files.List();
@@ -98,14 +121,15 @@ namespace HomeRecipes.SPA.Data
                 {
                     var fileMetadata = new Google.Apis.Drive.v3.Data.File()
                     {
-                        Name = "recipes.json",
+                        Name = fileName,
                         Parents = new List<string>() { "appDataFolder" }
                     };
                     FilesResource.CreateMediaUpload uploadRequest;
                     using (var stream = new MemoryStream())
                     {
+                        // Uploads a blank file
                         uploadRequest = driveService.Files.Create(
-                            fileMetadata, stream, "application/json");
+                            fileMetadata, stream, supportedMimeType);
                         uploadRequest.Fields = "id";
                         await uploadRequest.UploadAsync();
                     }
@@ -126,6 +150,12 @@ namespace HomeRecipes.SPA.Data
             }
         }
 
+        /// <summary>
+        /// Reads the contents of the file wtih the given Google Drive File ID
+        /// </summary>
+        /// <param name="fileId">Google Drive API v3 File ID</param>
+        /// <returns>String contents of the Google Drive File</returns>
+        /// <exception cref="Exception"></exception>
         private async Task<string> ReadFileContentAsync(string fileId)
         {
             if (!await EnsureDriveServiceInitializedAsync())
@@ -147,16 +177,46 @@ namespace HomeRecipes.SPA.Data
             }
         }
 
-        private async Task UpdateFileContentAsync(string fileId, string content)
+        /// <summary>
+        /// Reads the given Google Drive File and deserializes the contents to the provided generic type.
+        /// </summary>
+        /// <typeparam name="T">Object type to deserialize the JSON into.</typeparam>
+        /// <param name="fileId">Google Drive File ID</param>
+        /// <returns>Deserialized object</returns>
+        /// <exception cref="Exception"></exception>
+        private async Task<T> ReadAsync<T>(string fileId)
+        {
+            var json = await ReadFileContentAsync(fileId);
+            if (string.IsNullOrEmpty(json))
+                return default(T);
+
+            var result = JsonSerializer.Deserialize<T>(json);
+            if (result == null)
+                throw new Exception("Failed to deserialize JSON to generic type");
+            return result;
+        }
+
+        /// <summary>
+        /// Uploads the provided contents to the given Google Drive File
+        /// </summary>
+        /// <param name="fileId">Google Drive File ID</param>
+        /// <param name="contents">Contents of the Google Drive File</param>
+        /// <param name="mimeType">Mime type of the Google Drive File</param>
+        /// <returns>awaitable task</returns>
+        /// <exception cref="Exception"></exception>
+        private async Task UpdateFileContentAsync(string fileId, byte[] contents, string mimeType)
         {
             if (!await EnsureDriveServiceInitializedAsync())
                 throw new Exception("Drive service not initialized");
 
+            if (!supportedMimeTypes.Values.Contains(mimeType))
+                throw new Exception("Mime type not supported");
+
             try
             {
                 var fileMetadata = new Google.Apis.Drive.v3.Data.File();
-                using var stream = new MemoryStream(Encoding.UTF8.GetBytes(content));
-                var updateRequest = driveService.Files.Update(fileMetadata, fileId, stream, "application/json");
+                using var stream = new MemoryStream(contents);
+                var updateRequest = driveService.Files.Update(fileMetadata, fileId, stream, mimeType);
                 await updateRequest.UploadAsync();
                 logger.LogInformation("File content updated in Google Drive.");
             }
@@ -166,32 +226,33 @@ namespace HomeRecipes.SPA.Data
                 throw;
             }
         }
-        public async Task<RecipeCollection> LoadCollectionAsync(string collectionName)
-        {
-            var file = await GetOrCreateFileAsync($"{collectionName}.json");
-            if (file == null)
-            {
-                throw new Exception("Unable to load collection file.");
-            }
 
-            var json = await ReadFileContentAsync(file.Id);
-            return JsonSerializer.Deserialize<RecipeCollection>(json);
+        /// <summary>
+        /// Updates a JSON formatted Google Drive File
+        /// </summary>
+        /// <typeparam name="T">Object type to serialize</typeparam>
+        /// <param name="fileId">Google Drive File ID</param>
+        /// <param name="contents">Object to serialize</param>
+        /// <returns>awaitable task</returns>
+        private async Task UpdateAsync<T>(string fileId, T contents)
+        {
+            string json = JsonSerializer.Serialize(contents);
+            await UpdateFileContentAsync(fileId, Encoding.UTF8.GetBytes(json), "application/json");
         }
 
-        public async Task SaveCollectionAsync(RecipeCollection collection)
+        /// <summary>
+        /// Adds the given email address as a collaborator to the given Google Drive File with the specified role.
+        /// </summary>
+        /// <param name="collectionName">Google Drive File ID</param>
+        /// <param name="email">Email address of the user to give permission to.</param>
+        /// <param name="role">Role the given user has on the Google Drive File.</param>
+        /// <returns>awaitable task</returns>
+        public async Task AddCollaboratorAsync(string collectionName, string email, string role)
         {
-            var file = await GetOrCreateFileAsync($"{collection.Name}.json");
-            if (file == null)
-            {
-                throw new Exception("Unable to save collection file.");
-            }
+            var collectionConfig = GetCollectionConfig(collectionName);
+            if (collectionConfig == null)
+                throw new Exception("Could not find recipe collection configuration");
 
-            var json = JsonSerializer.Serialize(collection);
-            await UpdateFileContentAsync(file.Id, json);
-        }
-
-        private async Task AddCollaboratorAsync(string fileId, string email, string role)
-        {
             var permission = new Permission
             {
                 Type = "user",
@@ -199,29 +260,174 @@ namespace HomeRecipes.SPA.Data
                 EmailAddress = email
             };
 
-            var request = driveService.Permissions.Create(permission, fileId);
+            var request = driveService.Permissions.Create(permission, collectionConfig.FileId);
             await request.ExecuteAsync();
         }
 
-        public async Task AddCollaboratorToCollectionAsync(string collectionName, string email, string role)
+        public async Task Refresh()
         {
-            var file = await GetOrCreateFileAsync($"{collectionName}.json");
-            if (file != null)
+            ProfileConfigFile = await GetOrCreateFileAsync("profile.json");
+            if (ProfileConfigFile != null)
             {
-                await AddCollaboratorAsync(file.Id, email, role);
+                this.ProfileConfiguration = await ReadAsync<ProfileConfiguration>(ProfileConfigFile.Id);
+                if (this.ProfileConfiguration == null)
+                {
+                    // Initialize the default collection
+                    var defaultCollection = await InitializeDefaultCollection();
+
+                    this.ProfileConfiguration = new ProfileConfiguration()
+                    {
+                        User = "", // TODO: Get from authenticated user.
+                        Collections = new List<CollectionConfig>()
+                    {
+                        new CollectionConfig()
+                        {
+                            Name = "Default",
+                            FileId = defaultCollection.FileId
+                        }
+                    }
+                    };
+                    await UpdateProfile();
+                }
+                logger.LogInformation("Drive service initialized successfully.");
             }
         }
 
-        public ValueTask<Recipe[]> GetOutstandingLocalEditsAsync()
+        private async Task<CollectionConfig> InitializeDefaultCollection()
         {
-            return js.InvokeAsync<Recipe[]>(
-                $"{IndexedDb.PREFIX}.getAll", IndexedDb.LOCAL_STORE);
+            RecipeCollection defaultCollection = null;
+            var defaultCollectionFile = await GetOrCreateFileAsync("default.json");
+            if (defaultCollectionFile != null)
+            {
+                defaultCollection = await ReadAsync<RecipeCollection>(defaultCollectionFile.Id);
+                if (defaultCollection == null)
+                {
+                    defaultCollection = new RecipeCollection()
+                    {
+                        Name = "Default",
+                        Description = "My personal, offline recipe book"
+                    };
+                    await UpdateAsync(defaultCollectionFile.Id, defaultCollection);
+                }
+                return new CollectionConfig
+                {
+                    Name = "Default",
+                    FileId = defaultCollectionFile.Id,
+                    DateModifiedUtc = defaultCollection.DateModifiedUtc
+                };
+            }
+            else
+            {
+                throw new Exception("Failed to create default collection configuration on Google Drive");
+            }
+        }
+
+        /// <summary>
+        /// Updates the current Profile configuration on the Google Drive
+        /// </summary>
+        /// <returns></returns>
+        public async Task UpdateProfile()
+            => await UpdateAsync(this.ProfileConfigFile.Id, this.ProfileConfiguration);
+
+        public CollectionConfig? GetCollectionConfig(string collectionName)
+        => this.ProfileConfiguration
+                .Collections
+                .FirstOrDefault(o => o.Name.Equals(collectionName, StringComparison.OrdinalIgnoreCase));
+
+        /// <summary>
+        /// Gets the Recipe Collection by the given name.
+        /// </summary>
+        /// <param name="collectionName">Name of the Recipe Collection</param>
+        /// <returns>Deserialized RecipeCollection</returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<RecipeCollection> GetCollection(string collectionName)
+        {
+            var collectionConfig = GetCollectionConfig(collectionName);
+            if (collectionConfig == null)
+                throw new Exception("No Recipe collection by that name");
+
+            return await ReadAsync<RecipeCollection>(collectionConfig.FileId);
+        }
+
+        /// <summary>
+        /// Adds a new file or updates the existing configuration file for a specific Recipe Collection by name up to the Google Drive.
+        /// </summary>
+        /// <param name="collection">Object to serialize into the configuration file.</param>
+        /// <returns>awaitable task</returns>
+        /// <exception cref="Exception"></exception>
+        public async Task AddOrUpdateCollection(RecipeCollection collection)
+        {
+            // Update collection meta
+            collection.DateModifiedUtc = DateTime.UtcNow;
+
+            var collectionConfig = GetCollectionConfig(collection.Name);
+
+            // Now it's time to update Google Drive, get the Collection config Google Drive File ID from the profile configuration
+            string googleDriveFileId = collectionConfig
+                ?.FileId
+                ?? string.Empty;
+            if (string.IsNullOrEmpty(googleDriveFileId))
+            {
+                // Collection file doesn't exist, so create one
+                var file = await GetOrCreateFileAsync($"{collection.Name}.json");
+                if (file != null)
+                {
+                    googleDriveFileId = file.Id;
+
+                    // Update Profile config
+                    ProfileConfiguration!.Collections.Add(new CollectionConfig()
+                    {
+                        Name = collection.Name,
+                        FileId = file.Id,
+                        DateModifiedUtc = collection.DateModifiedUtc
+                    });
+                    // Push updates to Google Drive
+                    await UpdateProfile();
+                }
+                else
+                {
+                    throw new Exception("Couldn't create new Recipe collection file");
+                }
+            } else
+            {
+                // Update profile
+                collectionConfig!.DateModifiedUtc = collection.DateModifiedUtc;
+                await UpdateProfile();
+            }
+            // Push updates to Google Drive
+            await UpdateAsync(googleDriveFileId!, collection);
+        }
+    }
+    public class LocalRecipeStore
+    {
+        private readonly IJSRuntime js;
+        private readonly ILogger<LocalRecipeStore> logger;
+
+        private GoogleAppDataStorage googleService;
+
+        public LocalRecipeStore(IJSRuntime js, GoogleAppDataStorage googleService, ILogger<LocalRecipeStore> logger)
+        {
+            this.js = js;
+            this.googleService = googleService;
+            this.logger = logger;
+        }
+
+        public async Task SaveCollectionAsync(RecipeCollection collection)
+            => await googleService.AddOrUpdateCollection(collection);
+
+        public async Task AddCollaboratorToCollectionAsync(string collectionName, string email, string role)
+            => await googleService.AddCollaboratorAsync(collectionName, email, role);
+
+        public ValueTask<RecipeCollection> GetOutstandingLocalEditsAsync()
+        {
+            return js.InvokeAsync<RecipeCollection>(
+                $"{IndexedDb.PREFIX}.getAll", IndexedDb.COLLECTION_STORE);
         }
 
         public async Task SynchronizeAsync()
         {
-            await EnsureDriveServiceInitializedAsync();
-            await FetchChangesAsync();
+            if (googleService.IsInitialized)
+                await FetchChangesAsync();
         }
 
         public ValueTask SaveUserAccountAsync(ClaimsPrincipal user)
@@ -240,15 +446,45 @@ namespace HomeRecipes.SPA.Data
         }
 
         public ValueTask<string[]> Autocomplete(string prefix)
-            => js.InvokeAsync<string[]>($"{IndexedDb.PREFIX}.autocompleteKeys", IndexedDb.LOCAL_STORE, prefix, 5);
+            => js.InvokeAsync<string[]>($"{IndexedDb.PREFIX}.autocompleteKeys", IndexedDb.COLLECTION_STORE, prefix, 5);
 
-        public async Task<Recipe> GetRecipe(string recipeName)
-            => await GetAsync<Recipe>(IndexedDb.LOCAL_STORE, recipeName);
+        public async Task<IEnumerable<RecipeCollection>> GetCollections()
+            => await GetAllAsync<RecipeCollection>(IndexedDb.COLLECTION_STORE);
+
+        public async Task<RecipeCollection?> GetCollection(string collectionName)
+        {
+            var collection = await GetAsync<RecipeCollection>(IndexedDb.COLLECTION_STORE, collectionName);
+            if (collection == null)
+            {
+                var ex = new Exception("Could not find local collection by name '" + collectionName + "'");
+                logger.LogError(ex, ex.Message);
+                return null;
+            }
+
+            return collection;
+        }
+
+        public async Task<bool> HasRecipe(string collectionName, string recipeName)
+        {
+            return (await GetRecipe(collectionName, recipeName)) != null;
+        }
+
+        public async Task<Recipe?> GetRecipe(string collectionName, string recipeName)
+        {
+            var collection = await GetCollection(collectionName);
+            return collection?.Recipes.FirstOrDefault(o => o.Name == recipeName);
+        }
 
         public async Task<IEnumerable<Recipe>> GetAllRecipes()
         {
-            IEnumerable<Recipe> recipes = await GetAllAsync<Recipe>(IndexedDb.LOCAL_STORE);
-            return recipes;
+            var collections = await GetCollections();
+            return collections.SelectMany(o => o.Recipes);
+        }
+
+        public async Task<IEnumerable<Recipe>> GetAllRecipes(string collectionName)
+        {
+            var collection = await GetCollection(collectionName);
+            return collection?.Recipes ?? new List<Recipe>();
         }
 
         public async ValueTask<DateTime?> GetLastUpdateDateAsync()
@@ -257,38 +493,99 @@ namespace HomeRecipes.SPA.Data
             return value == null ? (DateTime?)null : DateTime.Parse(value);
         }
 
-        public async ValueTask SaveRecipeAsync(Recipe recipe)
+        public async ValueTask SaveRecipeAsync(string collectionName, Recipe recipe)
         {
+            // Get the Recipe Collection from the IndexedDB by name
+            var collection = await GetCollection(collectionName);
+            if (collection == null)
+            {
+                collection = new RecipeCollection() { Name = collectionName };
+                await PutAsync(IndexedDb.COLLECTION_STORE, null, collection);
+            }
+
             // Validate the recipe name
             if (string.IsNullOrEmpty(recipe.Name))
             {
                 throw new InvalidOperationException("Recipe name is required and cannot be null or empty.");
             }
 
+            // Lookup existing recipe or assign new recipe
+            var record = collection
+                .Recipes
+                .FirstOrDefault(o => o.Name.Equals(recipe.Name, StringComparison.OrdinalIgnoreCase))
+                ?? recipe;
+
+            // TODO: Use AutoMapper or something
+            record.Name = recipe.Name;
+            record.Description = recipe.Description;
+            record.PrepTime = recipe.PrepTime;
+            record.CookTime = recipe.CookTime;
+            record.RecipeYield = recipe.RecipeYield;
+            record.ThumbnailUrl = recipe.ThumbnailUrl;
+            record.Ingredients = recipe.Ingredients;
+            record.Instructions = recipe.Instructions;
+
             recipe.DateModified = DateTime.UtcNow;
             recipe.DatePublished = DateTime.UtcNow;
 
-            await PutAsync(IndexedDb.LOCAL_STORE, null, recipe);
+            // Add Recipe if it doesn't exist
+            if (!collection.Recipes.Any(o => o.Name.Equals(record.Name, StringComparison.OrdinalIgnoreCase)))
+            {
+                collection.Recipes.Add(record);
+            }
 
-            var json = await ReadFileContentAsync(recipeFile.Id);
-            var recipes = new List<Recipe>();
-            if (!string.IsNullOrEmpty(json))
-                recipes = JsonSerializer.Deserialize<List<Recipe>>(json)!;
-            recipes.Add(recipe);
+            // Update IndexedDB with collection
+            await PutAsync(IndexedDb.COLLECTION_STORE, null, collection);
 
-            var updatedJson = JsonSerializer.Serialize(recipes, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-            await UpdateFileContentAsync(recipeFile.Id, updatedJson);
+            // Update Collection file on Google Drive
+            await googleService.AddOrUpdateCollection(collection);
         }
 
         public async Task FetchChangesAsync()
         {
-            var json = await ReadFileContentAsync(recipeFile.Id);
-            if (!string.IsNullOrEmpty(json))
+            await googleService.Refresh();
+
+            foreach (var profileCollection in googleService.ProfileConfiguration.Collections)
             {
-                var recipes = JsonSerializer.Deserialize<List<Recipe>>(json);
-                json = JsonSerializer.Serialize(recipes, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-                await js.InvokeVoidAsync($"{IndexedDb.PREFIX}.putAllFromJson", IndexedDb.LOCAL_STORE, json);
-                await PutAsync(IndexedDb.META_STORE, "lastUpdateDate", DateTime.Now.ToString("o"));
+                var localCollection = await GetCollection(profileCollection.Name);
+                if (localCollection == null)
+                {
+                    if (profileCollection.Name.Equals("Default"))
+                    {
+                        localCollection = new RecipeCollection()
+                        {
+                            Name = "Default",
+                            DateCreatedUtc = DateTime.UtcNow,
+                            DateModifiedUtc = DateTime.UtcNow,
+                        };
+                        await PutAsync(IndexedDb.COLLECTION_STORE, null, localCollection);
+                    }
+                    else
+                    {
+                        throw new Exception("Failed to get Recipe Collection file from local IndexedDB");
+                    }
+                }
+
+                if (profileCollection.DateModifiedUtc > localCollection.DateModifiedUtc)
+                {
+                    var driveCollection = await googleService.GetCollection(profileCollection.Name);
+                    if (driveCollection == null)
+                        throw new Exception("Failed to get Recipe Collection file from Google Drive");
+
+                    await PutAsync(IndexedDb.COLLECTION_STORE, null, driveCollection);
+                }
+                else if (profileCollection.DateModifiedUtc < localCollection.DateModifiedUtc)
+                {
+                    await googleService.AddOrUpdateCollection(localCollection);
+                }
+            }
+
+            var localCollections = await GetCollections();
+            foreach (var localCollection in localCollections)
+            {
+                bool existsInDrive = googleService.ProfileConfiguration.Collections.Any(o => o.Name.Equals(localCollection.Name, StringComparison.OrdinalIgnoreCase));
+                if (!existsInDrive)
+                    await googleService.AddOrUpdateCollection(localCollection);
             }
         }
 
@@ -313,8 +610,8 @@ namespace HomeRecipes.SPA.Data
         public static class IndexedDb
         {
             public const string PREFIX = "localRecipeStore";
-            public const string LOCAL_STORE = "localedits";
             public const string META_STORE = "metadata";
+            public const string COLLECTION_STORE = "collections";
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@page "/recipes/{name}"
+﻿@page "/collections/{collectionName}/recipes/{name}"
 @inject HttpClient Http
 @inject Data.LocalRecipeStore LocalRecipeStore
 @using HomeRecipes.Shared
@@ -21,7 +21,7 @@
             <option value="4">x4 (Quadruple)</option>
         </select>
     </div>
-    <a href="recipes/@(Name)/edit" class="float-end">Edit</a>
+    <a href="collections/@(CollectionName)/recipes/@(Name)/edit" class="float-end">Edit</a>
 </div>
 <div class="recipe container mt-5">
     <div class="recipe-header">
@@ -108,6 +108,9 @@
 
 @code {
     [Parameter]
+    public string CollectionName { get; set; }
+
+    [Parameter]
     public string Name { get; set; }
 
     public HomeRecipes.Shared.Recipe recipe { get; set; }
@@ -115,7 +118,7 @@
     private double servingSize = 1;
 
     protected override async Task OnInitializedAsync() {
-        recipe = await LocalRecipeStore.GetRecipe(Name);// (await Http.GetFromJsonAsync<IEnumerable<HomeRecipes.Shared.Recipe>>($"recipes/recipes.json")).FirstOrDefault(o => o.Name == Name);
+        recipe = await LocalRecipeStore.GetRecipe(CollectionName, Name);// (await Http.GetFromJsonAsync<IEnumerable<HomeRecipes.Shared.Recipe>>($"recipes/recipes.json")).FirstOrDefault(o => o.Name == Name);
     }
 
     void ServingSizeChanged(ChangeEventArgs e) {

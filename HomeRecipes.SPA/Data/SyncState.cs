@@ -7,14 +7,11 @@ namespace HomeRecipes.SPA.Data
         public DateTime? LastUpdated { get; private set; }
         public bool IsSynced { get; private set; }
         public bool LastSyncFailed { get; private set; }
-        public int? OutstandingEdits { get; private set; }
         public event Action OnComplete;
 
         //private LocalRecipeStore LocalRecipeStore { get; set; }
 
-        public SyncState() {
-
-        }
+        public SyncState() { }
 
         public bool SetSyncState(bool state) {
             IsSynced = state;

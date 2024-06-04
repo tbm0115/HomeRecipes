@@ -17,6 +17,18 @@
             if (!db.objectStoreNames.contains('localedits')) {
                 db.createObjectStore('localedits', { keyPath: 'name' });
             }
+        },
+        // Version 2 to Version 3
+        (db, transaction) => {
+            // Delete 'localedits' store if it exists
+            if (db.objectStoreNames.contains('localedits')) {
+                db.deleteObjectStore('localedits');
+            }
+
+            // Create 'collections' store if it doesn't exist
+            if (!db.objectStoreNames.contains('collections')) {
+                db.createObjectStore('collections', { keyPath: 'name' });
+            }
         }
     ];
 
@@ -31,7 +43,7 @@
     };
 
     // Open the database and run migrations as needed
-    const dbPromise = idb.openDB('Recipes', 2, {
+    const dbPromise = idb.openDB('Recipes', 3, {
         upgrade(db, oldVersion, newVersion, transaction) {
             runMigrations(db, oldVersion, newVersion, transaction);
         }
@@ -47,7 +59,7 @@
             return (cursor && cursor.value) || null;
         },
         put: async (storeName, key, value) => {
-            if ((storeName === 'localedits') && !value.name) {
+            if ((storeName === 'localedits' || storeName === 'collections') && !value.name) {
                 console.error(`Missing 'name' property in object:`, value);
                 throw new Error("Object is missing 'name' property.");
             }
@@ -56,7 +68,7 @@
         putAllFromJson: async (storeName, json) => {
             const store = (await dbPromise).transaction(storeName, 'readwrite').store;
             JSON.parse(json).forEach(item => {
-                if ((storeName === 'localedits') && !item.name) {
+                if ((storeName === 'localedits' || storeName === 'collections') && !item.name) {
                     console.error(`Missing 'name' property in object:`, item);
                     throw new Error("Object is missing 'name' property.");
                 }

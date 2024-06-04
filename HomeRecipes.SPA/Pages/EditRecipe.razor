@@ -1,4 +1,4 @@
-﻿@page "/recipes/{name}/edit"
+﻿@page "/collections/{collectionName}/recipes/{name}/edit"
 @using HomeRecipes.SPA.Data
 @using HomeRecipes.Shared
 @using System.Linq
@@ -147,6 +147,9 @@
 
 @code {
     [Parameter]
+    public string CollectionName { get; set; }
+
+    [Parameter]
     public string Name { get; set; }
 
     public HomeRecipes.Shared.Recipe recipe { get; set; }
@@ -158,7 +161,7 @@
     protected override async Task OnInitializedAsync()
     {
         _loadingItem = true;
-        recipe = await LocalRecipeStore.GetRecipe(Name);
+        recipe = await LocalRecipeStore.GetRecipe(CollectionName, Name);
         prepgroups = recipe.Ingredients?.Select(o => o.PrepGroup)?.Distinct()?.ToList() ?? new List<string>();
         _loadingItem = false;
     }
@@ -196,8 +199,8 @@
         try
         {
             // Save recipe data
-            await LocalRecipeStore.SaveRecipeAsync(recipe);
-            Navigation.NavigateTo("/recipes/" + Name);
+            await LocalRecipeStore.SaveRecipeAsync(CollectionName, recipe);
+            Navigation.NavigateTo("/collections/" + CollectionName + "/recipes/" + Name);
         }
         catch (Exception ex)
         {

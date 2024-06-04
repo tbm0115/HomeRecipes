@@ -19,6 +19,7 @@ builder.Services.AddScoped(sp =>
     client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("br"));
     return client;
 });
+builder.Services.AddScoped<GoogleAppDataStorage>();
 builder.Services.AddScoped<LocalRecipeStore>();
 builder.Services.AddScoped<TokenStorage>();
 builder.Services.AddSingleton<SyncState>();

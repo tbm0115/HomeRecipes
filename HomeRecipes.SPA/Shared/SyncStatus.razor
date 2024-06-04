@@ -1,11 +1,12 @@
 ﻿@inject Data.SyncState SyncState
+@inject Data.GoogleAppDataStorage GoogleStorage
 @inject Data.LocalRecipeStore LocalRecipeStore
 @implements IDisposable
 
 @if (isSyncing) {
     <span>Updating...</span>
 } else if (lastSyncFailed) {
-    <span>Could not sync. Unsent edits: @(outstandingEdits ?? 0) </span>
+    <span>Could not sync.</span>
     <a class="toolbar-item toolbar-item-end toolbar-item-bg" @onclick="Synchronize">Retry</a>
 } else {
     <span>Last updated: @GetLastUpdatedText()</span>
@@ -16,7 +17,6 @@
     public bool isSyncing { get; set; }
     public bool lastSyncFailed { get; set; }
     public DateTime? lastUpdated { get; set; }
-    public int? outstandingEdits { get; set; }
 
     [Parameter]
     public Action OnSyncComplete { get; set; }
@@ -31,12 +31,15 @@
         isSyncing = true;
         lastSyncFailed = false;
 
-        lastSyncFailed = await SyncState.Synchronize(LocalRecipeStore);
-        StateHasChanged();
-        // Even if we weren't able to reach the server, we can update status based on local data
-        lastUpdated = await LocalRecipeStore.GetLastUpdateDateAsync();
-        StateHasChanged();
-        outstandingEdits = (await LocalRecipeStore.GetOutstandingLocalEditsAsync()).Length;
+        if (await GoogleStorage.EnsureDriveServiceInitializedAsync())
+        {
+            lastSyncFailed = await SyncState.Synchronize(LocalRecipeStore);
+            // Even if we weren't able to reach the server, we can update status based on local data
+            lastUpdated = await LocalRecipeStore.GetLastUpdateDateAsync();
+        } else
+        {
+            lastSyncFailed = true;
+        }
         StateHasChanged();
 
         isSyncing = false;

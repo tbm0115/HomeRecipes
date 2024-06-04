@@ -3,24 +3,30 @@
 @inject HttpClient Http
 @inject Data.LocalRecipeStore LocalRecipeStore
 
-<div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Select Collection
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        @foreach (var collection in collections)
+<div class="row">
+    <InputSelect class="form-control" @bind-Value="@selectedCollection" @bind-Value:after="() => SwitchCollection(selectedCollection)">
+        <option value="">All</option>
+        @if (collections?.Count > 0)
         {
-            <a class="dropdown-item" @onclick="() => SwitchCollection(collection.Name)">@collection.Name</a>
+            foreach (var collection in collections)
+            {
+                <option value="@(collection.Name)">@(collection.Name)</option>
+            }
         }
-    </div>
+    </InputSelect>
 </div>
 
-@if (recipeCount > 0) {
-    <div class="card-columns">
-        @for (int i = 0; i < recipeCount; i++) {
-        <RecipeTile recipe="@recipes.ElementAt(i)" />
-        }
-    </div>
+@if (currentRecipes?.Count > 0) {
+    foreach (var kvp in currentRecipes)
+    {
+        <h4>@(kvp.Key)</h4>
+        <div class="card-columns">
+            @foreach (var recipe in kvp.Value)
+            {
+                <RecipeTile CollectionName="@kvp.Key" Recipe="@recipe" />
+            }
+        </div>
+    }
 } else {
     <p class="alert alert-info">No Recipes Available</p>
 }
@@ -30,46 +36,43 @@
 <SyncStatus OnSyncComplete="@OnSyncComplete" />
 
 @code {
-    private List<RecipeCollection> collections;
-    private RecipeCollection currentCollection = new RecipeCollection();
+    private string selectedCollection;
+    private List<HomeRecipes.Shared.RecipeCollection> collections;
 
-    private int recipeCount => recipes?.Count() ?? 0;
-    private IEnumerable<HomeRecipes.Shared.Recipe> recipes { get; set; }
+    private Dictionary<string, List<HomeRecipes.Shared.Recipe>> currentRecipes = new Dictionary<string, List<HomeRecipes.Shared.Recipe>>();
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         collections = await LoadCollectionsAsync();
+        await SwitchCollection();
     }
 
-    async void OnSyncComplete() {
-        recipes = await LocalRecipeStore.GetAllRecipes();
+    async void OnSyncComplete()
+    {
+        collections = await LoadCollectionsAsync();
         StateHasChanged();
     }
 
     private async Task<List<RecipeCollection>> LoadCollectionsAsync()
     {
         // Load collections from Google Drive
-        return await Task.FromResult(new List<RecipeCollection>());
+        return (await LocalRecipeStore.GetCollections()).ToList();
     }
 
-    private async Task SwitchCollection(string collectionName)
+    private async Task SwitchCollection(string collectionName = "")
     {
-        currentCollection = await LocalRecipeStore.LoadCollectionAsync(collectionName);
-    }
-
-    private void AddCollaborator()
-    {
-        currentCollection.Collaborators.Add(new Collaborator());
-    }
-
-    private void RemoveCollaborator(Collaborator collaborator)
-    {
-        currentCollection.Collaborators.Remove(collaborator);
-    }
-
-    private async Task SaveCollection()
-    {
-        await LocalRecipeStore.SaveCollectionAsync(currentCollection);
+        selectedCollection = collectionName;
+        if (string.IsNullOrEmpty(collectionName))
+        {
+            currentRecipes = collections.ToDictionary(o => o.Name, o => o.Recipes);
+        } else
+        {
+            var collection = collections.FirstOrDefault(o => o.Name.Equals(selectedCollection, StringComparison.OrdinalIgnoreCase));
+            currentRecipes = new Dictionary<string, List<HomeRecipes.Shared.Recipe>>()
+            {
+                { collection.Name, collection.Recipes }
+            };
+        }
     }
 } 
