@@ -19,14 +19,7 @@ async function onInstall(event) {
         .filter(asset => offlineAssetsInclude.some(pattern => pattern.test(asset.url)))
         .filter(asset => !offlineAssetsExclude.some(pattern => pattern.test(asset.url)))
         .map(asset => new Request(asset.url, { integrity: asset.hash }));
-
-    try {
-        const cache = await caches.open(cacheName);
-        await cache.addAll(assetsRequests);
-        console.info('All assets cached successfully.');
-    } catch (error) {
-        console.error('Error caching assets during install:', error);
-    }
+    await caches.open(cacheName).then(cache => cache.addAll(assetsRequests));
 }
 
 async function onActivate(event) {
@@ -37,8 +30,6 @@ async function onActivate(event) {
     await Promise.all(cacheKeys
         .filter(key => key.startsWith(cacheNamePrefix) && key !== cacheName)
         .map(key => caches.delete(key)));
-
-    console.info('Old caches cleaned up.');
 }
 
 async function onFetch(event) {
@@ -50,24 +41,9 @@ async function onFetch(event) {
 
         const request = shouldServeIndexHtml ? 'index.html' : event.request;
         const cache = await caches.open(cacheName);
-
-        try {
-            cachedResponse = await cache.match(request);
-        } catch (error) {
-            console.error('Error matching cache for request:', error);
-        }
-
-        if (!cachedResponse) {
-            try {
-                cachedResponse = await fetch(event.request);
-                if (cachedResponse && cachedResponse.status === 200) {
-                    cache.put(event.request, cachedResponse.clone());
-                }
-            } catch (error) {
-                console.error('Error fetching resource:', error);
-            }
-        }
+        cachedResponse = await cache.match(request);
     }
 
     return cachedResponse || fetch(event.request);
 }
+/* Manifest version: oIssiOMw */
