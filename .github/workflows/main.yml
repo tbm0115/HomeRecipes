@@ -13,7 +13,7 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 7.0.x
+          dotnet-version: 8.0.x
           
       - name: Publish .NET Core Project
         run: dotnet publish HomeRecipes.SPA/HomeRecipes.SPA.csproj -c Release -o release --nologo
