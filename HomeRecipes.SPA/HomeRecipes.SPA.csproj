@@ -23,13 +23,13 @@
   </ItemGroup>
 	
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-		<None Update="appsettings.Release.json" CopyToOutputDirectory="Never" />
-		<None Update="appsettings.Development.json" CopyToOutputDirectory="PreserveNewest" />
+		<None Update="wwwroot\appsettings.Release.json" CopyToOutputDirectory="Never" />
+		<None Update="wwwroot\appsettings.Development.json" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<None Update="appsettings.Development.json" CopyToOutputDirectory="Never" />
-		<None Update="appsettings.Release.json" CopyToOutputDirectory="PreserveNewest" />
+		<None Update="wwwroot\appsettings.Development.json" CopyToOutputDirectory="Never" />
+		<None Update="wwwroot\appsettings.Release.json" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
 
 	<ItemGroup>
