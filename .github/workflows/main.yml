@@ -3,6 +3,16 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      BuildType:
+        description: VS Build Type
+        required: true
+        default: 'Release'
+        type: choice
+        options:
+          - Release
+          - Debug
 
 jobs:
   deploy-to-github-pages:
@@ -16,7 +26,7 @@ jobs:
           dotnet-version: 8.0.x
           
       - name: Publish .NET Core Project
-        run: dotnet publish HomeRecipes.SPA/HomeRecipes.SPA.csproj -c Release -o release --nologo
+        run: dotnet publish HomeRecipes.SPA/HomeRecipes.SPA.csproj -c ${{ github.event.inputs.buildtype }} -o ${{ github.event.inputs.buildtype }} --nologo
         
       # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to match GitHub Pages repository subdirectory
      # - name: Change base-tag in index.html from / to HomeRecipes.Client
@@ -24,7 +34,7 @@ jobs:
       
       # copy index.html to 404.html to serve the same file when a file is not found
       - name: copy index.html to 404.html
-        run: cp release/wwwroot/index.html release/wwwroot/404.html
+        run: cp ${{ github.event.inputs.buildtype }}/wwwroot/index.html ${{ github.event.inputs.buildtype }}/wwwroot/404.html
       
       # add .nojekyll file to tell GitHub pages to not treat this as a Jekyll project. (Allow files and folders starting with an underscore)
       - name: Add .nojekyll file
@@ -35,4 +45,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: release/wwwroot
+          FOLDER: ${{ github.event.inputs.buildtype }}/wwwroot
