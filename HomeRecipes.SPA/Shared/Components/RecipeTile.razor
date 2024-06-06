@@ -1,0 +1,22 @@
+﻿@inject HttpClient Http
+
+<div class="card">
+    @if (Recipe == null) {
+        <BlazorBootstrap.Spinner />
+    } else {
+        <img class="card-img-top" src="@(Recipe.ThumbnailUrl)" alt="@(Recipe.Name)" />
+        <div class="card-body">
+            <h5 class="card-title">@(Recipe.Name)</h5>
+            <p class="card-text">@(Recipe.Description)</p>
+            <a href="collections/@(CollectionName)/recipes/@(Recipe.Name)" class="btn btn-primary">View Recipe</a>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string CollectionName { get; set; }
+
+    [Parameter]
+    public HomeRecipes.Shared.Recipe Recipe { get; set; }
+}

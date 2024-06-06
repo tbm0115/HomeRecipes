@@ -1,0 +1,57 @@
+{
+    "name": "LightWorks.Recipes",
+    "short_name": "Recipes",
+    "start_url": "./",
+    "lang": "en-US",
+    "dir": "ltr",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#03173d",
+    "categories": [ "food" ],
+    "description": "A collection of favorite family recipes with capabilities of adjusting recipe by serving size automatically.",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "maskable_icon_512.png",
+            "type": "image/png",
+            "sizes": "512x512",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable_icon_384.png",
+            "type": "image/png",
+            "sizes": "384x384",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable_icon_152.png",
+            "type": "image/png",
+            "sizes": "152x152",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable_icon_144.png",
+            "type": "image/png",
+            "sizes": "144x144",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable_icon_128.png",
+            "type": "image/png",
+            "sizes": "128x128",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable_icon_96.png",
+            "type": "image/png",
+            "sizes": "96x96",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable_icon_72.png",
+            "type": "image/png",
+            "sizes": "72x72",
+            "purpose": "maskable"
+        }
+    ]
+}

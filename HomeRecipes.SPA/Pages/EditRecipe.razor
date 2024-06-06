@@ -1,0 +1,213 @@
+﻿@page "/collections/{collectionName}/recipes/{name}/edit"
+@using HomeRecipes.SPA.Data
+@using HomeRecipes.Shared
+@using System.Linq
+
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject ILogger<EditRecipe> Logger
+@inject LocalRecipeStore LocalRecipeStore
+
+<PageTitle>Edit - @(recipe?.Name ?? "Recipe") - @(CollectionName) - Collections - LightWorks Home Recipes</PageTitle>
+
+@if (_loadingItem)
+{
+    <BlazorBootstrap.Spinner />
+} else if (recipe == null)
+{
+    <p class="alert alert-danger">Could not find recipe by the name of '@(Name)'</p>
+} else
+{
+    <EditForm FormName="editRecipe" Model="@recipe" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="row">
+            <div class="col">
+                <label for="txtName">Name</label>
+                <InputText id="txtName" readonly Type="text" class="form-control" @bind-Value="recipe.Name" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="txtDescription">Description</label>
+                <InputTextArea id="txtDescription" class="form-control" rows="5" @bind-Value="recipe.Description" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="imgThumbnail">Thumbnail URL</label>
+                <InputText id="imgThumbnail" class="form-control" Type="text" Placeholder="Paste image URL" @bind-Value="recipe.ThumbnailUrl" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="txtYield">Recipe Yield</label>
+                <InputNumber id="txtYield" class="form-control" @bind-Value="recipe.RecipeYield" />
+            </div>
+        </div>
+        @* <InputText Type="time" @bind-Value="recipe.CookTime" Label="Cook Time" />
+    <InputText Type="time" @bind-Value="recipe.PrepTime" Label="Prep Time" /> *@
+        @* <InputText Type="datetime-local" @bind-Value="recipe.DateCreated" Label="Date Created" />
+    <InputText Type="datetime-local" @bind-Value="recipe.DatePublished" Label="Date Published" />
+    <InputText Type="datetime-local" @bind-Value="recipe.DateModified" Label="Date Modified" /> *@
+
+        <h3>Ingredients</h3>
+        @if (recipe.Ingredients?.Count() > 0)
+        {
+            foreach (var ingredient in recipe.Ingredients)
+            {
+                <div class="ingredient-item mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="txtInredientName">Name</label>
+                            <InputText id="txtInredientName" class="form-control" Type="text" @bind-Value="ingredient.Name" />
+                        </div>
+                        <div class="col-1">
+                            <label for="txtIngredientQuantity">Quantity</label>
+                            <InputNumber id="txtIngredientQuantity" class="form-control" min="0" @bind-Value="ingredient.Quantity" Label="Quantity" />
+                        </div>
+                        <div class="col-2">
+                            <label for="txtUnits">Units</label>
+                            <InputText id="txtUnits" class="form-control" Type="text" @bind-Value="ingredient.Units" Label="Units" list="ingredient-units" />
+                            <datalist id="ingredient-units">
+                                <option value="Teaspoon"></option>
+                                <option value="Tablespoon"></option>
+                                <option value="Cup"></option>
+                                <option value="Pint"></option>
+                                <option value="Quart"></option>
+                                <option value="Pound"></option>
+                                <option value="To Taste"></option>
+                            </datalist>
+                        </div>
+                        <div class="col-4">
+                            <label for="txtIngredientPrepGroup">Preperation Group</label>
+                            <InputText id="txtIngredientPrepGroup" class="form-control" Type="text" @bind-Value="ingredient.PrepGroup" Label="Prep Group" list="prepgroups" />
+                            @if (prepgroups?.Count > 0)
+                            {
+                                <datalist id="prepgroups">
+                                    @foreach (var prepgroup in prepgroups)
+                                {
+                                    <option value="@(prepgroup)"></option>
+                                }
+                                </datalist>
+                            }
+                        </div>
+                        <div class="col-1">
+                            <button type="button" @onclick="@(() => RemoveIngredient(ingredient))" class="btn btn-danger">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="alert alert-warning">No Ingredients</p>
+        }
+        <div class="row mb-5">
+            <div class="col-9"></div>
+            <div class="col-3">
+                <button type="button" @onclick="AddIngredient" class="btn btn-sm btn-primary">Add Ingredient</button>
+            </div>
+        </div>
+
+        <h3>Instructions</h3>
+        @if (recipe.Instructions?.Count() > 0)
+        {
+            foreach (var instruction in recipe.Instructions)
+            {
+                <div class="instruction-item mb-3">
+                    <div class="row">
+                        <div class="col-11">
+                            <label for="txtInstructionDescription">Description</label>
+                            <InputText id="txtInstructionDescription" class="form-control" Type="text" @bind-Value="instruction.Description" Label="Description" />
+                        </div>
+                        <div class="col-1">
+                            <button type="button" @onclick="@(() => RemoveInstruction(instruction))" class="btn btn-danger">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="alert alert-warning">No Instructions</p>
+        }
+        <div class="row mb-5">
+            <div class="col-9"></div>
+            <div class="col-3">
+                <button type="button" @onclick="AddInstruction" class="btn btn-sm btn-primary">Add Instruction</button>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+        <div class="row mb-5">
+            <DeleteRecipeModal CollectionName="@CollectionName" Recipe="@recipe" />
+        </div>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public string CollectionName { get; set; }
+
+    [Parameter]
+    public string Name { get; set; }
+
+    public HomeRecipes.Shared.Recipe recipe { get; set; }
+
+    private bool _loadingItem { get; set; }
+
+    private List<string> prepgroups = new List<string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _loadingItem = true;
+        recipe = await LocalRecipeStore.GetRecipe(CollectionName, Name);
+        prepgroups = recipe.Ingredients?.Select(o => o.PrepGroup)?.Distinct()?.ToList() ?? new List<string>();
+        _loadingItem = false;
+    }
+
+    private void AddIngredient()
+    {
+        var ingredients = recipe.Ingredients?.ToList() ?? new List<RecipeIngredient>();
+        ingredients.Add(new RecipeIngredient());
+        recipe.Ingredients = ingredients;
+    }
+
+    private void RemoveIngredient(RecipeIngredient ingredient)
+    {
+        var ingredients = recipe.Ingredients?.ToList() ?? new List<RecipeIngredient>();
+        ingredients.Remove(ingredient);
+        recipe.Ingredients = ingredients;
+    }
+
+    private void AddInstruction()
+    {
+        var instructions = recipe.Instructions?.ToList() ?? new List<RecipeInstruction>();
+        instructions.Add(new RecipeInstruction());
+        recipe.Instructions = instructions;
+    }
+
+    private void RemoveInstruction(RecipeInstruction instruction)
+    {
+        var instructions = recipe.Instructions?.ToList() ?? new List<RecipeInstruction>();
+        instructions.Remove(instruction);
+        recipe.Instructions = instructions;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            // Save recipe data
+            await LocalRecipeStore.SaveRecipeAsync(CollectionName, recipe);
+            Navigation.NavigateTo("/collections/" + CollectionName + "/recipes/" + Name);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError("Error saving recipe: {Message}", ex.Message);
+        }
+    }
+}

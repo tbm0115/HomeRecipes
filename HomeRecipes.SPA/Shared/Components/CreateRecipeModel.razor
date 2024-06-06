@@ -1,0 +1,105 @@
+﻿@using BlazorBootstrap
+@using HomeRecipes.SPA.Data
+@using HomeRecipes.Shared
+@using System.ComponentModel.DataAnnotations
+@inject LocalRecipeStore RecipeStore
+@inject IJSRuntime JSRuntime
+
+<button class="btn btn-primary" @onclick="ShowModal">Create New Recipe</button>
+
+
+<Modal @ref="modal" Title="Create New Recipe">
+    <BodyTemplate>
+        <div class="form-group">
+            <label for="collectionName">Collection</label>
+            <input type="text" class="form-control" id="collectionName" @bind="dto.CollectionName" placeholder="Search or create a new Collection" list="collectionNames" />
+            <datalist id="collectionNames">
+                @foreach (var savedCollectionName in collectionNames)
+                {
+                    <option value="@(savedCollectionName)"></option>
+                }
+            </datalist>
+        </div>
+        <div class="form-group">
+            <label for="recipeName">Recipe Name</label>
+            <input type="text" class="form-control" id="recipeName" @bind="dto.RecipeName" placeholder="Enter recipe name" />
+        </div>
+        <!-- Add more fields for the recipe as needed -->
+    </BodyTemplate>
+    <FooterTemplate>
+        <button type="button" class="btn btn-secondary" @onclick="HideModal">Close</button>
+        @if (isCreating)
+        {
+            <Spinner />
+        } else
+        {
+            <button type="button" class="btn btn-primary" @onclick="CreateRecipe">Create Recipe</button>
+        }
+    </FooterTemplate>
+</Modal>
+
+@code {
+    [Parameter]
+    public EventCallback OnRecipeCreated { get; set; }
+
+    private Modal modal = default!;
+    private NewRecipeDto dto = new NewRecipeDto();
+    private string[] collectionNames = new string[] { };
+    private bool isCreating = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        collectionNames = (await RecipeStore.GetCollections()).Select(o => o.Name).ToArray();
+    }
+
+    private async Task ShowModal()
+    {
+        await modal.ShowAsync();
+    }
+
+    private async Task HideModal()
+    {
+        await modal.HideAsync();
+    }
+
+    private async Task CreateRecipe()
+    {
+        if (string.IsNullOrEmpty(dto.CollectionName) || dto.CollectionName.Length < 4)
+            throw new Exception("Invalid collection name");
+        if (string.IsNullOrEmpty(dto.RecipeName) || dto.RecipeName.Length < 4)
+            throw new Exception("Invalid recipe name");
+        if (await RecipeStore.HasRecipe(dto.CollectionName, dto.RecipeName))
+            throw new Exception("Recipe already exists in the collection");
+
+        isCreating = true;
+
+        // Save the new recipe using LocalRecipeStore
+        await RecipeStore.SaveRecipeAsync(dto.CollectionName, new Recipe()
+        {
+            Name = dto.RecipeName
+        });
+
+        // Optionally, synchronize with Google Drive
+        await RecipeStore.SynchronizeAsync();
+
+        // Close the modal
+        await HideModal();
+
+        // Reset the form
+        dto = new NewRecipeDto();
+
+        isCreating = false;
+
+        await OnRecipeCreated.InvokeAsync();
+    }
+    internal class NewRecipeDto
+    {
+        [Required, MinLength(4)]
+        internal string RecipeName { get; set; } = "My Recipe";
+
+        [Required, MinLength(4)]
+        internal string CollectionName { get; set; } = "Default";
+    }
+}

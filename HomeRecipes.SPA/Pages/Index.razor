@@ -1,0 +1,82 @@
+﻿@page "/"
+@using HomeRecipes.Shared
+@inject HttpClient Http
+@inject Data.LocalRecipeStore LocalRecipeStore
+
+<PageTitle>LightWorks Home Recipes</PageTitle>
+
+<div class="row">
+    <InputSelect class="form-control" @bind-Value="@selectedCollection" @bind-Value:after="() => SwitchCollection(selectedCollection)">
+        <option value="">All</option>
+        @if (collections?.Count > 0)
+        {
+            foreach (var collection in collections)
+            {
+                <option value="@(collection.Name)">@(collection.Name)</option>
+            }
+        }
+    </InputSelect>
+</div>
+
+@if (currentRecipes?.Count > 0) {
+    foreach (var kvp in currentRecipes)
+    {
+        <h4>@(kvp.Key)</h4>
+        <div class="card-columns">
+            @foreach (var recipe in kvp.Value)
+            {
+                <RecipeTile CollectionName="@kvp.Key" Recipe="@recipe" />
+            }
+        </div>
+    }
+} else {
+    <p class="alert alert-info">No Recipes Available</p>
+}
+
+<CreateRecipeModel OnRecipeCreated="LoadCollectionsAsync" />
+
+<SyncStatus OnSyncComplete="@OnSyncComplete" />
+
+@code {
+    private string selectedCollection;
+    private List<HomeRecipes.Shared.RecipeCollection> collections;
+
+    private Dictionary<string, List<HomeRecipes.Shared.Recipe>> currentRecipes = new Dictionary<string, List<HomeRecipes.Shared.Recipe>>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await LoadCollectionsAsync();
+        await SwitchCollection();
+    }
+
+    async void OnSyncComplete()
+    {
+        await LoadCollectionsAsync();
+        StateHasChanged();
+    }
+
+    private async Task LoadCollectionsAsync()
+    {
+        // Load collections from Google Drive
+        collections = (await LocalRecipeStore.GetCollections()).ToList();
+        await SwitchCollection(selectedCollection);
+        StateHasChanged();
+    }
+
+    private async Task SwitchCollection(string collectionName = "")
+    {
+        selectedCollection = collectionName;
+        if (string.IsNullOrEmpty(collectionName))
+        {
+            currentRecipes = collections.ToDictionary(o => o.Name, o => o.Recipes);
+        } else
+        {
+            var collection = collections.FirstOrDefault(o => o.Name.Equals(selectedCollection, StringComparison.OrdinalIgnoreCase));
+            currentRecipes = new Dictionary<string, List<HomeRecipes.Shared.Recipe>>()
+            {
+                { collection.Name, collection.Recipes }
+            };
+        }
+    }
+} 
