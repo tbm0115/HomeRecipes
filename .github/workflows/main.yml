@@ -19,31 +19,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        
+
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 8.0.x
-          
+
       - name: Set Build Type
         id: build_type
         run: echo "::set-output name=build_type::${{ github.event.inputs.build_type || 'Release' }}"
-        
+
       - name: Publish .NET Core Project
         run: dotnet publish HomeRecipes.SPA/HomeRecipes.SPA.csproj -c ${{ steps.build_type.outputs.build_type }} -o ${{ steps.build_type.outputs.build_type }} --nologo
-        
-      # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to match GitHub Pages repository subdirectory
-      # - name: Change base-tag in index.html from / to HomeRecipes.Client
-      #   run: sed -i 's/<base href="\/" \/>/<base href="\/HomeRecipes\/" \/>/g' release/wwwroot/index.html
-      
-      # copy index.html to 404.html to serve the same file when a file is not found
-      - name: copy index.html to 404.html
+
+      - name: Rename appsettings
+        run: |
+          if [ "${{ steps.build_type.outputs.build_type }}" = "Release" ]; then
+            mv ${{ steps.build_type.outputs.build_type }}/wwwroot/appsettings.Release.json ${{ steps.build_type.outputs.build_type }}/wwwroot/appsettings.json
+          else
+            mv ${{ steps.build_type.outputs.build_type }}/wwwroot/appsettings.Development.json ${{ steps.build_type.outputs.build_type }}/wwwroot/appsettings.json
+          fi
+
+      - name: Copy index.html to 404.html
         run: cp ${{ steps.build_type.outputs.build_type }}/wwwroot/index.html ${{ steps.build_type.outputs.build_type }}/wwwroot/404.html
-      
-      # add .nojekyll file to tell GitHub pages to not treat this as a Jekyll project. (Allow files and folders starting with an underscore)
+
       - name: Add .nojekyll file
         run: touch ${{ steps.build_type.outputs.build_type }}/wwwroot/.nojekyll
-      
+
       - name: Commit wwwroot to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
