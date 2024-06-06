@@ -36,8 +36,10 @@ jobs:
         run: |
           if [ "${{ steps.build_type.outputs.build_type }}" = "Release" ]; then
             mv ${{ steps.build_type.outputs.build_type }}/wwwroot/appsettings.Release.json ${{ steps.build_type.outputs.build_type }}/wwwroot/appsettings.json
+            rm ${{ steps.build_type.outputs.build_type }}/wwwroot/appsettings.Development.json
           else
             mv ${{ steps.build_type.outputs.build_type }}/wwwroot/appsettings.Development.json ${{ steps.build_type.outputs.build_type }}/wwwroot/appsettings.json
+            rm ${{ steps.build_type.outputs.build_type }}/wwwroot/appsettings.Release.json
           fi
 
       - name: Copy index.html to 404.html
