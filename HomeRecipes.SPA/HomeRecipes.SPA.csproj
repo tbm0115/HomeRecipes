@@ -21,8 +21,18 @@
     <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
     <_ContentIncludedByDefault Remove="wwwroot\Readme.md" />
   </ItemGroup>
+	
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<None Update="appsettings.Release.json" CopyToOutputDirectory="Never" />
+		<None Update="appsettings.Development.json" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<None Update="appsettings.Development.json" CopyToOutputDirectory="Never" />
+		<None Update="appsettings.Release.json" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+
+	<ItemGroup>
     <PackageReference Include="Blazor.Bootstrap" Version="2.2.0" />
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.68.0.3428" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.6" />
