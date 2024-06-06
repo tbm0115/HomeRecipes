@@ -25,24 +25,28 @@ jobs:
         with:
           dotnet-version: 8.0.x
           
+      - name: Set Build Type
+        id: build_type
+        run: echo "::set-output name=build_type::${{ github.event.inputs.build_type || 'Release' }}"
+        
       - name: Publish .NET Core Project
-        run: dotnet publish HomeRecipes.SPA/HomeRecipes.SPA.csproj -c ${{ github.event.inputs.build_type }} -o ${{ github.event.inputs.build_type }} --nologo
+        run: dotnet publish HomeRecipes.SPA/HomeRecipes.SPA.csproj -c ${{ steps.build_type.outputs.build_type }} -o ${{ steps.build_type.outputs.build_type }} --nologo
         
       # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to match GitHub Pages repository subdirectory
-     # - name: Change base-tag in index.html from / to HomeRecipes.Client
-     #   run: sed -i 's/<base href="\/" \/>/<base href="\/HomeRecipes\/" \/>/g' release/wwwroot/index.html
+      # - name: Change base-tag in index.html from / to HomeRecipes.Client
+      #   run: sed -i 's/<base href="\/" \/>/<base href="\/HomeRecipes\/" \/>/g' release/wwwroot/index.html
       
       # copy index.html to 404.html to serve the same file when a file is not found
       - name: copy index.html to 404.html
-        run: cp ${{ github.event.inputs.build_type }}/wwwroot/index.html ${{ github.event.inputs.build_type }}/wwwroot/404.html
+        run: cp ${{ steps.build_type.outputs.build_type }}/wwwroot/index.html ${{ steps.build_type.outputs.build_type }}/wwwroot/404.html
       
       # add .nojekyll file to tell GitHub pages to not treat this as a Jekyll project. (Allow files and folders starting with an underscore)
       - name: Add .nojekyll file
-        run: touch ${{ github.event.inputs.build_type }}/wwwroot/.nojekyll
+        run: touch ${{ steps.build_type.outputs.build_type }}/wwwroot/.nojekyll
       
       - name: Commit wwwroot to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: ${{ github.event.inputs.build_type }}/wwwroot
+          FOLDER: ${{ steps.build_type.outputs.build_type }}/wwwroot
