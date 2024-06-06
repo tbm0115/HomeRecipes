@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "HomeRecipes.SPA",
   "resources": {
-    "hash": "sha256-695fTYDrhYVtHiz11qdWkx218CJOXuY6vG4DNwxJ/dA=",
+    "hash": "sha256-+7HUGe8e/ZIDsa1qhT82CJsI4xw/bkRqUmJvGGf4yk4=",
     "jsModuleNative": {
       "dotnet.native.8.0.6.suuomc2hr0.js": "sha256-YU6M9+jtDVnB8/wtrgIndOstzNh778Ls8g9XnbjorSk="
     },
@@ -23,8 +23,8 @@
       "Google.Apis.Core.wasm": "sha256-ZJbUx6BHuzcdqeDElFsJ1+cYzyTyVisWXwQWJjMxixY=",
       "Google.Apis.Drive.v3.wasm": "sha256-Yf2eID4j9eoxISPuyaprf4mbmMxBFecVw2Y+kE4AoSE=",
       "Google.Apis.wasm": "sha256-XcsNSetbd049F/SxdqrKodylx/hxhc7VhTmTARzfCH4=",
-      "HomeRecipes.Shared.wasm": "sha256-G+XZrQpj2xNHeZBap1dHlym0HhPbSkz8FDAmZlq/6zw=",
-      "HomeRecipes.SPA.wasm": "sha256-sG8UF+RKLUv/s/bocfDdOnjxpwJJN4NJaysCrfsH1yg=",
+      "HomeRecipes.Shared.wasm": "sha256-Ayr4qyswTatrmLQQXkG494TWxunndMeCA9zJunoLgRY=",
+      "HomeRecipes.SPA.wasm": "sha256-iKq4nCmmppXBFZCfXMk57UfyOlP58nAJzWf3WlZk5Fk=",
       "Microsoft.AspNetCore.Authorization.wasm": "sha256-tm3gf+rB/N1n3JbSmv8aZTMly0l1YAjhTEl/xDF3X+I=",
       "Microsoft.AspNetCore.Components.Authorization.wasm": "sha256-vZL1WsvAwIwwxs43b8VF/rD6FCsBOFIy5Go3wzcAYBY=",
       "Microsoft.AspNetCore.Components.Forms.wasm": "sha256-vn0/0tOw3AuMn7pmkq6LwTypEdaIEQBw/QO4Gobzl1o=",
