@@ -1,0 +1,65 @@
+﻿@using BlazorBootstrap
+@using HomeRecipes.SPA.Data
+@using HomeRecipes.Shared
+@using System.ComponentModel.DataAnnotations
+@inject NavigationManager Navigation
+@inject LocalRecipeStore RecipeStore
+@inject IJSRuntime JSRuntime
+
+<button class="btn btn-danger" @onclick="ShowModal">Delete Collection</button>
+
+
+<Modal @ref="modal" Title="Delete Collection">
+    <BodyTemplate>
+        <p class="alert alert-danger">Are you sure you wish to delete this collection?<br /><strong>@(CollectionName)</strong></p>
+    </BodyTemplate>
+    <FooterTemplate>
+        <button type="button" class="btn btn-secondary" @onclick="HideModal">Close</button>
+        @if (isDeleting)
+        {
+            <Spinner />
+        } else
+        {
+            <button type="button" class="btn btn-primary" @onclick="Delete">Delete Collection</button>
+        }
+    </FooterTemplate>
+</Modal>
+
+@code {
+    private Modal modal = default!;
+    private bool isDeleting = false;
+
+    [Parameter]
+    public string CollectionName { get; set; }
+
+    private async Task ShowModal()
+    {
+        await modal.ShowAsync();
+    }
+
+    private async Task HideModal()
+    {
+        await modal.HideAsync();
+    }
+
+    private async Task Delete()
+    {
+        if (string.IsNullOrEmpty(CollectionName))
+            throw new Exception("Invalid collection name");
+
+        isDeleting = true;
+
+        // Save the new recipe using LocalRecipeStore
+        await RecipeStore.DeleteCollectionAsync(CollectionName);
+
+        // Optionally, synchronize with Google Drive
+        await RecipeStore.SynchronizeAsync();
+
+        // Close the modal
+        await HideModal();
+
+        isDeleting = false;
+
+        Navigation.NavigateTo("/");
+    }
+}

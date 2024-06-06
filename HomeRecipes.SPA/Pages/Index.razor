@@ -3,6 +3,8 @@
 @inject HttpClient Http
 @inject Data.LocalRecipeStore LocalRecipeStore
 
+<PageTitle>LightWorks Home Recipes</PageTitle>
+
 <div class="row">
     <InputSelect class="form-control" @bind-Value="@selectedCollection" @bind-Value:after="() => SwitchCollection(selectedCollection)">
         <option value="">All</option>
@@ -31,7 +33,7 @@
     <p class="alert alert-info">No Recipes Available</p>
 }
 
-<CreateRecipeModel />
+<CreateRecipeModel OnRecipeCreated="LoadCollectionsAsync" />
 
 <SyncStatus OnSyncComplete="@OnSyncComplete" />
 
@@ -44,20 +46,22 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        collections = await LoadCollectionsAsync();
+        await LoadCollectionsAsync();
         await SwitchCollection();
     }
 
     async void OnSyncComplete()
     {
-        collections = await LoadCollectionsAsync();
+        await LoadCollectionsAsync();
         StateHasChanged();
     }
 
-    private async Task<List<RecipeCollection>> LoadCollectionsAsync()
+    private async Task LoadCollectionsAsync()
     {
         // Load collections from Google Drive
-        return (await LocalRecipeStore.GetCollections()).ToList();
+        collections = (await LocalRecipeStore.GetCollections()).ToList();
+        await SwitchCollection(selectedCollection);
+        StateHasChanged();
     }
 
     private async Task SwitchCollection(string collectionName = "")

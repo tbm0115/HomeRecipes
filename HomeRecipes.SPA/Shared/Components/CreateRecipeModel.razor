@@ -27,15 +27,25 @@
         <!-- Add more fields for the recipe as needed -->
     </BodyTemplate>
     <FooterTemplate>
-        <button class="btn btn-secondary" @onclick="HideModal">Close</button>
-        <button class="btn btn-primary" @onclick="CreateRecipe">Create Recipe</button>
+        <button type="button" class="btn btn-secondary" @onclick="HideModal">Close</button>
+        @if (isCreating)
+        {
+            <Spinner />
+        } else
+        {
+            <button type="button" class="btn btn-primary" @onclick="CreateRecipe">Create Recipe</button>
+        }
     </FooterTemplate>
 </Modal>
 
 @code {
+    [Parameter]
+    public EventCallback OnRecipeCreated { get; set; }
+
     private Modal modal = default!;
     private NewRecipeDto dto = new NewRecipeDto();
     private string[] collectionNames = new string[] { };
+    private bool isCreating = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -63,6 +73,8 @@
         if (await RecipeStore.HasRecipe(dto.CollectionName, dto.RecipeName))
             throw new Exception("Recipe already exists in the collection");
 
+        isCreating = true;
+
         // Save the new recipe using LocalRecipeStore
         await RecipeStore.SaveRecipeAsync(dto.CollectionName, new Recipe()
         {
@@ -77,6 +89,10 @@
 
         // Reset the form
         dto = new NewRecipeDto();
+
+        isCreating = false;
+
+        await OnRecipeCreated.InvokeAsync();
     }
     internal class NewRecipeDto
     {

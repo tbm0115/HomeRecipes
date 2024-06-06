@@ -249,7 +249,7 @@ namespace HomeRecipes.SPA.Data
         /// <returns>awaitable task</returns>
         public async Task AddCollaboratorAsync(string collectionName, string email, string role)
         {
-            var collectionConfig = GetCollectionConfig(collectionName);
+            var collectionConfig = await GetCollectionConfig(collectionName);
             if (collectionConfig == null)
                 throw new Exception("Could not find recipe collection configuration");
 
@@ -329,10 +329,14 @@ namespace HomeRecipes.SPA.Data
         public async Task UpdateProfile()
             => await UpdateAsync(this.ProfileConfigFile.Id, this.ProfileConfiguration);
 
-        public CollectionConfig? GetCollectionConfig(string collectionName)
-        => this.ProfileConfiguration
+        public async Task<CollectionConfig?> GetCollectionConfig(string collectionName)
+        {
+            if (!await EnsureDriveServiceInitializedAsync())
+                throw new Exception("Drive service not initialized");
+            return this.ProfileConfiguration
                 .Collections
                 .FirstOrDefault(o => o.Name.Equals(collectionName, StringComparison.OrdinalIgnoreCase));
+        }
 
         /// <summary>
         /// Gets the Recipe Collection by the given name.
@@ -340,11 +344,14 @@ namespace HomeRecipes.SPA.Data
         /// <param name="collectionName">Name of the Recipe Collection</param>
         /// <returns>Deserialized RecipeCollection</returns>
         /// <exception cref="Exception"></exception>
-        public async Task<RecipeCollection> GetCollection(string collectionName)
+        public async Task<RecipeCollection?> GetCollection(string collectionName)
         {
-            var collectionConfig = GetCollectionConfig(collectionName);
+            var collectionConfig = await GetCollectionConfig(collectionName);
             if (collectionConfig == null)
-                throw new Exception("No Recipe collection by that name");
+            {
+                logger.LogWarning("No Recipe collection by the name {CollectionName}", collectionName);
+                return null;
+            }
 
             return await ReadAsync<RecipeCollection>(collectionConfig.FileId);
         }
@@ -360,7 +367,7 @@ namespace HomeRecipes.SPA.Data
             // Update collection meta
             collection.DateModifiedUtc = DateTime.UtcNow;
 
-            var collectionConfig = GetCollectionConfig(collection.Name);
+            var collectionConfig = await GetCollectionConfig(collection.Name);
 
             // Now it's time to update Google Drive, get the Collection config Google Drive File ID from the profile configuration
             string googleDriveFileId = collectionConfig
@@ -388,7 +395,8 @@ namespace HomeRecipes.SPA.Data
                 {
                     throw new Exception("Couldn't create new Recipe collection file");
                 }
-            } else
+            }
+            else
             {
                 // Update profile
                 collectionConfig!.DateModifiedUtc = collection.DateModifiedUtc;
@@ -397,7 +405,48 @@ namespace HomeRecipes.SPA.Data
             // Push updates to Google Drive
             await UpdateAsync(googleDriveFileId!, collection);
         }
+
+        public async Task DeleteCollection(RecipeCollection collection)
+        {
+            var collectionConfig = await GetCollectionConfig(collection.Name);
+
+            if (collectionConfig != null)
+            {
+                string googleDriveFileId = collectionConfig.FileId;
+
+                if (!string.IsNullOrEmpty(googleDriveFileId))
+                {
+                    try
+                    {
+                        // Delete the file from Google Drive
+                        var deleteRequest = driveService.Files.Delete(googleDriveFileId);
+                        await deleteRequest.ExecuteAsync();
+                        logger.LogInformation($"Deleted Google Drive file with ID: {googleDriveFileId}");
+
+                        // Remove the collection from the profile configuration
+                        ProfileConfiguration.Collections.Remove(collectionConfig);
+
+                        // Update the profile on Google Drive
+                        await UpdateProfile();
+                        logger.LogInformation($"Deleted collection '{collection.Name}' from profile configuration");
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, $"Error deleting collection '{collection.Name}' from Google Drive and profile configuration");
+                    }
+                }
+                else
+                {
+                    logger.LogWarning($"Collection '{collection.Name}' does not have a valid Google Drive file ID");
+                }
+            }
+            else
+            {
+                logger.LogWarning($"Collection '{collection.Name}' not found in profile configuration");
+            }
+        }
     }
+
     public class LocalRecipeStore
     {
         private readonly IJSRuntime js;
@@ -456,9 +505,17 @@ namespace HomeRecipes.SPA.Data
             var collection = await GetAsync<RecipeCollection>(IndexedDb.COLLECTION_STORE, collectionName);
             if (collection == null)
             {
-                var ex = new Exception("Could not find local collection by name '" + collectionName + "'");
-                logger.LogError(ex, ex.Message);
-                return null;
+                var cloudCollection = await googleService.GetCollection(collectionName);
+                if (cloudCollection != null)
+                {
+                    await PutAsync(IndexedDb.COLLECTION_STORE, null, cloudCollection);
+                }
+                else
+                {
+                    var ex = new Exception("Could not find local collection by name '" + collectionName + "'");
+                    logger.LogError(ex, ex.Message);
+                    return null;
+                }
             }
 
             return collection;
@@ -541,6 +598,51 @@ namespace HomeRecipes.SPA.Data
             await googleService.AddOrUpdateCollection(collection);
         }
 
+        public async ValueTask DeleteCollectionAsync(string collectionName)
+        {
+            var collection = await GetCollection(collectionName);
+            if (collection == null)
+                throw new Exception("Could not find collection by name '" + collectionName + "'");
+            await DeleteAsync(IndexedDb.COLLECTION_STORE, collectionName);
+            // Delete Collection file on Google Drive
+            await googleService.DeleteCollection(collection);
+        }
+
+        public async ValueTask DeleteRecipeAsync(string collectionName, Recipe recipe)
+        {
+            // Get the Recipe Collection from the IndexedDB by name
+            var collection = await GetCollection(collectionName);
+            if (collection == null)
+            {
+                collection = new RecipeCollection() { Name = collectionName };
+                await PutAsync(IndexedDb.COLLECTION_STORE, null, collection);
+            }
+
+            // Validate the recipe name
+            if (string.IsNullOrEmpty(recipe.Name))
+            {
+                throw new InvalidOperationException("Recipe name is required and cannot be null or empty.");
+            }
+
+            // Lookup existing recipe or assign new recipe
+            var record = collection
+                .Recipes
+                .FirstOrDefault(o => o.Name.Equals(recipe.Name, StringComparison.OrdinalIgnoreCase))
+                ?? recipe;
+
+            // Add Recipe if it doesn't exist
+            if (collection.Recipes.Any(o => o.Name.Equals(record.Name, StringComparison.OrdinalIgnoreCase)))
+            {
+                collection.Recipes.Remove(record);
+            }
+
+            // Update IndexedDB with collection
+            await PutAsync(IndexedDb.COLLECTION_STORE, null, collection);
+
+            // Update Collection file on Google Drive
+            await googleService.AddOrUpdateCollection(collection);
+        }
+
         public async Task FetchChangesAsync()
         {
             await googleService.Refresh();
@@ -562,7 +664,7 @@ namespace HomeRecipes.SPA.Data
                     }
                     else
                     {
-                        throw new Exception("Failed to get Recipe Collection file from local IndexedDB");
+                        continue;
                     }
                 }
 
@@ -614,4 +716,5 @@ namespace HomeRecipes.SPA.Data
             public const string COLLECTION_STORE = "collections";
         }
     }
+
 }

@@ -1,0 +1,55 @@
+﻿@page "/collections/{collectionName}"
+@using HomeRecipes.Shared
+@inject HttpClient Http
+@inject Data.LocalRecipeStore LocalRecipeStore
+
+<PageTitle>@(CollectionName) - Collections - LightWorks Home Recipes</PageTitle>
+
+<h4>@(CollectionName)</h4>
+<div class="row mb-5">
+    @if (currentRecipes?.Count > 0)
+    {
+        <div class="card-columns">
+            @foreach (var recipe in currentRecipes)
+            {
+                <RecipeTile CollectionName="@CollectionName" Recipe="@recipe" />
+            }
+        </div>
+    }
+    else
+    {
+        <p class="alert alert-info">No Recipes Available</p>
+    }
+</div>
+
+<div class="row mb-5">
+    <CreateRecipeModel />
+</div>
+
+@if (!CollectionName.Equals("Default", StringComparison.OrdinalIgnoreCase))
+{
+    <div class="row mb-5">
+        <DeleteCollectionModal CollectionName="@CollectionName" />
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string CollectionName { get; set; }
+
+    private List<HomeRecipes.Shared.Recipe> currentRecipes = new List<HomeRecipes.Shared.Recipe>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await SwitchCollection();
+    }
+
+    private async Task SwitchCollection()
+    {
+        if (!string.IsNullOrEmpty(CollectionName))
+        {
+            currentRecipes = (await LocalRecipeStore.GetCollection(CollectionName))?.Recipes ?? new List<HomeRecipes.Shared.Recipe>();
+        }
+    }
+} 

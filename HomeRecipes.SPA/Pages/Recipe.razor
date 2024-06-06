@@ -3,6 +3,8 @@
 @inject Data.LocalRecipeStore LocalRecipeStore
 @using HomeRecipes.Shared
 
+<PageTitle>@(recipe?.Name ?? "Recipe") - @(CollectionName) - Collections - LightWorks Home Recipes</PageTitle>
+
 @if (recipe == null) {
     <BlazorBootstrap.Spinner />
 } else {
