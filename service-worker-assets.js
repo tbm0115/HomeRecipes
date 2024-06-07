@@ -721,7 +721,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-5AW1Cd5dMlyvyAgWyCb1pOtpjTnl2+nOscP6gwf8ROw=",
+      "hash": "sha256-1aGT6TGGOtSwqOUCbkdc60MFbubyRzC8N5igK+jtmUM=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -749,11 +749,11 @@
       "url": "_framework\/Google.Apis.wasm"
     },
     {
-      "hash": "sha256-9OR2tTGNAl8gaoeIhFLKtjGMTmnBO9X5EYlW3fDta2k=",
+      "hash": "sha256-ZLXnno6oZj1yLTO5\/K92A9c90MkqJtragWxchmiVWlE=",
       "url": "_framework\/HomeRecipes.Shared.wasm"
     },
     {
-      "hash": "sha256-JMYVqJ9DfHHvQbsvZMTbytdtBA2LMwWC1Ic8r7AUa18=",
+      "hash": "sha256-d7bLFerFAJ7YEplaElMuli1x2PfNY58Pk0Z+2cEjek0=",
       "url": "_framework\/HomeRecipes.SPA.wasm"
     },
     {
@@ -1125,5 +1125,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "+vm71XBh"
+  "version": "yHEEXLrR"
 };
