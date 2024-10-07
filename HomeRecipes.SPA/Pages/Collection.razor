@@ -2,10 +2,54 @@
 @using HomeRecipes.Shared
 @inject HttpClient Http
 @inject Data.LocalRecipeStore LocalRecipeStore
+@inject Data.GoogleAppDataStorage GoogleDriveService
 
 <PageTitle>@(CollectionName) - Collections - LightWorks Home Recipes</PageTitle>
 
 <h4>@(CollectionName)</h4>
+
+<!-- Collaborator management -->
+<div class="row mb-5">
+    <h5>Manage Collaborators</h5>
+    <button class="btn btn-primary" @onclick="ShowAddCollaboratorModal">Add Collaborator</button>
+
+    <div>
+        @if (collaborators?.Count > 0)
+        {
+            <ul class="list-group">
+                @foreach (var collaborator in collaborators)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>@collaborator.Email</span>
+                        <span class="badge badge-secondary">@collaborator.Role</span>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="alert alert-info">No collaborators added yet.</p>
+        }
+    </div>
+</div>
+
+<!-- Add Collaborator Modal -->
+<BlazorBootstrap.Modal @ref="addCollaboratorModal" Title="Add Collaborator">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" @bind="newCollaboratorEmail" placeholder="Enter collaborator's email" required />
+    </div>
+    <div class="form-group">
+        <label for="role">Role</label>
+        <select id="role" class="form-control" @bind="newCollaboratorRole">
+            <option value="editor">Editor</option>
+            <option value="viewer">Viewer</option>
+        </select>
+    </div>
+    <button class="btn btn-primary" @onclick="AddCollaboratorAsync">Add</button>
+</BlazorBootstrap.Modal>
+
+<!-- Rest of the page content (existing) -->
 <div class="row mb-5">
     @if (currentRecipes?.Count > 0)
     {
@@ -38,11 +82,17 @@
     public string CollectionName { get; set; }
 
     private List<HomeRecipes.Shared.Recipe> currentRecipes = new List<HomeRecipes.Shared.Recipe>();
+    private List<Collaborator> collaborators = new List<Collaborator>();
+    private string newCollaboratorEmail = "";
+    private string newCollaboratorRole = "editor";
+
+    private BlazorBootstrap.Modal addCollaboratorModal;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         await SwitchCollection();
+        await LoadCollaborators();
     }
 
     private async Task SwitchCollection()
@@ -52,4 +102,27 @@
             currentRecipes = (await LocalRecipeStore.GetCollection(CollectionName))?.Recipes ?? new List<HomeRecipes.Shared.Recipe>();
         }
     }
-} 
+
+    private async Task LoadCollaborators()
+    {
+        // Fetch collaborators for the collection (you'll need to implement this method in your data service)
+        var collection = await GoogleDriveService.GetCollection(CollectionName);
+        collaborators = collection.Collaborators?.ToList() ?? new List<Collaborator>();
+    }
+
+    private async Task AddCollaboratorAsync()
+    {
+        if (!string.IsNullOrEmpty(newCollaboratorEmail))
+        {
+            await GoogleDriveService.AddCollaboratorAsync(CollectionName, newCollaboratorEmail, newCollaboratorRole);
+            await LoadCollaborators();  // Refresh collaborator list
+            newCollaboratorEmail = "";  // Clear input field
+            await addCollaboratorModal.Hide();
+        }
+    }
+
+    private void ShowAddCollaboratorModal()
+    {
+        addCollaboratorModal.Show();
+    }
+}
