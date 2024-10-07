@@ -721,7 +721,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-2ZzVLBI1Ij1CvM+F9RueCdMOwS0gNwvA1OrJuEZR\/48=",
+      "hash": "sha256-g7dZ5\/sBGhEf01T5YnsjNnpwODwMPfbV0gOZyJMMf50=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -749,11 +749,11 @@
       "url": "_framework\/Google.Apis.wasm"
     },
     {
-      "hash": "sha256-nw7DJw1mtpA\/P1Y0g7zcRo0ZYcyymAux6ymo8Ea9tZc=",
+      "hash": "sha256-bKK7rYVHpSarabbL1pgPq0mPz5hhM5k+Li\/0xjzM7JU=",
       "url": "_framework\/HomeRecipes.Shared.wasm"
     },
     {
-      "hash": "sha256-umSZVcVwnQa10eSXuZF4Re\/TL0s1TzOO\/rLUhjurOjI=",
+      "hash": "sha256-LeMeeoQGDKf6+CNpzd2HPWL+1X2sz7rUGsDt0YvpzLU=",
       "url": "_framework\/HomeRecipes.SPA.wasm"
     },
     {
@@ -1081,19 +1081,19 @@
       "url": "_framework\/System.Xml.XDocument.wasm"
     },
     {
-      "hash": "sha256-Xrug3LWF1JnO5H5\/E2XY2d5z7a\/3nq992XR10bf+Zjo=",
+      "hash": "sha256-WCmPjkZLSWo2ILyypr0vLOUw5YB7Ei6z7HYxJCiLyjk=",
       "url": "appsettings.Development.json"
     },
     {
-      "hash": "sha256-2JdrdMm1lCzGjGf\/QkJ0geP+6aoyVFzf10wrred1Hr8=",
+      "hash": "sha256-p2Eqo9lUEkTU2ZqU8zNQ+vxBuzXDYPkFTbfAPryfV1g=",
       "url": "appsettings.json"
     },
     {
-      "hash": "sha256-2JdrdMm1lCzGjGf\/QkJ0geP+6aoyVFzf10wrred1Hr8=",
+      "hash": "sha256-p2Eqo9lUEkTU2ZqU8zNQ+vxBuzXDYPkFTbfAPryfV1g=",
       "url": "appsettings.Production.json"
     },
     {
-      "hash": "sha256-9NFmujq\/ZIR6zC2HUVHEzFX5XCbRyGQLb\/hbateae+U=",
+      "hash": "sha256-\/ZleHYz7DgnK4AQnoUqDfzXqeUayw8yzhNcEtuWzEPA=",
       "url": "appsettings.Release.json"
     },
     {
@@ -1133,5 +1133,5 @@
       "url": "_content\/Microsoft.AspNetCore.Components.WebAssembly.Authentication\/AuthenticationService.js"
     }
   ],
-  "version": "F9w5w+LM"
+  "version": "5OA4qKc8"
 };
