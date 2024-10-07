@@ -117,12 +117,12 @@
             await GoogleDriveService.AddCollaboratorAsync(CollectionName, newCollaboratorEmail, newCollaboratorRole);
             await LoadCollaborators();  // Refresh collaborator list
             newCollaboratorEmail = "";  // Clear input field
-            await addCollaboratorModal.Hide();
+            await addCollaboratorModal.HideAsync();
         }
     }
 
-    private void ShowAddCollaboratorModal()
+    private async Task ShowAddCollaboratorModal()
     {
-        addCollaboratorModal.Show();
+        await addCollaboratorModal.ShowAsync();
     }
 }
