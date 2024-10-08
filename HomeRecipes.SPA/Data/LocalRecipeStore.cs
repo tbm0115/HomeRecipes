@@ -129,7 +129,7 @@ namespace HomeRecipes.SPA.Data
                     var fileMetadata = new Google.Apis.Drive.v3.Data.File()
                     {
                         Name = fileName,
-                        Parents = new List<string>() { "Recipes" }
+                        //Parents = new List<string>() { driveSpace }
                     };
                     FilesResource.CreateMediaUpload uploadRequest;
                     using (var stream = new MemoryStream())
