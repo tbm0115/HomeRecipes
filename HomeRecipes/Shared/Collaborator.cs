@@ -17,6 +17,6 @@ namespace HomeRecipes.Shared
         /// Role that this specific collaborator has on this Google Drive File.
         /// </summary>
         [JsonPropertyName("role")]
-        public string Role { get; set; } // "editor" or "viewer"
+        public string Role { get; set; } // "writer" or "owner"
     }
 }

@@ -43,8 +43,8 @@
     <div class="form-group">
         <label for="role">Role</label>
         <select id="role" class="form-control" @bind="newCollaboratorRole">
-            <option value="editor">Editor</option>
-            <option value="viewer">Viewer</option>
+            <option value="writer">Writer</option>
+            <option value="reader">Reader</option>
         </select>
     </div>
     <button class="btn btn-primary" @onclick="AddCollaboratorAsync">Add</button>
@@ -86,7 +86,7 @@
     private List<HomeRecipes.Shared.Recipe> currentRecipes = new List<HomeRecipes.Shared.Recipe>();
     private List<Collaborator> collaborators = new List<Collaborator>();
     private string newCollaboratorEmail = "";
-    private string newCollaboratorRole = "editor";
+    private string newCollaboratorRole = "writer";
 
     private BlazorBootstrap.Modal addCollaboratorModal;
 
