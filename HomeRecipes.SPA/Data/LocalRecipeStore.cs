@@ -95,6 +95,12 @@ namespace HomeRecipes.SPA.Data
             }
         }
 
+        private enum DriveSpacesEnum
+        {
+            appDataFolder,
+            drive
+        }
+
         /// <summary>
         /// Filename to get or create (including the extension).
         /// </summary>
@@ -111,8 +117,9 @@ namespace HomeRecipes.SPA.Data
 
             try
             {
+                var driveSpace = DriveSpacesEnum.drive.ToString();
                 var request = driveService.Files.List();
-                request.Spaces = "appDataFolder";
+                request.Spaces = driveSpace;
                 request.Q = $"name='{fileName}' and trashed=false";
                 request.Fields = "files(id, name)";
                 var result = await request.ExecuteAsync();
@@ -122,7 +129,7 @@ namespace HomeRecipes.SPA.Data
                     var fileMetadata = new Google.Apis.Drive.v3.Data.File()
                     {
                         Name = fileName,
-                        Parents = new List<string>() { "appDataFolder" }
+                        Parents = new List<string>() { "Recipes" }
                     };
                     FilesResource.CreateMediaUpload uploadRequest;
                     using (var stream = new MemoryStream())
