@@ -72,7 +72,7 @@ namespace HomeRecipes.SPA.Data
 
                     var applicationName = "LightWorks Home Recipes";
                     this.credential = GoogleCredential.FromAccessToken(token.Value)
-                        .CreateScoped(DriveService.Scope.DriveAppdata);
+                        .CreateScoped(DriveService.Scope.Drive);//.DriveAppdata);
 
                     driveService = new DriveService(new BaseClientService.Initializer
                     {
